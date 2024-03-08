@@ -1,0 +1,5 @@
+open-resume/node_modules
+open-resume-backend/node_modules
+open-resume/.next/
+open-resume/.swc/
+open-resume/.*.env
