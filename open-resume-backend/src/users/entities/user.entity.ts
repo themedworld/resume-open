@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn , Timestamp } from 'typeorm';
+import {OneToMany, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn , Timestamp } from 'typeorm';
+import { Resume } from 'src/resume/entities/resume.entity'
 
 export enum UserRole {
     Recruteur = 'recruteur',
@@ -49,6 +50,12 @@ export class UserEntity {
     createdAt:Timestamp;
     @UpdateDateColumn()
     updateAt:Timestamp;
+
+
+    @OneToMany(() => Resume, resume => resume.user)
+    resume: Resume;
+
+
 }
 
 

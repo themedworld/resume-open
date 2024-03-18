@@ -1,4 +1,5 @@
 import { Timestamp } from 'typeorm';
+import { Resume } from 'src/resume/entities/resume.entity';
 export declare enum UserRole {
     Recruteur = "recruteur",
     Demandeur = "demandeur"
@@ -16,4 +17,5 @@ export declare class UserEntity {
     determineUserRole(): UserRole;
     createdAt: Timestamp;
     updateAt: Timestamp;
+    resume: Resume;
 }
