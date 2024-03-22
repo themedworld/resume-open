@@ -12,6 +12,7 @@ import { ResumeTable } from "resume-parser/ResumeTable";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { ResumeParserAlgorithmArticle } from "resume-parser/ResumeParserAlgorithmArticle";
 import DemandeurRoute1 from "components/form/DemandeurRoute";
+import Layout from "components/layout";
 
 const RESUME_EXAMPLES = [
   {
@@ -53,7 +54,7 @@ export default function ResumeParser() {
     test();
   }, [fileUrl]);
 
-  return (
+  return ( <Layout>
     <DemandeurRoute1>
       <main className="h-full w-full overflow-hidden">
         <div className="grid md:grid-cols-6">
@@ -132,5 +133,6 @@ export default function ResumeParser() {
         </div>
       </main>
     </DemandeurRoute1>
+    </Layout>
   );
 }

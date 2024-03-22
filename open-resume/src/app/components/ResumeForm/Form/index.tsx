@@ -50,8 +50,10 @@ const FORM_TO_ICON: { [section in ShowForm]: typeof BuildingOfficeIcon } = {
   workExperiences: BuildingOfficeIcon,
   educations: AcademicCapIcon,
   projects: LightBulbIcon,
+  languages: AcademicCapIcon,
   skills: WrenchIcon,
   custom: WrenchIcon,
+  
 };
 
 export const Form = ({

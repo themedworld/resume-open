@@ -45,6 +45,7 @@ const SECTION_TITLE_PRIMARY_KEYWORDS = [
   "experience",
   "education",
   "project",
+  "language",
   "skill",
 ];
 const SECTION_TITLE_SECONDARY_KEYWORDS = [
@@ -56,6 +57,7 @@ const SECTION_TITLE_SECONDARY_KEYWORDS = [
   "award",
   "honor",
   "project",
+  "language",
 ];
 const SECTION_TITLE_KEYWORDS = [
   ...SECTION_TITLE_PRIMARY_KEYWORDS,
@@ -63,7 +65,7 @@ const SECTION_TITLE_KEYWORDS = [
 ];
 
 const isSectionTitle = (line: Line, lineNumber: number) => {
-  const isFirstTwoLines = lineNumber < 2;
+  const isFirstTwoLines = lineNumber < 5;
   const hasMoreThanOneItemInLine = line.length > 1;
   const hasNoItemInLine = line.length === 0;
   if (isFirstTwoLines || hasMoreThanOneItemInLine || hasNoItemInLine) {
@@ -82,7 +84,7 @@ const isSectionTitle = (line: Line, lineNumber: number) => {
   // (This heuristics is not well tested and may not work well)
   const text = textItem.text.trim();
   const textHasAtMost2Words =
-    text.split(" ").filter((s) => s !== "&").length <= 2;
+    text.split(" ").filter((s) => s !== "&").length <= 5;
   const startsWithCapitalLetter = /[A-Z]/.test(text.slice(0, 1));
 
   if (

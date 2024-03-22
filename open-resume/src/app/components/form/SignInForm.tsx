@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import { authService } from "./authService";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import Link from 'next/link';
+import { useEffect } from "react";
 
 const SignInForm = () => {
     const [username, setUsername] = useState("");
@@ -17,13 +18,27 @@ const SignInForm = () => {
             const response = await authService.login(userData);
             if (response?.data?.accessToken) {
                 authService.setToken(response.data.accessToken);
-                router.push('/Welcom');
+                const role = authService.getUserRole();
+                const username = authService.getUserName();
+                if (role === "demandeur") {
+                    router.push('/Demandeur');
+                } else if (role === "recruteur") {
+                    router.push('/Recruteur');
+                } 
             }
         } catch (error) {
             setError("Invalid username or password");
         }
     }
 
+    useEffect(() => {
+        const role = authService.getUserRole();
+        if (role === "demandeur") {
+            router.push('/Demandeur');
+        } else if (role === "recruteur") {
+            router.push('/Recruteur');
+        }
+    }, []);
     return (
 <div className="flex justify-center items-center h-screen bg-gray-100">
     <form onSubmit={submitForm} className='bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 max-w-md'>

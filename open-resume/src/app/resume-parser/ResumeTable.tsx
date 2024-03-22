@@ -119,6 +119,23 @@ export const ResumeTable = ({ resume }: { resume: Resume }) => {
             />
           </Fragment>
         ))}
+        {resume.languages.length > 0 && (
+          <TableRowHeader>languages</TableRowHeader>
+        )}
+        {resume.languages.map((language, idx) => (
+          <Fragment key={idx}>
+            <TableRow label="Language" value={language.language} />
+            <TableRow
+              label="Descriptions"
+              value={language.descriptions}
+              className={
+                resume.languages.length - 1 !== 0 &&
+                idx !== resume.languages.length - 1 &&
+                "!border-b-4"
+              }
+            />
+          </Fragment>
+        ))}
         <TableRowHeader>Skills</TableRowHeader>
         <TableRow label="Descriptions" value={skills} />
       </tbody>

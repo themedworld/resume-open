@@ -15,10 +15,12 @@ import { ThemeForm } from "components/ResumeForm/ThemeForm";
 import { CustomForm } from "components/ResumeForm/CustomForm";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
+import { LanguageForm } from "components/ResumeForm/LanguageForm";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
   educations: EducationsForm,
+  languages: LanguageForm, 
   projects: ProjectsForm,
   skills: SkillsForm,
   custom: CustomForm,

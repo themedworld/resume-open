@@ -8,6 +8,7 @@ import type {
   ResumeProject,
   ResumeSkills,
   ResumeWorkExperience,
+  ResumeLanguage
 } from "lib/redux/types";
 import type { ShowForm } from "lib/redux/settingsSlice";
 
@@ -40,6 +41,10 @@ export const initialProject: ResumeProject = {
   date: "",
   descriptions: [],
 };
+export const initialLanguage:ResumeLanguage ={
+  language:"",
+  descriptions: [],
+}
 
 export const initialFeaturedSkill: FeaturedSkill = { skill: "", rating: 4 };
 export const initialFeaturedSkills: FeaturedSkill[] = Array(6).fill({
@@ -61,6 +66,7 @@ export const initialResumeState: Resume = {
   projects: [initialProject],
   skills: initialSkills,
   custom: initialCustom,
+  languages:[initialLanguage],
 };
 
 // Keep the field & value type in sync with CreateHandleChangeArgsWithDescriptions (components\ResumeForm\types.ts)
@@ -111,6 +117,14 @@ export const resumeSlice = createSlice({
       const project = draft.projects[idx];
       project[field] = value as any;
     },
+    changeLanguages: (
+      draft,
+      action: PayloadAction<CreateChangeActionWithDescriptions<ResumeLanguage>>
+    ) => {
+      const { idx, field, value } = action.payload;
+      const language = draft.languages[idx];
+      language[field] = value as any;
+    },
     changeSkills: (
       draft,
       action: PayloadAction<
@@ -121,6 +135,7 @@ export const resumeSlice = createSlice({
             skill: string;
             rating: number;
           }
+          
       >
     ) => {
       const { field } = action.payload;
@@ -154,6 +169,10 @@ export const resumeSlice = createSlice({
         }
         case "projects": {
           draft.projects.push(structuredClone(initialProject));
+          return draft;
+        }
+        case "languages":{
+          draft.languages.push(structuredClone(initialLanguage));
           return draft;
         }
       }
@@ -207,6 +226,7 @@ export const {
   changeProjects,
   changeSkills,
   changeCustom,
+  changeLanguages,
   addSectionInForm,
   moveSectionInForm,
   deleteSectionInFormByIdx,
@@ -221,5 +241,6 @@ export const selectEducations = (state: RootState) => state.resume.educations;
 export const selectProjects = (state: RootState) => state.resume.projects;
 export const selectSkills = (state: RootState) => state.resume.skills;
 export const selectCustom = (state: RootState) => state.resume.custom;
+export const selectLanguages =(state : RootState)=>state.resume.languages;
 
 export default resumeSlice.reducer;

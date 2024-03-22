@@ -3,6 +3,7 @@ import {
   initialProfile,
   initialProject,
   initialWorkExperience,
+  initialLanguage,
 } from "lib/redux/resumeSlice";
 import type { Resume } from "lib/redux/types";
 import { deepClone } from "lib/deep-clone";
@@ -70,6 +71,14 @@ export const END_HOME_RESUME: Resume = {
       ],
     },
   ],
+  languages: [
+    {
+      language: "OpenResume",
+      descriptions: [
+        "Created and launched a free resume builder web app that allows thousands of users to create professional resume easily and land their dream jobs",
+      ],
+    },
+  ],
   skills: {
     featuredSkills: [
       { skill: "HTML", rating: 4 },
@@ -87,6 +96,7 @@ export const END_HOME_RESUME: Resume = {
   custom: {
     descriptions: [],
   },
+
 };
 
 export const START_HOME_RESUME: Resume = {
@@ -106,4 +116,5 @@ export const START_HOME_RESUME: Resume = {
   custom: {
     descriptions: [],
   },
+  languages: [deepClone(initialLanguage)],
 };

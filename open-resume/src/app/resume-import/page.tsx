@@ -4,6 +4,7 @@ import { getHasUsedAppBefore } from "lib/redux/local-storage";
 import { ResumeDropzone } from "components/ResumeDropzone";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Layout from "components/layout";
 
 export default function ImportResume() {
   const [hasUsedAppBefore, setHasUsedAppBefore] = useState(false);
@@ -17,6 +18,7 @@ export default function ImportResume() {
   }, []);
 
   return (
+    <Layout>
     <DemandeurRoute1>
       <main>
         <div className="mx-auto mt-14 max-w-3xl rounded-md border border-gray-200 px-10 py-10 text-center shadow-md">
@@ -61,7 +63,7 @@ export default function ImportResume() {
           )}
         </div>
       </main>
-    </DemandeurRoute1>
+    </DemandeurRoute1></Layout>
   );
 }
 

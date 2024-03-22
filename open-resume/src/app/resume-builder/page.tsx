@@ -4,9 +4,11 @@ import { store } from "lib/redux/store";
 import { ResumeForm } from "components/ResumeForm";
 import { Resume } from "components/Resume";
 import DemandeurRoute1 from "components/form/DemandeurRoute";
+import Layout from "components/layout";
 
 export default function Create() {
   return (
+    <Layout>
     <DemandeurRoute1>
       <Provider store={store}>
         <main className="relative h-full w-full overflow-hidden bg-gray-50">
@@ -21,5 +23,6 @@ export default function Create() {
         </main>
       </Provider>
     </DemandeurRoute1>
+    </Layout>
   );
 }
