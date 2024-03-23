@@ -13,7 +13,7 @@ import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { ResumeParserAlgorithmArticle } from "resume-parser/ResumeParserAlgorithmArticle";
 import DemandeurRoute1 from "components/form/DemandeurRoute";
 import Layout from "components/layout";
-
+import Navbar from "components/Navbar";
 const RESUME_EXAMPLES = [
   {
     fileUrl: "resume-example/laverne-resume.pdf",
@@ -54,8 +54,8 @@ export default function ResumeParser() {
     test();
   }, [fileUrl]);
 
-  return ( <Layout>
-    <DemandeurRoute1>
+  return ( 
+    <DemandeurRoute1><Navbar>
       <main className="h-full w-full overflow-hidden">
         <div className="grid md:grid-cols-6">
           <div className="flex justify-center px-2 md:col-span-3 md:h-[calc(100vh-var(--top-nav-bar-height))] md:justify-end">
@@ -131,8 +131,8 @@ export default function ResumeParser() {
             </section>
           </div>
         </div>
-      </main>
+      </main></Navbar>
     </DemandeurRoute1>
-    </Layout>
+    
   );
 }
