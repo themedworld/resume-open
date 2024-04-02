@@ -17,5 +17,5 @@ export declare class UserEntity {
     determineUserRole(): UserRole;
     createdAt: Timestamp;
     updateAt: Timestamp;
-    resume: Resume;
+    resume: Resume[];
 }

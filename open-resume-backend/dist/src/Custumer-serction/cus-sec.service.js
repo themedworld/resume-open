@@ -37,7 +37,7 @@ let CusSecService = class CusSecService {
         if (!cusSec) {
             throw new common_1.NotFoundException(`CusSec with id ${id} not found`);
         }
-        cusSec.Custom_Textbox = updateCusSecDto.Custom_Textbox;
+        cusSec.descriptions = updateCusSecDto.descriptions;
         return this.CusSecRepository.save(cusSec);
     }
     async remove(id) {

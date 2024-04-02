@@ -3,6 +3,9 @@ import {
   BulletListTextarea,
   Input,
 } from "components/ResumeForm/Form/InputGroup";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { authService } from "components/form/authService";
 import { BulletListIconButton } from "components/ResumeForm/Form/IconButton";
 import type { CreateHandleChangeArgsWithDescriptions } from "components/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
@@ -12,6 +15,8 @@ import {
   changeShowBulletPoints,
   selectShowBulletPoints,
 } from "lib/redux/settingsSlice";
+import { useState } from "react";
+import { ResumeForm } from ".";
 
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
@@ -19,6 +24,47 @@ export const EducationsForm = () => {
   const showDelete = educations.length > 1;
   const form = "educations";
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
+  const router = useRouter();
+  const resumeid = authService.getResumeId();
+  const buttonClicked = authService.getbuttonClicked();
+
+  useEffect(() => {
+    if (buttonClicked === 1 && resumeid) {
+      handleSubmitEducation();
+    }
+  }, [buttonClicked]); // Run the effect whenever buttonClicked changes
+
+  const handleSubmitEducation = async () => {
+    try {
+      const updatedEducations = educations.map((education) => {
+        return {
+          ...education,
+          resumeid: resumeid,
+        };
+      });
+
+      const response = await fetch("http://localhost:3001/api/v1/education", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEducations),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save data");
+      }
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+      console.log("Data saved successfully");
+
+   
+    
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
   return (
     <Form form={form} addButtonText="Add School">
@@ -81,6 +127,7 @@ export const EducationsForm = () => {
               value={gpa}
               onChange={handleEducationChange}
             />
+
             <div className="relative col-span-full">
               <BulletListTextarea
                 label="Additional Information (Optional)"
@@ -101,6 +148,7 @@ export const EducationsForm = () => {
           </FormSection>
         );
       })}
+     
     </Form>
   );
 };

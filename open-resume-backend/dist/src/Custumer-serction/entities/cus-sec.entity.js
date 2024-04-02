@@ -23,7 +23,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], CusSec.prototype, "Custom_Textbox", void 0);
+], CusSec.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.CusSec, { onDelete: 'CASCADE' }),
     (0, typeorm_2.JoinColumn)({ name: 'resumeid' }),

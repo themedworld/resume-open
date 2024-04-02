@@ -7,7 +7,7 @@ export declare class EducationService {
     private EducationRepository;
     private ResumeRepository;
     constructor(EducationRepository: Repository<Education>, ResumeRepository: Repository<Resume>);
-    createEducation(createEducationDto: CreateEducationDto): Promise<Education>;
+    createEducation(createEducationDtoArray: CreateEducationDto[]): Promise<Education[]>;
     updateEducation(id: number, updateEducationDto: UpdateEducationDto): Promise<Education>;
     remove(id: number): Promise<void>;
     findEducationByResumeId(id: number): Promise<Education[]>;

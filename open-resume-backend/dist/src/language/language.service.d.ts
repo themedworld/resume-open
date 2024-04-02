@@ -7,8 +7,14 @@ export declare class LanguageService {
     private LanguageRepository;
     private ResumeRepository;
     constructor(LanguageRepository: Repository<Language>, ResumeRepository: Repository<Resume>);
-    createLanguage(createLanguageDto: CreateLanguageDto): Promise<Language>;
+    createLanguage(createLanguageDtoArray: CreateLanguageDto[]): Promise<Language[]>;
     updateLanguage(id: number, updateLanguageDto: UpdateLanguageDto): Promise<Language>;
     remove(id: number): Promise<void>;
     findLanguageByResumeId(id: number): Promise<Language[]>;
+    findLanguage(language: string): Promise<{
+        id: number;
+        resumeid: number;
+        language: string;
+        descriptions: string;
+    }[]>;
 }

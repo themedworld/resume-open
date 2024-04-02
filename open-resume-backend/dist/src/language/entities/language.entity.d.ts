@@ -1,7 +1,7 @@
 import { Resume } from 'src/resume/entities/resume.entity';
 export declare class Language {
     id: number;
-    languageName: string;
-    proficiency: string;
+    language: string;
+    descriptions: string;
     resume: Resume;
 }

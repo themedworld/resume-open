@@ -7,7 +7,7 @@ export declare class WorkExpService {
     private WorkExpRepository;
     private ResumeRepository;
     constructor(WorkExpRepository: Repository<WorkExp>, ResumeRepository: Repository<Resume>);
-    createWorkExp(createWorkExpDto: CreateWorkExpDto): Promise<WorkExp>;
+    createWorkExp(createWorkExpDtoArray: CreateWorkExpDto[]): Promise<WorkExp[]>;
     updateWorkExp(id: number, updateWorkExpDto: UpdateWorkExpDto): Promise<WorkExp>;
     findResSetByResumeId(id: number): Promise<WorkExp[]>;
     remove(id: number): Promise<void>;

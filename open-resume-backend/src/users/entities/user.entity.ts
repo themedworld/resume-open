@@ -53,7 +53,7 @@ export class UserEntity {
 
 
     @OneToMany(() => Resume, resume => resume.user)
-    resume: Resume;
+    resume: Resume[];
 
 
 }

@@ -71,13 +71,13 @@ let UsersService = class UsersService {
         return await this.usersRepository.findOne({ where: { username } });
     }
     async accessToken(user) {
-        return (0, jsonwebtoken_1.sign)({ username: user.username, role: user.role }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME });
+        return (0, jsonwebtoken_1.sign)({ username: user.username, role: user.role, id: user.id }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME });
     }
     async refreshToken(user) {
         if (!process.env.REFRECH_TOKEN_SECRET_KEY) {
             throw new Error('REFRECH_TOKEN_SECRET_KEY is missing in .env file');
         }
-        return (0, jsonwebtoken_1.sign)({ username: user.username, role: user.role }, process.env.REFRECH_TOKEN_SECRET_KEY, { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME });
+        return (0, jsonwebtoken_1.sign)({ username: user.username, role: user.role, id: user.id }, process.env.REFRECH_TOKEN_SECRET_KEY, { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME });
     }
 };
 exports.UsersService = UsersService;

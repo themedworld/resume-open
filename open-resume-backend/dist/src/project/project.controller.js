@@ -15,15 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProjectController = void 0;
 const common_1 = require("@nestjs/common");
 const project_service_1 = require("./project.service");
-const create_project_dto_1 = require("./dto/create-project.dto");
 const update_project_dto_1 = require("./dto/update-project.dto");
 let ProjectController = class ProjectController {
     constructor(projectService) {
         this.projectService = projectService;
     }
-    async craeteProject(createProjectDto) {
-        const project = await this.projectService.createProject(createProjectDto);
-        return { project };
+    async createProject(createProjectDtoArray) {
+        return this.projectService.createProject(createProjectDtoArray);
     }
     async updateProject(id, updateProjectDto) {
         return this.projectService.updateProject(id, updateProjectDto);
@@ -39,12 +37,12 @@ let ProjectController = class ProjectController {
 };
 exports.ProjectController = ProjectController;
 __decorate([
-    (0, common_1.Post)('createProject'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_project_dto_1.CreateProjectDto]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
-], ProjectController.prototype, "craeteProject", null);
+], ProjectController.prototype, "createProject", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),

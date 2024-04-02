@@ -13,10 +13,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PerInfService = void 0;
+const per_inf_entity_1 = require("./entities/per-inf.entity");
 const resume_entity_1 = require("../resume/entities/resume.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const per_inf_entity_1 = require("./entities/per-inf.entity");
 const typeorm_2 = require("typeorm");
 let PerInfService = class PerInfService {
     constructor(PerInfRepository, ResumeRepository) {
@@ -38,11 +38,11 @@ let PerInfService = class PerInfService {
             throw new common_1.NotFoundException(`PerInf with id ${id} not found`);
         }
         perInf.name = updatePerInfDto.name;
-        perInf.objective = updatePerInfDto.objective;
+        perInf.summary = updatePerInfDto.summary;
         perInf.email = updatePerInfDto.email;
         perInf.phone = updatePerInfDto.phone;
         perInf.location = updatePerInfDto.location;
-        perInf.website = updatePerInfDto.website;
+        perInf.url = updatePerInfDto.url;
         return this.PerInfRepository.save(perInf);
     }
     async remove(id) {

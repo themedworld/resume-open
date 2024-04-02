@@ -15,13 +15,12 @@ class CreateCusSecDto {
 }
 exports.CreateCusSecDto = CreateCusSecDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: "is required" }),
-    (0, class_validator_1.IsNumber)({}, { message: "is a number" }),
+    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateCusSecDto.prototype, "resumeid", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: "is required" }),
     (0, class_validator_1.IsString)({ message: "is a string" }),
     __metadata("design:type", String)
-], CreateCusSecDto.prototype, "Custom_Textbox", void 0);
+], CreateCusSecDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-cus-sec.dto.js.map

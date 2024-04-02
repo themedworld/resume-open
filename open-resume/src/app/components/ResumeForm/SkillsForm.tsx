@@ -12,6 +12,8 @@ import {
   changeShowBulletPoints,
   selectThemeColor,
 } from "lib/redux/settingsSlice";
+import { authService } from "components/form/authService";
+import { useEffect } from "react";
 
 export const SkillsForm = () => {
   const skills = useAppSelector(selectSkills);
@@ -20,7 +22,15 @@ export const SkillsForm = () => {
   const form = "skills";
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const themeColor = useAppSelector(selectThemeColor) || "#38bdf8";
+const resumeid= authService.getResumeId();
+const skillswithresumeid = {featuredSkills:skills.featuredSkills,descriptions:skills.descriptions,resumeid:resumeid};
+const buttonClicked = authService.getbuttonClicked();
 
+useEffect(() => {
+  if (buttonClicked === 1 && resumeid) {
+    handleSubmit();
+  }
+}, [buttonClicked]); 
   const handleSkillsChange = (field: "descriptions", value: string[]) => {
     dispatch(changeSkills({ field, value }));
   };
@@ -33,6 +43,28 @@ export const SkillsForm = () => {
   };
   const handleShowBulletPoints = (value: boolean) => {
     dispatch(changeShowBulletPoints({ field: form, value }));
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/skills/createSkills", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(skillswithresumeid),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit skills form");
+      }
+
+      console.log("Skills form submitted successfully");
+      // Ajoutez ici le code à exécuter après avoir soumis le formulaire avec succès
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   return (
@@ -79,6 +111,8 @@ export const SkillsForm = () => {
             circleColor={themeColor}
           />
         ))}
+
+      
       </div>
     </Form>
   );

@@ -19,7 +19,12 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the user id is required' }),
     (0, class_validator_2.IsNumber)({}, { message: 'the id user is a number' }),
     __metadata("design:type", Number)
-], CreateResumeDto.prototype, "iduser", void 0);
+], CreateResumeDto.prototype, "id", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: 'the user id is required' }),
+    (0, class_validator_2.IsNumber)({}, { message: 'the id user is a number' }),
+    __metadata("design:type", Number)
+], CreateResumeDto.prototype, "userid", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the name is required' }),
     (0, class_validator_1.IsString)({ message: 'the name is a string' }),

@@ -12,6 +12,7 @@ export declare class ResumeController {
         resumes: Resume[];
         count: number;
     }>;
+    findOne(id: string): Promise<Resume>;
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
     remove(id: string): Promise<void>;
 }

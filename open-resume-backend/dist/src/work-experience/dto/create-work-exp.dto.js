@@ -23,7 +23,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the company name is required' }),
     (0, class_validator_1.IsString)({ message: 'the company name must be a string' }),
     __metadata("design:type", String)
-], CreateWorkExpDto.prototype, "companyName", void 0);
+], CreateWorkExpDto.prototype, "company", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the job title is required' }),
     (0, class_validator_1.IsString)({ message: 'the job title must be a string' }),
@@ -31,12 +31,12 @@ __decorate([
 ], CreateWorkExpDto.prototype, "jobTitle", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the date is required' }),
-    (0, class_validator_1.IsDate)({ message: 'the date must be a valid date' }),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsString)({ message: 'the date must be a valid date' }),
+    __metadata("design:type", String)
 ], CreateWorkExpDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the description is required' }),
     (0, class_validator_1.IsString)({ message: 'the description must be a string' }),
     __metadata("design:type", String)
-], CreateWorkExpDto.prototype, "description", void 0);
+], CreateWorkExpDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-work-exp.dto.js.map

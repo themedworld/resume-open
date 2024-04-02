@@ -30,6 +30,11 @@ __decorate([
     __metadata("design:type", String)
 ], CreateResSetDto.prototype, "fontSize", void 0);
 __decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: 'the font family is required' }),
+    (0, class_validator_1.IsString)({ message: 'the font family must be a string' }),
+    __metadata("design:type", String)
+], CreateResSetDto.prototype, "fontFamily", void 0);
+__decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the document size is required' }),
     (0, class_validator_1.IsString)({ message: 'the document size must be a string' }),
     __metadata("design:type", String)

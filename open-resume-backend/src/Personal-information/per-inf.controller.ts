@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe ,Headers} from '@nestjs/common';
 import { PerInfService } from './per-inf.service';
 import { CreatePerInfDto } from './dto/create-per-inf.dto';
 import { PerInf } from './entities/per-inf.entity';

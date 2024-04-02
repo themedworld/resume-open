@@ -4,9 +4,13 @@ interface TokenPayload {
     exp: number;
     username: string;
     role: string;
+    id: number;
     // Add other properties if necessary
 }
-
+interface ResumeData {
+  userId: string;
+  resumeName: string;
+}
 const setToken = (token: string): void => {
     localStorage.setItem('token', token);
 };
@@ -19,11 +23,33 @@ const getToken = (): string | null => {
 const login = (userData: any) => {
     return axiosInstance.post("http://localhost:3001/api/v1/users/signin", userData);
 };
+const resumesave = (resumeData: any) => {
+    
+       return axiosInstance.post("http://localhost:3001/api/v1/resume/createresume", resumeData);
+        
+};
 
+let resumeId: number;
+
+const setResumeId = (id: number): void => {
+    resumeId = id;
+};
+
+const getResumeId = (): number=> {
+    return resumeId;
+};
+
+let buttonClicked :number;
+const setbuttonClicked = (Clicked: number):void=>{
+    buttonClicked= Clicked;
+}
+const getbuttonClicked =():number=>{
+    return buttonClicked;
+}
 const parseToken = (token: string): TokenPayload | null => {
     const tokenParts = token.split('.');
     if (tokenParts.length !== 3) {
-        return null; // Invalid token format
+        return null; 
     }
     const payload = JSON.parse(atob(tokenParts[1]));
     return payload as TokenPayload;
@@ -38,6 +64,7 @@ const getUserName = (): string | null => {
     return null;
 };
 
+
 const getUserRole = (): string | null => {
     const token = getToken();
     if (token) {
@@ -46,6 +73,16 @@ const getUserRole = (): string | null => {
     }
     return null;
 };
+
+const getUserId = (): number | null => {
+    const token = getToken();
+    if (token) {
+        const payload = parseToken(token);
+        return payload?.id ?? null
+    }
+    return null;
+};
+
 
 const isLoggedIn = (): boolean => {
     const token = getToken();
@@ -61,5 +98,5 @@ const logOut = (): void => {
     localStorage.clear();
 };
 
-export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn };
+export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked  };
 

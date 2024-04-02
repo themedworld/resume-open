@@ -9,7 +9,7 @@ export class CusSec {
   id: number;
 
   @Column()
-  Custom_Textbox: string;
+  descriptions: string;
 
   @ManyToOne(() => Resume, (resume) => resume.CusSec, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

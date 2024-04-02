@@ -4,7 +4,7 @@ class UpdateCusSecDto {
 
   @IsNotEmpty({ message: "is required" })
   @IsString({ message: "is a string" })
-  Custom_Textbox: string;
+  descriptions: string;
 }
 
 export { UpdateCusSecDto };

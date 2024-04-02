@@ -22,19 +22,19 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], WorkExp.prototype, "companyName", void 0);
+], WorkExp.prototype, "company", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], WorkExp.prototype, "jobTitle", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], WorkExp.prototype, "date", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], WorkExp.prototype, "description", void 0);
+], WorkExp.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.workExp, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'resumeid' }),

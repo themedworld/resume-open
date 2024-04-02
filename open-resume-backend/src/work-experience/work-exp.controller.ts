@@ -6,11 +6,9 @@ import { UpdateWorkExpDto } from './dto/update-work-exp.tdo';
 @Controller('work-exp')
 export class WorkExpController {
   constructor(private readonly workExpService: WorkExpService) {}
-
-  @Post('createWorkExp')
-  async craeteWorkExp(@Body() createWorkExpDto: CreateWorkExpDto): Promise<{workexp: WorkExp }> {
-    const workexp = await this.workExpService.createWorkExp(createWorkExpDto);
-    return { workexp };
+  @Post()
+  async createWorkExp(@Body() createWorkExpDtoArray: CreateWorkExpDto[]): Promise<WorkExp[]> {
+    return this.workExpService.createWorkExp(createWorkExpDtoArray);
   }
   @Get(':id')
   async findWorkExpByResumeId(

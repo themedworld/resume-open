@@ -8,7 +8,7 @@ export class UpdatePerInfDto {
 
   @IsNotEmpty({ message: 'the objective is required' })
   @IsString({ message: 'the objective must be a string' })
-  objective: string;
+  summary: string;
 
   @IsNotEmpty({ message: 'the email is required' })
   @IsString({ message: 'the email must be a valid email' })
@@ -24,5 +24,5 @@ export class UpdatePerInfDto {
 
   @IsNotEmpty({ message: 'the website is required' })
   @IsString({ message: 'the website must be a string' })
-  website: string;
+  url: string;
 }

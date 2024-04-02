@@ -15,33 +15,33 @@ class CreateEducationDto {
 }
 exports.CreateEducationDto = CreateEducationDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the resume is required' }),
-    (0, class_validator_1.IsNumber)({}, { message: 'the resumeid must be a number' }),
+    (0, class_validator_1.IsNotEmpty)(),
+    (0, class_validator_1.IsNumber)({}),
     __metadata("design:type", Number)
 ], CreateEducationDto.prototype, "resumeid", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'is required' }),
-    (0, class_validator_1.IsString)({ message: 'the school name must be a string' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'School name is required' }),
+    (0, class_validator_1.IsString)({ message: 'School name must be a string' }),
     __metadata("design:type", String)
 ], CreateEducationDto.prototype, "school", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the education date is required' }),
-    (0, class_validator_1.IsDate)({ message: 'the education date must be a date' }),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsNotEmpty)({ message: 'Education date is required' }),
+    (0, class_validator_1.IsString)({ message: 'Education date must be a string' }),
+    __metadata("design:type", String)
 ], CreateEducationDto.prototype, "date", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the degree is required' }),
-    (0, class_validator_1.IsString)({ message: 'the degree must be a string' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'Degree is required' }),
+    (0, class_validator_1.IsString)({ message: 'Degree must be a string' }),
     __metadata("design:type", String)
 ], CreateEducationDto.prototype, "degree", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)({ message: 'the GPA must be a string' }),
+    (0, class_validator_1.IsString)({ message: 'GPA must be a string' }),
     __metadata("design:type", String)
 ], CreateEducationDto.prototype, "gpa", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)({ message: 'additional information must be a string' }),
+    (0, class_validator_1.IsString)({ message: 'Additional information must be a string' }),
     __metadata("design:type", String)
-], CreateEducationDto.prototype, "additionalInformation", void 0);
+], CreateEducationDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-education.dto.js.map

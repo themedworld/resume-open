@@ -22,15 +22,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Project.prototype, "projectName", void 0);
+], Project.prototype, "project", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], Project.prototype, "date", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Project.prototype, "description", void 0);
+], Project.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.projects, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'resumeid' }),

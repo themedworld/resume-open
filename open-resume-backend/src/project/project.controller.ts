@@ -6,10 +6,9 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 @Controller('project')
 export class ProjectController {
   constructor(private readonly projectService: ProjectService) {}
-  @Post('createProject')
-  async craeteProject(@Body() createProjectDto: CreateProjectDto): Promise<{project: Project }> {
-    const project = await this.projectService.createProject(createProjectDto);
-    return { project };
+  @Post()
+  async createProject(@Body() createProjectDtoArray: CreateProjectDto[]): Promise<Project[]> {
+    return this.projectService.createProject(createProjectDtoArray);
   }
   @Put(':id')
   async updateProject(@Param('id') id: number, @Body() updateProjectDto: UpdateProjectDto): Promise<Project> {

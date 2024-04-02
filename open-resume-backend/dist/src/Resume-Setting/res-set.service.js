@@ -39,6 +39,7 @@ let ResSetService = class ResSetService {
         }
         resset.themeColor = updateResSetDto.themeColor;
         resset.fontSize = updateResSetDto.fontSize;
+        resset.fontFamily = updateResSetDto.fontFamily;
         resset.documentSize = updateResSetDto.documentSize;
         return this.ResSetRepository.save(resset);
     }

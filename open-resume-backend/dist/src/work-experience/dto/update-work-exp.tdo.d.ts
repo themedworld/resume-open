@@ -1,6 +1,6 @@
 export declare class UpdateWorkExpDto {
-    companyName: string;
+    company: string;
     jobTitle: string;
-    date: Date;
-    description: string;
+    date: string;
+    descriptions: string;
 }

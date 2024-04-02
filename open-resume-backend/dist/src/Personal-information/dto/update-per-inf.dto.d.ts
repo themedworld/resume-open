@@ -1,8 +1,8 @@
 export declare class UpdatePerInfDto {
     name: string;
-    objective: string;
+    summary: string;
     email: string;
     phone: string;
     location: string;
-    website: string;
+    url: string;
 }

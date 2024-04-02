@@ -16,24 +16,29 @@ export class ProjectService {
   ) {}
 
 
-  async createProject(createProjectDto: CreateProjectDto): Promise<Project> {
-    const resume = await this.ResumeRepository.findOne({ where: { id: createProjectDto.resumeid } });
-    if (!resume) {
-      throw new NotFoundException('Resume not found');
+  async createProject(createProjectDtoArray: CreateProjectDto[]): Promise<Project[]> {
+    const createdProjects: Project[] = [];
+    for (const createProjectDto of createProjectDtoArray) {
+      const { resumeid, ...rest } = createProjectDto;
+      const resume = await this.ResumeRepository.findOne({ where: { id: resumeid } });
+      if (!resume) {
+        throw new NotFoundException('Resume not found');
+      }
+      const project = this.ProjectRepository.create({ ...rest, resume });
+      createdProjects.push(await this.ProjectRepository.save(project));
     }
-    const Project = this.ProjectRepository.create(createProjectDto);
-    Project.resume = resume;
-    return this.ProjectRepository.save(Project);
+    return createdProjects;
   }
+
 
   async updateProject(id: number, updateProjectDto: UpdateProjectDto): Promise<Project> {
     const project = await this.ProjectRepository.findOne({ where: { id } });
     if (!project) {
       throw new NotFoundException(`Project with id ${id} not found`);
     }
-    project.projectName = updateProjectDto.projectName;
+    project.project = updateProjectDto.project;
     project.date = updateProjectDto.date;
-    project.description = updateProjectDto.description;
+    project.descriptions = updateProjectDto.descriptions;
     return this.ProjectRepository.save(project);
   }
   async findProjectByResumeId(id: number): Promise<Project[]> {

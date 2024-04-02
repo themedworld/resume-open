@@ -18,5 +18,5 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: "is required" }),
     (0, class_validator_1.IsString)({ message: "is a string" }),
     __metadata("design:type", String)
-], UpdateCusSecDto.prototype, "Custom_Textbox", void 0);
+], UpdateCusSecDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=update-cussec.dto.js.map

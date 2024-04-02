@@ -15,6 +15,7 @@ export class SkillsService {
     private ResumeRepository: Repository<Resume>,
   ) {}
 
+
   async createSkills(createSkillsDto: CreateSkillsDto): Promise<Skills> {
     const resume = await this.ResumeRepository.findOne({ where: { id: createSkillsDto.resumeid } });
     if (!resume) {
@@ -31,8 +32,10 @@ export class SkillsService {
     if (!skills) {
       throw new NotFoundException(`Skills with id ${id} not found`);
     }
-    skills.skill = updateSkillsDto.skill;
-    skills.featuredSkill = updateSkillsDto.featuredSkill;
+    
+    skills.featuredSkills = updateSkillsDto.featuredSkills;
+    skills.descriptions = updateSkillsDto.descriptions;
+    
     return this.SkillsRepository.save(skills);
   }
   async findSkillsByResumeId(id: number): Promise<Skills[]> {

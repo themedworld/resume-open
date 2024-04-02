@@ -31,9 +31,9 @@ export const defaultNavItems: NavItem[] = [
     icon: <FolderIcon className="w-6 h-6" />,
   },
   {
-    label: "Calendar",
-    href: "/calendar",
-    icon: <CalendarIcon className="w-6 h-6" />,
+    label: "logout",
+    href: "/SignIn",
+    icon: <PowerIcon className="w-6 h-6" />,
   },
 ];
 
@@ -45,12 +45,12 @@ export const demandeurNavItems: NavItem[] = [
   },
   {
     label: "Builder",
-    href: "/resume-builder",
+    href: "/createnewresume",
     icon: <BuildingLibraryIcon className="w-6 h-6" />,
   },
   {
     label: "Your resume",
-    href: "/Demandeur",
+    href: "/fetchresumebyuserid",
     icon: <FolderIcon className="w-6 h-6" />,
   },
   {
@@ -82,8 +82,8 @@ export const recriteurNavItems: NavItem[] = [
     icon: <FolderIcon className="w-6 h-6" />,
   },
   {
-    label: "Calendar",
-    href: "/Recruteur",
-    icon: <CalendarIcon className="w-6 h-6" />,
+    label: "logout",
+    href: "/SignIn",
+    icon: <PowerIcon className="w-6 h-6" />,
   },
 ];

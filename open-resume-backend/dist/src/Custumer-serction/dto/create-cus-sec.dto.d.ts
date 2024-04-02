@@ -1,5 +1,5 @@
 declare class CreateCusSecDto {
     resumeid: number;
-    Custom_Textbox: string;
+    descriptions: string;
 }
 export { CreateCusSecDto };

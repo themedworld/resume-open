@@ -9,7 +9,7 @@ export class PerInf {
   name: string;
 
   @Column()
-  objective: string;
+  summary: string;
 
   @Column()
   email: string;
@@ -18,7 +18,7 @@ export class PerInf {
   phone: string;
 
   @Column()
-  website: string;
+  url: string;
 
   @Column()
   location: string;
@@ -28,3 +28,5 @@ export class PerInf {
   @JoinColumn({ name: 'resumeid' })
   resume: Resume;
 }
+
+

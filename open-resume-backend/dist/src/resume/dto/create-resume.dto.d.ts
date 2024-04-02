@@ -1,5 +1,6 @@
 declare class CreateResumeDto {
-    iduser: number;
+    id: number;
+    userid: number;
     name: string;
 }
 export { CreateResumeDto };

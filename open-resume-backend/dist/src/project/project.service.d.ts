@@ -7,7 +7,7 @@ export declare class ProjectService {
     private ProjectRepository;
     private ResumeRepository;
     constructor(ProjectRepository: Repository<Project>, ResumeRepository: Repository<Resume>);
-    createProject(createProjectDto: CreateProjectDto): Promise<Project>;
+    createProject(createProjectDtoArray: CreateProjectDto[]): Promise<Project[]>;
     updateProject(id: number, updateProjectDto: UpdateProjectDto): Promise<Project>;
     findProjectByResumeId(id: number): Promise<Project[]>;
     remove(id: number): Promise<void>;

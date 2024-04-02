@@ -22,8 +22,8 @@ import {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => UserEntity, (User) => User.resume)
-    @JoinColumn({ name: 'iduser' })
+    @ManyToOne(() => UserEntity, (user) => user.resume, { onDelete:'CASCADE' })
+    @JoinColumn({ name: 'userid' })
     user: UserEntity;
     
     @Column()

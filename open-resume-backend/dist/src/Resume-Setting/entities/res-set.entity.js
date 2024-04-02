@@ -26,11 +26,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], ResSet.prototype, "fontSize", void 0);
+], ResSet.prototype, "fontFamily", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], ResSet.prototype, "documentSize", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
+], ResSet.prototype, "fontSize", void 0);
 __decorate([
     (0, typeorm_1.OneToOne)(() => resume_entity_1.Resume, (resume) => resume.resSet, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'resumeid' }),

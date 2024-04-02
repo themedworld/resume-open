@@ -2,13 +2,13 @@ import { useState, useEffect } from "react";
 import ContentEditable from "react-contenteditable";
 import { useAutosizeTextareaHeight } from "lib/hooks/useAutosizeTextareaHeight";
 
-interface InputProps<K extends string, V extends string | string[]> {
+interface InputProps<K extends string, V extends string | string[] | number > {
   label: string;
   labelClassName?: string;
   // name is passed in as a const string. Therefore, we make it a generic type so its type can
   // be more restricted as a const for the first argument in onChange
   name: K;
-  value?: V;
+  value?: any;
   placeholder: string;
   onChange: (name: K, value: V) => void;
 }

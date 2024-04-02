@@ -5,6 +5,7 @@ import { CreateResumeDto } from './dto/create-resume.dto';
 import { Resume } from './entities/resume.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UpdateResumeNameDto } from './dto/update-resumename.dto';
+import { FindOneOptions } from 'typeorm';
 @Injectable()
 export class ResumeService {
   constructor(
@@ -15,7 +16,7 @@ export class ResumeService {
   ) {}
 
   async createResume(createResumeDto: CreateResumeDto): Promise<Resume> {
-    const user = await this.UserRepository.findOne({ where: { id: createResumeDto.iduser } });
+    const user = await this.UserRepository.findOne({ where: { id: createResumeDto.userid } });
     if (!user) {
       throw new NotFoundException('User not found');
     }
@@ -35,6 +36,13 @@ export class ResumeService {
   async findResumeByUserId(id: number): Promise<Resume[]> {
     return this.ResumeRepository.find({ where: { user: { id } } });
   }
+  async findOne(id: number) {
+    const options: FindOneOptions<Resume> = { where: { id } };
+    const resume = await this.ResumeRepository.findOne(options);
+    if (!resume) throw new NotFoundException('User not found');
+    return resume;
+}
+
 
   async remove(id: number): Promise<void> {
     await this.ResumeRepository.delete(id);

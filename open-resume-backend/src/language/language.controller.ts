@@ -6,10 +6,10 @@ import { UpdateLanguageDto } from './dto/update-language.dto';
 @Controller('language')
 export class LanguageController {
   constructor(private readonly languageService: LanguageService) {}
-  @Post('createLanguage')
-  async craeteLanguage(@Body() createLanguageDto: CreateLanguageDto): Promise<{language: Language }> {
-    const language = await this.languageService.createLanguage(createLanguageDto);
-    return { language };
+ 
+  @Post()
+  async createLanguage(@Body() createLanguageDtoArray: CreateLanguageDto[]): Promise<Language[]> {
+    return this.languageService.createLanguage(createLanguageDtoArray);
   }
   @Put(':id')
   async updateLanguage(@Param('id') id: number, @Body() updateLanguageDto: UpdateLanguageDto): Promise<Language> {
@@ -28,4 +28,12 @@ export class LanguageController {
   remove(@Param('id') id: string) {
     return this.languageService.remove(+id);
   }
+  @Get('findLanguage/:language')
+  async findLanguage(
+    @Param('language') language: string,
+  ): Promise<{ languages: { id: number, resumeid: number, language: string, descriptions: string }[] }> {
+    const languages = await this.languageService.findLanguage(language);
+    return { languages };
+  }
+  
 }

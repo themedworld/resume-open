@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useAppSelector,
   useSaveStateToLocalStorageOnChange,
@@ -16,11 +15,12 @@ import { CustomForm } from "components/ResumeForm/CustomForm";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
 import { LanguageForm } from "components/ResumeForm/LanguageForm";
+import { authService } from "components/form/authService";
 
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
   educations: EducationsForm,
-  languages: LanguageForm, 
+  languages: LanguageForm,
   projects: ProjectsForm,
   skills: SkillsForm,
   custom: CustomForm,
@@ -29,10 +29,17 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
 export const ResumeForm = () => {
   useSetInitialStore();
   useSaveStateToLocalStorageOnChange();
-
   const formsOrder = useAppSelector(selectFormsOrder);
   const [isHover, setIsHover] = useState(false);
+  const [resumeName, setResumeName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [buttonClicked, setButtonClicked] = useState(0); // Ajout de la constante et initialisation à 0
 
+  const handleButtonClick = () => {
+    setButtonClicked(1); 
+  };
+console.log (buttonClicked)
+authService.setbuttonClicked(buttonClicked);
   return (
     <div
       className={cx(
@@ -50,8 +57,15 @@ export const ResumeForm = () => {
         })}
         <ThemeForm />
         <br />
+        <button onClick={handleButtonClick} className="col-span-full bg-blue-500 text-white py-2 px-4 rounded">
+          save
+        </button>
+        
       </section>
+
       <FlexboxSpacer maxWidth={50} className="hidden md:block" />
     </div>
   );
 };
+
+export default ResumeForm;

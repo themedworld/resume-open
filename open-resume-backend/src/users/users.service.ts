@@ -70,7 +70,7 @@ export class UsersService {
   }
 
   async accessToken(user: UserEntity) {
-    return sign({ username: user.username, role: user.role }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME });
+    return sign({ username: user.username, role: user.role, id: user.id }, process.env.ACCESS_TOKEN_SECRET_KEY, { expiresIn: process.env.ACCESS_TOKEN_EXPIRE_TIME });
   }
   
   async refreshToken(user: UserEntity) {
@@ -79,7 +79,7 @@ export class UsersService {
     }
     
     return sign(
-      { username: user.username , role: user.role }, 
+      { username: user.username , role: user.role, id: user.id }, 
       process.env.REFRECH_TOKEN_SECRET_KEY, // Assurez-vous que la clé secrète est correctement définie dans .env
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME }
     );

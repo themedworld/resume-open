@@ -25,8 +25,8 @@ __decorate([
     __metadata("design:type", String)
 ], Education.prototype, "school", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ type: 'date' }),
-    __metadata("design:type", Date)
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", String)
 ], Education.prototype, "date", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
@@ -39,7 +39,7 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
-], Education.prototype, "additionalInformation", void 0);
+], Education.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.Education, { onDelete: 'CASCADE' }),
     (0, typeorm_2.JoinColumn)({ name: 'resumeid' }),

@@ -7,10 +7,9 @@ import { UpdateEducationDto } from './dto/update-education.dto';
 export class EducationController {
   constructor(private readonly educationService: EducationService) {}
 
-  @Post('createEducation')
-  async createEducation(@Body() createEducationDto: CreateEducationDto): Promise<{education: Education }> {
-    const education = await this.educationService.createEducation(createEducationDto);
-    return { education };
+  @Post()
+  async createEducation(@Body() createEducationDtoArray: CreateEducationDto[]): Promise<Education[]> {
+    return this.educationService.createEducation(createEducationDtoArray);
   }
   @Put(':id')
   async updateEducation(@Param('id') id: number, @Body() updateEducationDto: UpdateEducationDto): Promise<Education> {

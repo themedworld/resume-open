@@ -1,5 +1,9 @@
 export declare class CreateSkillsDto {
-    skill: string;
-    featuredSkill: number;
+    featuredSkills: FeaturedSkillDto[];
+    descriptions: string[];
     resumeid: number;
+}
+export declare class FeaturedSkillDto {
+    skill: string;
+    rating: number;
 }

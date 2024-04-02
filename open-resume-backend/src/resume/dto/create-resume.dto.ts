@@ -3,7 +3,11 @@ import { IsNumber } from 'class-validator';
 class CreateResumeDto  {
   @IsNotEmpty({ message: 'the user id is required' })
   @IsNumber({}, { message: 'the id user is a number' })
-  iduser: number;
+  id: number;
+
+  @IsNotEmpty({ message: 'the user id is required' })
+  @IsNumber({}, { message: 'the id user is a number' })
+  userid: number;
   @IsNotEmpty({ message: 'the name is required' })
   @IsString({ message: 'the name is a string' })
   name: string;

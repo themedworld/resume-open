@@ -1,0 +1,44 @@
+.card {
+    border: 15px solid #ddd; /* Bordure solide */
+    border-radius: 15px; /* Coins arrondis */
+    height: 100px; /* Hauteur augmentée */
+    width: 300px; /* Largeur augmentée */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.card-title {
+    font-size: 1.5rem; /* Taille de la police augmentée */
+    color: #333; /* Couleur du texte */
+}
+
+.btn {
+    font-size: 1.2rem; /* Taille de la police augmentée */
+    padding: 0.7rem 1.5rem; /* Rembourrage interne augmenté */
+    border-radius: 15px; /* Coins arrondis */
+}
+
+li {
+    list-style: none;
+    margin-bottom: 10px; /* Ajoute un espacement entre les éléments de la liste */
+}
+
+/* Style pour les triangles */
+li:before {
+    content: "";
+    width: 0; 
+    height: 0; 
+    border: 5px solid rgb(15, 48, 236); 
+    border-top-color: transparent; 
+    border-right-color: transparent; 
+    border-bottom-color: transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+}

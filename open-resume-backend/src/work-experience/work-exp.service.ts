@@ -16,14 +16,19 @@ export class WorkExpService {
   ) {}
 
 
-  async createWorkExp(createWorkExpDto: CreateWorkExpDto): Promise<WorkExp> {
-    const resume = await this.ResumeRepository.findOne({ where: { id: createWorkExpDto.resumeid } });
-    if (!resume) {
-      throw new NotFoundException('Resume not found');
-    }
-    const WorkExp = this.WorkExpRepository.create(createWorkExpDto);
-    WorkExp.resume = resume;
-    return this.WorkExpRepository.save(WorkExp);
+  async createWorkExp(createWorkExpDtoArray: CreateWorkExpDto[]): Promise<WorkExp[]> {
+    const WorkExpPromises = createWorkExpDtoArray.map(async (createWorkExpDto) => {
+      const { resumeid, ...rest } = createWorkExpDto;
+      const resume = await this.ResumeRepository.findOne({ where: { id: resumeid } });
+      if (!resume) {
+        throw new NotFoundException('Resume not found');
+      }
+      const WorkExp = this.WorkExpRepository.create(rest);
+      WorkExp.resume = resume;
+      return this.WorkExpRepository.save(WorkExp);
+    });
+  
+    return await Promise.all(WorkExpPromises);
   }
 
   async updateWorkExp(id: number, updateWorkExpDto: UpdateWorkExpDto): Promise<WorkExp> {
@@ -31,10 +36,10 @@ export class WorkExpService {
     if (!workExp) {
       throw new NotFoundException(`WorkExp with id ${id} not found`);
     }
-    workExp.companyName = updateWorkExpDto.companyName;
+    workExp.company = updateWorkExpDto.company;
     workExp.jobTitle = updateWorkExpDto.jobTitle;
     workExp.date = updateWorkExpDto.date;
-    workExp.description = updateWorkExpDto.description;
+    workExp.descriptions = updateWorkExpDto.descriptions;
     return this.WorkExpRepository.save(workExp);
   }
   async findResSetByResumeId(id: number): Promise<WorkExp[]> {

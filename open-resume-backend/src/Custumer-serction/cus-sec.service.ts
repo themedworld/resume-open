@@ -1,3 +1,4 @@
+import { CusSecModule } from './cus-sec.module';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCusSecDto } from './dto/create-cus-sec.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,7 +30,7 @@ export class CusSecService {
     if (!cusSec) {
       throw new NotFoundException(`CusSec with id ${id} not found`);
     }
-    cusSec.Custom_Textbox = updateCusSecDto.Custom_Textbox;
+    cusSec.descriptions = updateCusSecDto.descriptions;
     return this.CusSecRepository.save(cusSec);
   }
 

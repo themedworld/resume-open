@@ -37,8 +37,8 @@ let SkillsService = class SkillsService {
         if (!skills) {
             throw new common_1.NotFoundException(`Skills with id ${id} not found`);
         }
-        skills.skill = updateSkillsDto.skill;
-        skills.featuredSkill = updateSkillsDto.featuredSkill;
+        skills.featuredSkills = updateSkillsDto.featuredSkills;
+        skills.descriptions = updateSkillsDto.descriptions;
         return this.SkillsRepository.save(skills);
     }
     async findSkillsByResumeId(id) {

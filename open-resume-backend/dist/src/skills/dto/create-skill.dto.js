@@ -9,24 +9,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateSkillsDto = void 0;
+exports.FeaturedSkillDto = exports.CreateSkillsDto = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
 class CreateSkillsDto {
 }
 exports.CreateSkillsDto = CreateSkillsDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the skill name is required' }),
-    (0, class_validator_1.IsString)({ message: 'the skill name must be a string' }),
-    __metadata("design:type", String)
-], CreateSkillsDto.prototype, "skill", void 0);
+    (0, class_validator_1.IsNotEmpty)({ message: 'The featuredSkills array is required' }),
+    (0, class_validator_1.IsArray)({ message: 'The featuredSkills must be an array' }),
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => FeaturedSkillDto),
+    __metadata("design:type", Array)
+], CreateSkillsDto.prototype, "featuredSkills", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the skill level is required' }),
-    (0, class_validator_1.IsNumber)({}, { message: 'the skill level must be a number' }),
-    __metadata("design:type", Number)
-], CreateSkillsDto.prototype, "featuredSkill", void 0);
+    (0, class_validator_1.IsNotEmpty)({ message: 'The descriptions array is required' }),
+    (0, class_validator_1.IsArray)({ message: 'The descriptions must be an array' }),
+    (0, class_validator_1.IsString)({ each: true, message: 'Each description must be a string' }),
+    __metadata("design:type", Array)
+], CreateSkillsDto.prototype, "descriptions", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the resume id is required' }),
-    (0, class_validator_1.IsNumber)({}, { message: 'the resume id must be a number' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'The resume id is required' }),
+    (0, class_validator_1.IsNumber)({}, { message: 'The resume id must be a number' }),
     __metadata("design:type", Number)
 ], CreateSkillsDto.prototype, "resumeid", void 0);
+class FeaturedSkillDto {
+}
+exports.FeaturedSkillDto = FeaturedSkillDto;
+__decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: 'The skill name is required' }),
+    (0, class_validator_1.IsString)({ message: 'The skill name must be a string' }),
+    __metadata("design:type", String)
+], FeaturedSkillDto.prototype, "skill", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)({ message: 'The rating is required' }),
+    (0, class_validator_1.IsNumber)({}, { message: 'The rating must be a number' }),
+    __metadata("design:type", Number)
+], FeaturedSkillDto.prototype, "rating", void 0);
 //# sourceMappingURL=create-skill.dto.js.map

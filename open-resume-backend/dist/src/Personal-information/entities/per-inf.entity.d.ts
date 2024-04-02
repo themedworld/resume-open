@@ -2,10 +2,10 @@ import { Resume } from 'src/resume/entities/resume.entity';
 export declare class PerInf {
     id: number;
     name: string;
-    objective: string;
+    summary: string;
     email: string;
     phone: string;
-    website: string;
+    url: string;
     location: string;
     resume: Resume;
 }

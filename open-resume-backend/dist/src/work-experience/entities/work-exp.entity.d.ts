@@ -1,9 +1,9 @@
 import { Resume } from 'src/resume/entities/resume.entity';
 export declare class WorkExp {
     id: number;
-    companyName: string;
+    company: string;
     jobTitle: string;
-    date: Date;
-    description: string;
+    date: string;
+    descriptions: string;
     resume: Resume;
 }

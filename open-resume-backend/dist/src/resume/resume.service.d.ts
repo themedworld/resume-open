@@ -10,5 +10,6 @@ export declare class ResumeService {
     createResume(createResumeDto: CreateResumeDto): Promise<Resume>;
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
     findResumeByUserId(id: number): Promise<Resume[]>;
+    findOne(id: number): Promise<Resume>;
     remove(id: number): Promise<void>;
 }

@@ -11,7 +11,10 @@ class CreateResSetDto {
   @IsNotEmpty({ message: 'the font size is required' })
   @IsString({ message: 'the font size must be a string' })
   fontSize: string;
-
+  
+  @IsNotEmpty({ message: 'the font family is required' })
+  @IsString({ message: 'the font family must be a string' })
+  fontFamily: string; 
   @IsNotEmpty({ message: 'the document size is required' })
   @IsString({ message: 'the document size must be a string' })
   documentSize: string;

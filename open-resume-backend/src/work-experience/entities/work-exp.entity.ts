@@ -7,16 +7,16 @@ export class WorkExp {
   id: number;
 
   @Column()
-  companyName: string;
+  company: string;
 
   @Column()
   jobTitle: string;
 
-  @Column({ type: 'date' })
-  date: Date;
+  @Column()
+  date: string;
 
   @Column()
-  description: string;
+  descriptions: string;
 
 
   @ManyToOne(() => Resume, (resume) => resume.workExp, { onDelete: 'CASCADE' })

@@ -1,8 +1,8 @@
+import { PerInf } from 'src/Personal-information/entities/per-inf.entity';
 import { Resume } from 'src/resume/entities/resume.entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePerInfDto } from './dto/create-per-inf.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PerInf } from './entities/per-inf.entity';
 import { Repository } from 'typeorm';
 import { UpdatePerInfDto } from './dto/update-per-inf.dto';
 @Injectable()
@@ -24,18 +24,17 @@ export class PerInfService {
     PerInf.resume = resume;
     return this.PerInfRepository.save(PerInf);
   }
-
   async updatePerInf(id: number, updatePerInfDto: UpdatePerInfDto): Promise<PerInf> {
     const perInf = await this.PerInfRepository.findOne({ where: { id } });
     if (!perInf) {
       throw new NotFoundException(`PerInf with id ${id} not found`);
     }
     perInf.name = updatePerInfDto.name;
-    perInf.objective = updatePerInfDto.objective;
+    perInf.summary = updatePerInfDto.summary;
     perInf.email = updatePerInfDto.email;
     perInf.phone = updatePerInfDto.phone;
     perInf.location = updatePerInfDto.location;
-    perInf.website = updatePerInfDto.website;
+    perInf.url = updatePerInfDto.url;
     return this.PerInfRepository.save(perInf);
   }
 

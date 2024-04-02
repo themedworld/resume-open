@@ -15,15 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EducationController = void 0;
 const common_1 = require("@nestjs/common");
 const education_service_1 = require("./education.service");
-const create_education_dto_1 = require("./dto/create-education.dto");
 const update_education_dto_1 = require("./dto/update-education.dto");
 let EducationController = class EducationController {
     constructor(educationService) {
         this.educationService = educationService;
     }
-    async createEducation(createEducationDto) {
-        const education = await this.educationService.createEducation(createEducationDto);
-        return { education };
+    async createEducation(createEducationDtoArray) {
+        return this.educationService.createEducation(createEducationDtoArray);
     }
     async updateEducation(id, updateEducationDto) {
         return this.educationService.updateEducation(id, updateEducationDto);
@@ -39,10 +37,10 @@ let EducationController = class EducationController {
 };
 exports.EducationController = EducationController;
 __decorate([
-    (0, common_1.Post)('createEducation'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_education_dto_1.CreateEducationDto]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
 ], EducationController.prototype, "createEducation", null);
 __decorate([

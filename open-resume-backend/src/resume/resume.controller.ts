@@ -21,6 +21,11 @@ export class ResumeController {
     const count = resumes.length;
     return { resumes, count };
   }
+
+  @Get('resume/:id')
+  findOne(@Param('id') id: string) {
+    return this.resumeService.findOne(+id);
+  }
   @Put(':id/name')
   async updateName(@Param('id') id: number, @Body() updateResumeNameDto: UpdateResumeNameDto): Promise<Resume> {
     return this.resumeService.updateName(id, updateResumeNameDto);

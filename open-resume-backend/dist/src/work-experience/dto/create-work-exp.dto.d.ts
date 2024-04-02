@@ -1,7 +1,7 @@
 export declare class CreateWorkExpDto {
     resumeid: number;
-    companyName: string;
+    company: string;
     jobTitle: string;
-    date: Date;
-    description: string;
+    date: string;
+    descriptions: string;
 }

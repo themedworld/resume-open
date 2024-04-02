@@ -18,15 +18,15 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the project name is required' }),
     (0, class_validator_1.IsString)({ message: 'the project name must be a string' }),
     __metadata("design:type", String)
-], UpdateProjectDto.prototype, "projectName", void 0);
+], UpdateProjectDto.prototype, "project", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the date is required' }),
-    (0, class_validator_1.IsDate)({ message: 'the date must be a valid date' }),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsString)({ message: 'the date must be a valid date' }),
+    __metadata("design:type", String)
 ], UpdateProjectDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the description is required' }),
     (0, class_validator_1.IsString)({ message: 'the description must be a string' }),
     __metadata("design:type", String)
-], UpdateProjectDto.prototype, "description", void 0);
+], UpdateProjectDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=update-project.dto.js.map

@@ -1,5 +1,6 @@
-export declare class UpdateProjectDto {
-    projectName: string;
-    date: Date;
-    description: string;
+declare class UpdateProjectDto {
+    project: string;
+    date: string;
+    descriptions: string;
 }
+export { UpdateProjectDto };

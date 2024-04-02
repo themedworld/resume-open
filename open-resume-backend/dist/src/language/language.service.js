@@ -23,22 +23,26 @@ let LanguageService = class LanguageService {
         this.LanguageRepository = LanguageRepository;
         this.ResumeRepository = ResumeRepository;
     }
-    async createLanguage(createLanguageDto) {
-        const resume = await this.ResumeRepository.findOne({ where: { id: createLanguageDto.resumeid } });
-        if (!resume) {
-            throw new common_1.NotFoundException('Resume not found');
-        }
-        const Language = this.LanguageRepository.create(createLanguageDto);
-        Language.resume = resume;
-        return this.LanguageRepository.save(Language);
+    async createLanguage(createLanguageDtoArray) {
+        const LanguagePromises = createLanguageDtoArray.map(async (createLanguageDto) => {
+            const { resumeid, ...rest } = createLanguageDto;
+            const resume = await this.ResumeRepository.findOne({ where: { id: resumeid } });
+            if (!resume) {
+                throw new common_1.NotFoundException('Resume not found');
+            }
+            const Language = this.LanguageRepository.create(rest);
+            Language.resume = resume;
+            return this.LanguageRepository.save(Language);
+        });
+        return await Promise.all(LanguagePromises);
     }
     async updateLanguage(id, updateLanguageDto) {
         const language = await this.LanguageRepository.findOne({ where: { id } });
         if (!language) {
             throw new common_1.NotFoundException(`Language with id ${id} not found`);
         }
-        language.languageName = updateLanguageDto.languageName;
-        language.proficiency = updateLanguageDto.proficiency;
+        language.language = updateLanguageDto.language;
+        language.descriptions = updateLanguageDto.descriptions;
         return this.LanguageRepository.save(language);
     }
     async remove(id) {
@@ -46,6 +50,20 @@ let LanguageService = class LanguageService {
     }
     async findLanguageByResumeId(id) {
         return this.LanguageRepository.find({ where: { resume: { id } } });
+    }
+    async findLanguage(language) {
+        const languages = await this.LanguageRepository
+            .createQueryBuilder('language')
+            .select(['language.id', 'resume.id as resumeid', 'language.language', 'language.descriptions'])
+            .leftJoin('language.resume', 'resume')
+            .where('language.language ILIKE :language', { language: `%${language}%` })
+            .getRawMany();
+        return languages.map(language => ({
+            id: language.id,
+            resumeid: language.resumeid,
+            language: language.language,
+            descriptions: language.descriptions
+        }));
     }
 };
 exports.LanguageService = LanguageService;

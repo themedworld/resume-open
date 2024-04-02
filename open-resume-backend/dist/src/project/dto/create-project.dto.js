@@ -15,23 +15,22 @@ class CreateProjectDto {
 }
 exports.CreateProjectDto = CreateProjectDto;
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the project name is required' }),
-    (0, class_validator_1.IsNumber)({}, { message: 'the project name must be a string' }),
+    (0, class_validator_1.IsNotEmpty)({ message: 'the resume id is required' }),
     __metadata("design:type", Number)
 ], CreateProjectDto.prototype, "resumeid", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the project name is required' }),
     (0, class_validator_1.IsString)({ message: 'the project name must be a string' }),
     __metadata("design:type", String)
-], CreateProjectDto.prototype, "projectName", void 0);
+], CreateProjectDto.prototype, "project", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the date is required' }),
-    (0, class_validator_1.IsDate)({ message: 'the date must be a valid date' }),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsString)({ message: 'the date must be a valid date' }),
+    __metadata("design:type", String)
 ], CreateProjectDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the description is required' }),
     (0, class_validator_1.IsString)({ message: 'the description must be a string' }),
     __metadata("design:type", String)
-], CreateProjectDto.prototype, "description", void 0);
+], CreateProjectDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-project.dto.js.map

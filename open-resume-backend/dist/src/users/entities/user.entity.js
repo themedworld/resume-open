@@ -78,7 +78,7 @@ __decorate([
 ], UserEntity.prototype, "updateAt", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => resume_entity_1.Resume, resume => resume.user),
-    __metadata("design:type", resume_entity_1.Resume)
+    __metadata("design:type", Array)
 ], UserEntity.prototype, "resume", void 0);
 exports.UserEntity = UserEntity = __decorate([
     (0, typeorm_1.Entity)()

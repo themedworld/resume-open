@@ -16,13 +16,48 @@ import {
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import type { FontFamily } from "components/fonts/constants";
 import { Cog6ToothIcon } from "@heroicons/react/24/outline";
-
+import { authService } from "components/form/authService";
+import { useEffect } from "react";
 export const ThemeForm = () => {
   const settings = useAppSelector(selectSettings);
   const { fontSize, fontFamily, documentSize } = settings;
   const themeColor = settings.themeColor || DEFAULT_THEME_COLOR;
   const dispatch = useAppDispatch();
+  const resumeid =authService.getResumeId();
+  const themeFormwithresumeid ={fontSize:settings.fontSize,fontFamily:settings.fontFamily,documentSize:settings.documentSize,themeColor:themeColor,resumeid:resumeid}; 
 
+const buttonClicked = authService.getbuttonClicked();
+
+  useEffect(() => {
+    if (buttonClicked === 1 && resumeid) {
+      handleSubmit();
+    }
+  }, [buttonClicked]); 
+  const handleSubmit = async () => {
+
+    try {
+      const response = await fetch("http://localhost:3001/api/v1/res-set/createSkills", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(themeFormwithresumeid),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create profile");
+      }
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+      console.log("Settings created successfully");
+      // Vous pouvez éventuellement effectuer une action supplémentaire ici après la création du profil
+
+    } catch (error) {
+      console.error("Error:", error);
+    } finally {
+    
+    }
+  };
   const handleSettingsChange = (field: GeneralSetting, value: string) => {
     dispatch(changeSettings({ field, value }));
   };

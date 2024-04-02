@@ -10,13 +10,55 @@ import {
   selectWorkExperiences,
 } from "lib/redux/resumeSlice";
 import type { ResumeWorkExperience } from "lib/redux/types";
-
+import { authService } from "components/form/authService";
+import { useEffect } from "react";
+import { selectShowBulletPoints } from "lib/redux/settingsSlice";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
 
   const showDelete = workExperiences.length > 1;
+  const form = "workExperiences";
+  const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
+  const resumeid = authService.getResumeId();
+  const buttonClicked = authService.getbuttonClicked();
 
+  useEffect(() => {
+    if (buttonClicked === 1 && resumeid) {
+      handleSubmitProject();
+    }
+  }, [buttonClicked]); 
+  const handleSubmitProject = async () => {
+    try {
+      const updatedworkExperiences = workExperiences.map((workExperience) => {
+        return {
+          ...workExperience,
+          resumeid: resumeid,
+        };
+      });
+
+      const response = await fetch("http://localhost:3001/api/v1/work-exp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedworkExperiences),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save data");
+      }
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+      console.log("Data saved successfully");
+
+   
+      
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   return (
     <Form form="workExperiences" addButtonText="Add Job">
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {

@@ -20,6 +20,8 @@ export interface ResumeEducation {
   date: string;
   gpa: string;
   descriptions: string[];
+ 
+  
 }
 
 export interface ResumeProject {

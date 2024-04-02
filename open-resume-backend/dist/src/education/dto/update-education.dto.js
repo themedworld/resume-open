@@ -21,8 +21,8 @@ __decorate([
 ], UpdateEducationDto.prototype, "school", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the education date is required' }),
-    (0, class_validator_1.IsDate)({ message: 'the education date must be a date' }),
-    __metadata("design:type", Date)
+    (0, class_validator_1.IsString)({ message: 'the education date must be a date' }),
+    __metadata("design:type", String)
 ], UpdateEducationDto.prototype, "date", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the degree is required' }),
@@ -38,5 +38,5 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsString)({ message: 'additional information must be a string' }),
     __metadata("design:type", String)
-], UpdateEducationDto.prototype, "additionalInformation", void 0);
+], UpdateEducationDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=update-education.dto.js.map

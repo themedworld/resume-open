@@ -24,14 +24,14 @@ export class ResSetService {
     ResSet.resume = resume;
     return this.ResSetRepository.save(ResSet);
   }
-
   async updateResSet(id: number, updateResSetDto: UpdateResSetDto): Promise<ResSet> {
     const resset = await this.ResSetRepository.findOne({ where: { id } });
     if (!resset) {
       throw new NotFoundException(`Project with id ${id} not found`);
-    }
+    } 
     resset.themeColor = updateResSetDto.themeColor;
     resset.fontSize = updateResSetDto.fontSize;
+    resset.fontFamily = updateResSetDto.fontFamily;
     resset.documentSize = updateResSetDto.documentSize;
     return this.ResSetRepository.save(resset);
   }

@@ -28,8 +28,8 @@ __decorate([
     __metadata("design:type", Number)
 ], Resume.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (User) => User.resume),
-    (0, typeorm_1.JoinColumn)({ name: 'iduser' }),
+    (0, typeorm_1.ManyToOne)(() => user_entity_1.UserEntity, (user) => user.resume, { onDelete: 'CASCADE' }),
+    (0, typeorm_1.JoinColumn)({ name: 'userid' }),
     __metadata("design:type", user_entity_1.UserEntity)
 ], Resume.prototype, "user", void 0);
 __decorate([

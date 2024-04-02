@@ -23,14 +23,18 @@ let EducationService = class EducationService {
         this.EducationRepository = EducationRepository;
         this.ResumeRepository = ResumeRepository;
     }
-    async createEducation(createEducationDto) {
-        const resume = await this.ResumeRepository.findOne({ where: { id: createEducationDto.resumeid } });
-        if (!resume) {
-            throw new common_1.NotFoundException('Resume not found');
-        }
-        const Education = this.EducationRepository.create(createEducationDto);
-        Education.resume = resume;
-        return this.EducationRepository.save(Education);
+    async createEducation(createEducationDtoArray) {
+        const educationPromises = createEducationDtoArray.map(async (createEducationDto) => {
+            const { resumeid, ...rest } = createEducationDto;
+            const resume = await this.ResumeRepository.findOne({ where: { id: resumeid } });
+            if (!resume) {
+                throw new common_1.NotFoundException('Resume not found');
+            }
+            const education = this.EducationRepository.create(rest);
+            education.resume = resume;
+            return this.EducationRepository.save(education);
+        });
+        return await Promise.all(educationPromises);
     }
     async updateEducation(id, updateEducationDto) {
         const education = await this.EducationRepository.findOne({ where: { id } });
@@ -41,7 +45,7 @@ let EducationService = class EducationService {
         education.date = updateEducationDto.date;
         education.degree = updateEducationDto.degree;
         education.gpa = updateEducationDto.gpa;
-        education.additionalInformation = updateEducationDto.additionalInformation;
+        education.descriptions = updateEducationDto.descriptions;
         return this.EducationRepository.save(education);
     }
     async remove(id) {

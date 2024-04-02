@@ -28,7 +28,7 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the objective is required' }),
     (0, class_validator_1.IsString)({ message: 'the objective must be a string' }),
     __metadata("design:type", String)
-], CreatePerInfDto.prototype, "objective", void 0);
+], CreatePerInfDto.prototype, "summary", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the email is required' }),
     (0, class_validator_1.IsString)({ message: 'the email must be a valid email' }),
@@ -48,5 +48,5 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the website is required' }),
     (0, class_validator_1.IsString)({ message: 'the website must be a string' }),
     __metadata("design:type", String)
-], CreatePerInfDto.prototype, "website", void 0);
+], CreatePerInfDto.prototype, "url", void 0);
 //# sourceMappingURL=create-per-inf.dto.js.map

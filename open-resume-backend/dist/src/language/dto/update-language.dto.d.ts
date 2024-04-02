@@ -1,4 +1,4 @@
 export declare class UpdateLanguageDto {
-    languageName: string;
-    proficiency: string;
+    language: string;
+    descriptions: string;
 }

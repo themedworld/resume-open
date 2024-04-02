@@ -6,14 +6,16 @@ export class ResSet {
   id: number;
 
   @Column()
-  themeColor: string; // Utilisez la convention de nommage camelCase
+  themeColor: string;
 
   @Column()
-  fontSize: string; // Utilisez la convention de nommage camelCase
+  fontFamily: string;
 
   @Column()
   documentSize: string;
 
+  @Column()
+  fontSize: string; 
 
   @OneToOne(() => Resume, (resume) => resume.resSet, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

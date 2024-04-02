@@ -5,9 +5,7 @@ import { UpdateWorkExpDto } from './dto/update-work-exp.tdo';
 export declare class WorkExpController {
     private readonly workExpService;
     constructor(workExpService: WorkExpService);
-    craeteWorkExp(createWorkExpDto: CreateWorkExpDto): Promise<{
-        workexp: WorkExp;
-    }>;
+    createWorkExp(createWorkExpDtoArray: CreateWorkExpDto[]): Promise<WorkExp[]>;
     findWorkExpByResumeId(id: number): Promise<{
         workexp: WorkExp[];
         count: number;

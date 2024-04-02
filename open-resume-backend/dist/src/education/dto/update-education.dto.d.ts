@@ -1,8 +1,8 @@
 declare class UpdateEducationDto {
     school: string;
-    date: Date;
+    date: string;
     degree: string;
     gpa: string;
-    additionalInformation: string;
+    descriptions: string;
 }
 export { UpdateEducationDto };

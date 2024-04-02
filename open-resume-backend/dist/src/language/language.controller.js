@@ -15,15 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LanguageController = void 0;
 const common_1 = require("@nestjs/common");
 const language_service_1 = require("./language.service");
-const create_language_dto_1 = require("./dto/create-language.dto");
 const update_language_dto_1 = require("./dto/update-language.dto");
 let LanguageController = class LanguageController {
     constructor(languageService) {
         this.languageService = languageService;
     }
-    async craeteLanguage(createLanguageDto) {
-        const language = await this.languageService.createLanguage(createLanguageDto);
-        return { language };
+    async createLanguage(createLanguageDtoArray) {
+        return this.languageService.createLanguage(createLanguageDtoArray);
     }
     async updateLanguage(id, updateLanguageDto) {
         return this.languageService.updateLanguage(id, updateLanguageDto);
@@ -36,15 +34,19 @@ let LanguageController = class LanguageController {
     remove(id) {
         return this.languageService.remove(+id);
     }
+    async findLanguage(language) {
+        const languages = await this.languageService.findLanguage(language);
+        return { languages };
+    }
 };
 exports.LanguageController = LanguageController;
 __decorate([
-    (0, common_1.Post)('createLanguage'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_language_dto_1.CreateLanguageDto]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
-], LanguageController.prototype, "craeteLanguage", null);
+], LanguageController.prototype, "createLanguage", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
@@ -67,6 +69,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], LanguageController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('findLanguage/:language'),
+    __param(0, (0, common_1.Param)('language')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], LanguageController.prototype, "findLanguage", null);
 exports.LanguageController = LanguageController = __decorate([
     (0, common_1.Controller)('language'),
     __metadata("design:paramtypes", [language_service_1.LanguageService])

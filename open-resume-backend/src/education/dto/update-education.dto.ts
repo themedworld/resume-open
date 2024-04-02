@@ -7,8 +7,8 @@ class UpdateEducationDto {
   school: string;
 
   @IsNotEmpty({ message: 'the education date is required' })
-  @IsDate({ message: 'the education date must be a date' })
-  date: Date;
+  @IsString({ message: 'the education date must be a date' })
+  date: string;
 
   @IsNotEmpty({ message: 'the degree is required' })
   @IsString({ message: 'the degree must be a string' })
@@ -20,7 +20,7 @@ class UpdateEducationDto {
 
   @IsOptional()
   @IsString({ message: 'additional information must be a string' })
-  additionalInformation: string;
+  descriptions: string;
 }
 
 export { UpdateEducationDto  } ;

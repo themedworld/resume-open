@@ -15,15 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.WorkExpController = void 0;
 const common_1 = require("@nestjs/common");
 const work_exp_service_1 = require("./work-exp.service");
-const create_work_exp_dto_1 = require("./dto/create-work-exp.dto");
 const update_work_exp_tdo_1 = require("./dto/update-work-exp.tdo");
 let WorkExpController = class WorkExpController {
     constructor(workExpService) {
         this.workExpService = workExpService;
     }
-    async craeteWorkExp(createWorkExpDto) {
-        const workexp = await this.workExpService.createWorkExp(createWorkExpDto);
-        return { workexp };
+    async createWorkExp(createWorkExpDtoArray) {
+        return this.workExpService.createWorkExp(createWorkExpDtoArray);
     }
     async findWorkExpByResumeId(id) {
         const workexp = await this.workExpService.findResSetByResumeId(id);
@@ -39,12 +37,12 @@ let WorkExpController = class WorkExpController {
 };
 exports.WorkExpController = WorkExpController;
 __decorate([
-    (0, common_1.Post)('createWorkExp'),
+    (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_work_exp_dto_1.CreateWorkExpDto]),
+    __metadata("design:paramtypes", [Array]),
     __metadata("design:returntype", Promise)
-], WorkExpController.prototype, "craeteWorkExp", null);
+], WorkExpController.prototype, "createWorkExp", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),

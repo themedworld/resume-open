@@ -10,8 +10,8 @@ export class Education {
   @Column()
   school: string;
 
-  @Column({ type: 'date' })
-  date: Date;
+  @Column()
+  date: string;
 
   @Column()
   degree: string;
@@ -20,7 +20,7 @@ export class Education {
   gpa: string;
 
   @Column()
-  additionalInformation: string;
+  descriptions: string;
 
   @ManyToOne(() => Resume, (resume) => resume.Education, { onDelete:'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

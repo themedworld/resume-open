@@ -14,15 +14,39 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     setShowLayout((prev) => !prev);
   };
 
+  const VerticalBarsIcon = (props:any) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={`icon icon-tabler icon-tabler-bars-3 ${props.className}`}
+      width={24}
+      height={24}
+      viewBox="0 0 24 24"
+      strokeWidth={2}
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="5" y1="3" x2="5" y2="21" />
+      <line x1="12" y1="3" x2="12" y2="21" />
+      <line x1="19" y1="3" x2="19" y2="21" />
+    </svg>
+  );
+  
+
   const [username, setUserName] = useState<string | null>(null);
   const [userRole, setUserRole] = useState<string | null>(null);
-
+  const [userId, setUserId] = useState<number | null>(null);
   useEffect(() => {
     const role = authService.getUserRole();
     setUserRole(role);
 
     const username = authService.getUserName();
     setUserName(username);
+    const userId = authService.getUserId();
+    setUserId(userId);
   }, []);
 
   return (
@@ -38,9 +62,10 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="font-bold text-lg"><div>
           <button onClick={toggleLayout}>
               {showLayout ? (
-                <XCircleIcon  style={{ color: 'red' }} className="w-6 h-6"></XCircleIcon>
+                <Bars3Icon style={{ color: 'blue' }} className="w-6 h-6"></Bars3Icon>
+                
                
-              ) : ( <Bars3Icon style={{ color: 'blue' }} className="w-6 h-6"></Bars3Icon>
+              ) : ( <VerticalBarsIcon  style={{ color: 'blue' }} className="w-6 h-6"></VerticalBarsIcon>
                 
               )}
             </button>
@@ -48,7 +73,7 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           </div></div>
           <div className="flex-grow"></div>
-          {userRole}
+          {userId}
         </nav>
       </div>
       {showLayout ? (

@@ -18,10 +18,10 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the language name is required' }),
     (0, class_validator_1.IsString)({ message: 'the language name must be a string' }),
     __metadata("design:type", String)
-], UpdateLanguageDto.prototype, "languageName", void 0);
+], UpdateLanguageDto.prototype, "language", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'the proficiency level is required' }),
     (0, class_validator_1.IsString)({ message: 'the proficiency level must be a string' }),
     __metadata("design:type", String)
-], UpdateLanguageDto.prototype, "proficiency", void 0);
+], UpdateLanguageDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=update-language.dto.js.map

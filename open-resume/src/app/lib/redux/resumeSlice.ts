@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { authService } from "components/form/authService";
 import type { RootState } from "lib/redux/store";
 import type {
   FeaturedSkill,
@@ -29,6 +30,7 @@ export const initialWorkExperience: ResumeWorkExperience = {
 };
 
 export const initialEducation: ResumeEducation = {
+ 
   school: "",
   degree: "",
   gpa: "",
@@ -60,6 +62,7 @@ export const initialCustom = {
 };
 
 export const initialResumeState: Resume = {
+
   profile: initialProfile,
   workExperiences: [initialWorkExperience],
   educations: [initialEducation],
@@ -238,6 +241,7 @@ export const selectProfile = (state: RootState) => state.resume.profile;
 export const selectWorkExperiences = (state: RootState) =>
   state.resume.workExperiences;
 export const selectEducations = (state: RootState) => state.resume.educations;
+
 export const selectProjects = (state: RootState) => state.resume.projects;
 export const selectSkills = (state: RootState) => state.resume.skills;
 export const selectCustom = (state: RootState) => state.resume.custom;

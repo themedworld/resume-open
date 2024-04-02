@@ -1,5 +1,5 @@
 import RecruteurRoute from "components/form/RecruteurRoute";
-import Recruteur from "components/form/RecrutreurForm";
+import Recruteur from "components/form/RecruteurForm"
 import Layout from "components/layout";
 import Navbar from "components/Navbar";
 

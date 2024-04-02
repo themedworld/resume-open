@@ -1,4 +1,4 @@
 declare class UpdateCusSecDto {
-    Custom_Textbox: string;
+    descriptions: string;
 }
 export { UpdateCusSecDto };

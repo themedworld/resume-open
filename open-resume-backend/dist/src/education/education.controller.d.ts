@@ -5,9 +5,7 @@ import { UpdateEducationDto } from './dto/update-education.dto';
 export declare class EducationController {
     private readonly educationService;
     constructor(educationService: EducationService);
-    createEducation(createEducationDto: CreateEducationDto): Promise<{
-        education: Education;
-    }>;
+    createEducation(createEducationDtoArray: CreateEducationDto[]): Promise<Education[]>;
     updateEducation(id: number, updateEducationDto: UpdateEducationDto): Promise<Education>;
     findEducationByResumeId(id: number): Promise<{
         educations: Education[];

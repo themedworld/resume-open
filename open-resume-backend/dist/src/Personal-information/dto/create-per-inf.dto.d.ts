@@ -1,9 +1,9 @@
 export declare class CreatePerInfDto {
     resumeid: number;
     name: string;
-    objective: string;
+    summary: string;
     email: string;
     phone: string;
     location: string;
-    website: string;
+    url: string;
 }

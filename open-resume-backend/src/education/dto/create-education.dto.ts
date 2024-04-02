@@ -1,31 +1,30 @@
-import { IsNotEmpty, IsString, IsDate, IsOptional,IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsOptional, IsNumber } from 'class-validator';
 
 class CreateEducationDto {
 
-  @IsNotEmpty({ message: 'the resume is required' })
-  @IsNumber({},{ message: 'the resumeid must be a number' })
+  @IsNotEmpty()
+  @IsNumber({})
   resumeid: number;
 
-  
-  @IsNotEmpty({ message: 'is required' })
-  @IsString({ message: 'the school name must be a string' })
+  @IsNotEmpty({ message: 'School name is required' })
+  @IsString({ message: 'School name must be a string' })
   school: string;
 
-  @IsNotEmpty({ message: 'the education date is required' })
-  @IsDate({ message: 'the education date must be a date' })
-  date: Date;
+  @IsNotEmpty({ message: 'Education date is required' })
+  @IsString({ message: 'Education date must be a string' })
+  date: string;
 
-  @IsNotEmpty({ message: 'the degree is required' })
-  @IsString({ message: 'the degree must be a string' })
+  @IsNotEmpty({ message: 'Degree is required' })
+  @IsString({ message: 'Degree must be a string' })
   degree: string;
 
   @IsOptional()
-  @IsString({ message: 'the GPA must be a string' })
+  @IsString({ message: 'GPA must be a string' })
   gpa: string;
 
   @IsOptional()
-  @IsString({ message: 'additional information must be a string' })
-  additionalInformation: string;
+  @IsString({ message: 'Additional information must be a string' })
+  descriptions: string;
 }
 
-export { CreateEducationDto } ;
+export { CreateEducationDto };

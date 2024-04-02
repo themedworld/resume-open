@@ -30,6 +30,9 @@ let ResumeController = class ResumeController {
         const count = resumes.length;
         return { resumes, count };
     }
+    findOne(id) {
+        return this.resumeService.findOne(+id);
+    }
     async updateName(id, updateResumeNameDto) {
         return this.resumeService.updateName(id, updateResumeNameDto);
     }
@@ -52,6 +55,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "findResumeByUserId", null);
+__decorate([
+    (0, common_1.Get)('resume/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ResumeController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)(':id/name'),
     __param(0, (0, common_1.Param)('id')),

@@ -20,13 +20,13 @@ __decorate([
     __metadata("design:type", Number)
 ], Skills.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
-], Skills.prototype, "skill", void 0);
+    (0, typeorm_1.Column)('jsonb'),
+    __metadata("design:type", Array)
+], Skills.prototype, "featuredSkills", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Skills.prototype, "featuredSkill", void 0);
+    (0, typeorm_1.Column)('text', { array: true }),
+    __metadata("design:type", Array)
+], Skills.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.skills, { onDelete: 'CASCADE' }),
     (0, typeorm_1.JoinColumn)({ name: 'resumeid' }),
