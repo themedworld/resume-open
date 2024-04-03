@@ -42,7 +42,7 @@ export class WorkExpService {
     workExp.descriptions = updateWorkExpDto.descriptions;
     return this.WorkExpRepository.save(workExp);
   }
-  async findResSetByResumeId(id: number): Promise<WorkExp[]> {
+  async findWorkExpByResumeId(id: number): Promise<WorkExp[]> {
     return this.WorkExpRepository.find({ where: { resume: { id } } });
   }
   async remove(id: number): Promise<void> {

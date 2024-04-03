@@ -1,18 +1,45 @@
+import { ResSet } from './../Resume-Setting/entities/res-set.entity';
+import { WorkExp } from './../work-experience/entities/work-exp.entity';
+import { Skills } from './../skills/entities/skill.entity';
+import { Language } from './../language/entities/language.entity';
+import { PerInf } from './../Personal-information/entities/per-inf.entity';
+import { CusSec } from './../Custumer-serction/entities/cus-sec.entity';
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { ResumeService } from './resume.service';
 import { CreateResumeDto } from './dto/create-resume.dto';
 import { Resume } from './entities/resume.entity';
 import { UpdateResumeNameDto } from './dto/update-resumename.dto';
+import { UsersService } from 'src/users/users.service';
+import { CusSecService } from 'src/Custumer-serction/cus-sec.service';
+import { EducationService } from 'src/education/education.service';
+import { LanguageService } from 'src/language/language.service';
+import { PerInfService } from 'src/Personal-information/per-inf.service';
+import { ProjectService } from 'src/project/project.service';
+import { ResSetService } from 'src/Resume-Setting/res-set.service';
+import { SkillsService } from 'src/skills/skills.service';
+import { WorkExpService } from 'src/work-experience/work-exp.service';
 @Controller('resume')
 export class ResumeController {
-  constructor(private readonly resumeService: ResumeService) {}
+  constructor(
+    private readonly resumeService: ResumeService,
+    private readonly usersService: UsersService,
+    private readonly educationService: EducationService,
+    private readonly languageService: LanguageService,
+    private readonly perInfService: PerInfService,
+    private readonly projectService: ProjectService,
+    private readonly resSetService: ResSetService,
+    private readonly skillsService: SkillsService,
+    private readonly workExpService: WorkExpService,
+    private readonly cusSecService: CusSecService,
+
+  ) {}
+
   @Post('createresume')
-  async createresume(@Body() createResumeDto: CreateResumeDto): Promise<{resume: Resume }> {
+  async createresume(@Body() createResumeDto: CreateResumeDto): Promise<{ resume: Resume }> {
     const resume = await this.resumeService.createResume(createResumeDto);
     return { resume };
-
-
   } 
+
   @Get(':id')
   async findResumeByUserId(
     @Param('id', ParseIntPipe) id: number,
@@ -26,6 +53,7 @@ export class ResumeController {
   findOne(@Param('id') id: string) {
     return this.resumeService.findOne(+id);
   }
+
   @Put(':id/name')
   async updateName(@Param('id') id: number, @Body() updateResumeNameDto: UpdateResumeNameDto): Promise<Resume> {
     return this.resumeService.updateName(id, updateResumeNameDto);
@@ -36,4 +64,28 @@ export class ResumeController {
     return this.resumeService.remove(+id);
   }
 
+  @Get()
+  async getAllResumes(): Promise<any> {
+    // Récupérer tous les utilisateurs avec le rôle "demandeur"
+    const users = await this.usersService.findUsersByRole('demandeur');
+
+    // Mappez chaque utilisateur pour obtenir ses résumés avec les sections personnalisées et les éducations associées
+    const usersWithResumes = await Promise.all(users.map(async (user) => {
+      const resumes = await this.resumeService.findResumeByUserId(user.id);
+      const resumesWithDetails = await Promise.all(resumes.map(async (resume) => {
+        const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
+        const educations = await this.educationService.findEducationByResumeId(resume.id);
+        const languages = await this.languageService.findLanguageByResumeId(resume.id);
+        const projects = await this.projectService.findProjectByResumeId(resume.id);
+        const skills = await this.skillsService.findSkillsByResumeId(resume.id);
+        const WorkExps = await this.workExpService.findWorkExpByResumeId(resume.id);
+        const cusSecs = await this.cusSecService.findCusSecByResumeId(resume.id);
+        const resSets = await this.resSetService.findResSetByResumeId(resume.id);
+        return { resume, perInfs, educations, languages, projects,WorkExps, skills, cusSecs,resSets };
+      }));
+      return { user, resumes: resumesWithDetails };
+    }));
+
+    return usersWithResumes;
+  }
 }

@@ -3,7 +3,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository ,getConnection } from 'typeorm';
 import { UserEntity } from './entities/user.entity';
 import { UserSignupDto } from './dto/user-signup.dto';
 import { hash, compare } from 'bcrypt';
@@ -80,9 +80,33 @@ export class UsersService {
     
     return sign(
       { username: user.username , role: user.role, id: user.id }, 
-      process.env.REFRECH_TOKEN_SECRET_KEY, // Assurez-vous que la clé secrète est correctement définie dans .env
+      process.env.REFRECH_TOKEN_SECRET_KEY,
       { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME }
     );
   }
-
+async getUserWithResumeAndCusSecAndLanguage(): Promise<UserEntity[]> {
+    try {
+      const usersWithDetails = await getConnection()
+        .createQueryBuilder(UserEntity, 'user')
+        .leftJoinAndSelect('user.resume', 'resume')
+        .leftJoinAndSelect('resume.PerInf', 'perinf')
+        .leftJoinAndSelect('resume.CusSec', 'cusSec')
+        .leftJoinAndSelect('resume.Language', 'language')
+        .leftJoinAndSelect('resume.ResSet', 'resSet')
+        .leftJoinAndSelect('resume.projects', 'projects')
+        .leftJoinAndSelect('resume.Education', 'education')
+        .leftJoinAndSelect('resume.workExp', 'workExp')
+        .leftJoinAndSelect('resume.skills', 'skills')
+        .getMany();
+  
+      return usersWithDetails;
+    } catch (error) {
+      // Gérer les erreurs ici si nécessaire
+      console.error("Une erreur s'est produite lors de la récupération des utilisateurs avec les détails:", error);
+      throw error; // Vous pouvez choisir de relancer l'erreur ou de retourner un message d'erreur personnalisé
+    }
+  }
+  async findUsersByRole(role): Promise<UserEntity[]> {
+    return this.usersRepository.find({ where: { role } });
+  }
 }

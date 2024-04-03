@@ -53,6 +53,11 @@ let ResumeService = class ResumeService {
     async remove(id) {
         await this.ResumeRepository.delete(id);
     }
+    async getAllResumesWithDetails() {
+        return this.ResumeRepository.find({
+            relations: ['user', 'perInf', 'Education', 'projects', 'workExp', 'skills', 'resSet', 'CusSec', 'Language'],
+        });
+    }
 };
 exports.ResumeService = ResumeService;
 exports.ResumeService = ResumeService = __decorate([

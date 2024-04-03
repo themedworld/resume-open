@@ -5,7 +5,16 @@ import { CreateResumeDto } from './dto/create-resume.dto';
 import { Resume } from './entities/resume.entity';
 import { UserEntity } from 'src/users/entities/user.entity';
 import { UpdateResumeNameDto } from './dto/update-resumename.dto';
-import { FindOneOptions } from 'typeorm';
+import { FindOneOptions } from 'typeorm'
+import { Language } from 'src/language/entities/language.entity';
+import { ResSet } from 'src/Resume-Setting/entities/res-set.entity';
+import { Project } from 'src/project/entities/project.entity';
+import { Education } from 'src/education/entities/education.entity';
+import { CusSec } from 'src/Custumer-serction/entities/cus-sec.entity';
+import { WorkExp } from 'src/work-experience/entities/work-exp.entity';
+import { PerInf } from 'src/Personal-information/entities/per-inf.entity';
+import { Skills } from 'src/skills/entities/skill.entity';
+import { getConnection } from 'typeorm';
 @Injectable()
 export class ResumeService {
   constructor(
@@ -46,5 +55,10 @@ export class ResumeService {
 
   async remove(id: number): Promise<void> {
     await this.ResumeRepository.delete(id);
+  }
+  async getAllResumesWithDetails(): Promise<Resume[]> {
+    return this.ResumeRepository.find({
+      relations: ['user', 'perInf', 'Education', 'projects', 'workExp', 'skills', 'resSet', 'CusSec', 'Language'],
+    });
   }
 }

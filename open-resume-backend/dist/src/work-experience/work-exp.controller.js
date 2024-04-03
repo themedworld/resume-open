@@ -24,7 +24,7 @@ let WorkExpController = class WorkExpController {
         return this.workExpService.createWorkExp(createWorkExpDtoArray);
     }
     async findWorkExpByResumeId(id) {
-        const workexp = await this.workExpService.findResSetByResumeId(id);
+        const workexp = await this.workExpService.findWorkExpByResumeId(id);
         const count = workexp.length;
         return { workexp, count };
     }

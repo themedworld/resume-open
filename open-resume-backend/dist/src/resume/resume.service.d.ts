@@ -12,4 +12,5 @@ export declare class ResumeService {
     findResumeByUserId(id: number): Promise<Resume[]>;
     findOne(id: number): Promise<Resume>;
     remove(id: number): Promise<void>;
+    getAllResumesWithDetails(): Promise<Resume[]>;
 }

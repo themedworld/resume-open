@@ -14,7 +14,7 @@ export class WorkExpController {
   async findWorkExpByResumeId(
     @Param('id', ParseIntPipe) id: number,
   ): Promise<{ workexp: WorkExp[]; count: number }> {
-    const workexp = await this.workExpService.findResSetByResumeId(id);
+    const workexp = await this.workExpService.findWorkExpByResumeId(id);
     const count = workexp.length;
     return { workexp, count };
   }

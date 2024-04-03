@@ -65,4 +65,14 @@ export class UsersController {
     const refreshToken = await this.usersService.refreshToken(user);
     return { refreshToken };
   }
+  @Get('with-resume-cussec-language')
+  async getUsersWithResumeCusSecLanguage(): Promise<UserEntity[]> {
+    try {
+      const usersWithDetails = await this.usersService.getUserWithResumeAndCusSecAndLanguage();
+      return usersWithDetails;
+    } catch (error) {
+      console.error("Une erreur s'est produite lors de la récupération des utilisateurs avec les détails:", error);
+      throw error;
+    }
+  }
 }

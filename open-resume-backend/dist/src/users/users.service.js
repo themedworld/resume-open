@@ -79,6 +79,30 @@ let UsersService = class UsersService {
         }
         return (0, jsonwebtoken_1.sign)({ username: user.username, role: user.role, id: user.id }, process.env.REFRECH_TOKEN_SECRET_KEY, { expiresIn: process.env.REFRESH_TOKEN_EXPIRE_TIME });
     }
+    async getUserWithResumeAndCusSecAndLanguage() {
+        try {
+            const usersWithDetails = await (0, typeorm_2.getConnection)()
+                .createQueryBuilder(user_entity_1.UserEntity, 'user')
+                .leftJoinAndSelect('user.resume', 'resume')
+                .leftJoinAndSelect('resume.PerInf', 'perinf')
+                .leftJoinAndSelect('resume.CusSec', 'cusSec')
+                .leftJoinAndSelect('resume.Language', 'language')
+                .leftJoinAndSelect('resume.ResSet', 'resSet')
+                .leftJoinAndSelect('resume.projects', 'projects')
+                .leftJoinAndSelect('resume.Education', 'education')
+                .leftJoinAndSelect('resume.workExp', 'workExp')
+                .leftJoinAndSelect('resume.skills', 'skills')
+                .getMany();
+            return usersWithDetails;
+        }
+        catch (error) {
+            console.error("Une erreur s'est produite lors de la récupération des utilisateurs avec les détails:", error);
+            throw error;
+        }
+    }
+    async findUsersByRole(role) {
+        return this.usersRepository.find({ where: { role } });
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([

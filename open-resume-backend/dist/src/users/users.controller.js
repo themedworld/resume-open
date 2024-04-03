@@ -59,6 +59,16 @@ let UsersController = class UsersController {
         const refreshToken = await this.usersService.refreshToken(user);
         return { refreshToken };
     }
+    async getUsersWithResumeCusSecLanguage() {
+        try {
+            const usersWithDetails = await this.usersService.getUserWithResumeAndCusSecAndLanguage();
+            return usersWithDetails;
+        }
+        catch (error) {
+            console.error("Une erreur s'est produite lors de la récupération des utilisateurs avec les détails:", error);
+            throw error;
+        }
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -128,6 +138,12 @@ __decorate([
     __metadata("design:paramtypes", [user_entity_1.UserEntity]),
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "refreshToken", null);
+__decorate([
+    (0, common_1.Get)('with-resume-cussec-language'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "getUsersWithResumeCusSecLanguage", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

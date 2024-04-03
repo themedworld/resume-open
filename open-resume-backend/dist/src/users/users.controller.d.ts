@@ -23,4 +23,5 @@ export declare class UsersController {
     refreshToken(user: UserEntity): Promise<{
         refreshToken: string;
     }>;
+    getUsersWithResumeCusSecLanguage(): Promise<UserEntity[]>;
 }

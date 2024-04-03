@@ -17,4 +17,6 @@ export declare class UsersService {
     findUserByUsername(username: string): Promise<UserEntity>;
     accessToken(user: UserEntity): Promise<string>;
     refreshToken(user: UserEntity): Promise<string>;
+    getUserWithResumeAndCusSecAndLanguage(): Promise<UserEntity[]>;
+    findUsersByRole(role: any): Promise<UserEntity[]>;
 }

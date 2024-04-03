@@ -47,7 +47,7 @@ let WorkExpService = class WorkExpService {
         workExp.descriptions = updateWorkExpDto.descriptions;
         return this.WorkExpRepository.save(workExp);
     }
-    async findResSetByResumeId(id) {
+    async findWorkExpByResumeId(id) {
         return this.WorkExpRepository.find({ where: { resume: { id } } });
     }
     async remove(id) {
