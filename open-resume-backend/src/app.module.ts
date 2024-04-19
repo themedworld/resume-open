@@ -12,11 +12,12 @@ import { ProjectModule } from './project/project.module';
 import { ResSetModule } from './Resume-Setting/res-set.module';
 import { SkillsModule } from './skills/skills.module';
 import { WorkExpModule } from './work-experience/work-exp.module';
+import { PhotoModule } from './photo/photo.module';
 
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, ResumeModule, PerInfModule, CusSecModule, EducationModule, LanguageModule, ProjectModule, ResSetModule, SkillsModule, WorkExpModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, ResumeModule, PerInfModule, CusSecModule, EducationModule, LanguageModule, ProjectModule, ResSetModule, SkillsModule, WorkExpModule, PhotoModule],
   controllers: [],
   providers: [],
 })

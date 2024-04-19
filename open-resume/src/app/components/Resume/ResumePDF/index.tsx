@@ -1,4 +1,4 @@
-import { Page, View, Document } from "@react-pdf/renderer";
+import { Page, View, Document, Image } from "@react-pdf/renderer";
 import { styles, spacing } from "components/Resume/ResumePDF/styles";
 import { ResumePDFProfile } from "components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFWorkExperience } from "components/Resume/ResumePDF/ResumePDFWorkExperience";
@@ -11,33 +11,27 @@ import type { Settings, ShowForm } from "lib/redux/settingsSlice";
 import type { Resume } from "lib/redux/types";
 import { SuppressResumePDFErrorMessage } from "components/Resume/ResumePDF/common/SuppressResumePDFErrorMessage";
 import { ResumePDFLanguage } from "./ResumePDFLanguage";
-
-/**
- * Note: ResumePDF is supposed to be rendered inside PDFViewer. However,
- * PDFViewer is rendered too slow and has noticeable delay as you enter
- * the resume form, so we render it without PDFViewer to make it render
- * instantly. There are 2 drawbacks with this approach:
- * 1. Not everything works out of box if not rendered inside PDFViewer,
- *    e.g. svg doesn't work, so it takes in a isPDF flag that maps react
- *    pdf element to the correct dom element.
- * 2. It throws a lot of errors in console log, e.g. "<VIEW /> is using incorrect
- *    casing. Use PascalCase for React components, or lowercase for HTML elements."
- *    in development, causing a lot of noises. We can possibly workaround this by
- *    mapping every react pdf element to a dom element, but for now, we simply
- *    suppress these messages in <SuppressResumePDFErrorMessage />.
- *    https://github.com/diegomura/react-pdf/issues/239#issuecomment-487255027
- */
+import { authService } from "components/form/authService";
+import { useEffect, useState } from "react";
 export const ResumePDF = ({
   resume,
   settings,
   isPDF = false,
+ 
 }: {
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
+
 }) => {
-  const { profile, workExperiences, educations, projects, skills, custom,languages } =
-    resume;
+  const [fileUrl, setfileUrl] = useState("11");
+ 
+  useEffect(() => {
+    // Utilisation de authService pour obtenir l'URL de l'image
+    const imgUrl = authService.getfileUrl();
+    setfileUrl(imgUrl); // Mise à jour de l'URL de l'image
+  }, [resume, settings,authService])
+  const { profile, workExperiences, educations, projects, skills, custom, languages } = resume;
   const { name } = profile;
   const {
     fontFamily,
@@ -98,7 +92,7 @@ export const ResumePDF = ({
         themeColor={themeColor}
       />)
   };
-
+console.log(fileUrl);
   return (
     <>
       <Document title={`${name} Resume`} author={name} producer={"OpenResume"}>
@@ -125,12 +119,21 @@ export const ResumePDF = ({
               ...styles.flexCol,
               padding: `${spacing[0]} ${spacing[20]}`,
             }}
-          >
+          > 
+          {fileUrl}
+
+               {fileUrl && (
+              <View style={{ alignSelf: "center", marginBottom: spacing[2] }}>
+                <Image src={fileUrl} />
+              </View>
+            )}
+            
+
             <ResumePDFProfile
               profile={profile}
               themeColor={themeColor}
               isPDF={isPDF}
-            />
+            />  
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];
               return <Component key={form} />;
@@ -142,3 +145,4 @@ export const ResumePDF = ({
     </>
   );
 };
+

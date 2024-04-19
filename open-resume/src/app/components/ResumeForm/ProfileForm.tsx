@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import { changeProfile, selectProfile } from "lib/redux/resumeSlice";
 import { ResumeProfile } from "lib/redux/types";
 import { useEffect } from "react";
+import ImportImg from "importimg/page";
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
@@ -48,7 +49,8 @@ const buttonClicked = authService.getbuttonClicked();
   };
 
 
-  return (
+  return ( 
+   
     <BaseForm>
       <div className="grid grid-cols-6 gap-3">
         <Input

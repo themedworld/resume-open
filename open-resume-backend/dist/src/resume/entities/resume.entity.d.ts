@@ -7,6 +7,7 @@ import { Skills } from 'src/skills/entities/skill.entity';
 import { ResSet } from 'src/Resume-Setting/entities/res-set.entity';
 import { CusSec } from 'src/Custumer-serction/entities/cus-sec.entity';
 import { Language } from 'src/language/entities/language.entity';
+import { Photo } from 'src/photo/entities/photo.entity';
 export declare class Resume {
     id: number;
     user: UserEntity;
@@ -18,5 +19,6 @@ export declare class Resume {
     skills: Skills[];
     resSet: ResSet;
     CusSec: CusSec;
+    Photo: Photo;
     Language: Language[];
 }

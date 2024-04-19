@@ -1,5 +1,9 @@
 import axiosInstance from "./axiosInstance";
+import { ResumeEducation } from "lib/redux/types";
 
+  interface educations{
+    educations:ResumeEducation[]
+  }
 interface TokenPayload {
     exp: number;
     username: string;
@@ -7,6 +11,7 @@ interface TokenPayload {
     id: number;
     // Add other properties if necessary
 }
+
 interface ResumeData {
   userId: string;
   resumeName: string;
@@ -38,7 +43,24 @@ const setResumeId = (id: number): void => {
 const getResumeId = (): number=> {
     return resumeId;
 };
+let counteducation: number;
 
+const setcounteducation = (counteducation: number): void => {
+    counteducation = counteducation;
+};
+
+const getcounteducation= (): number=> {
+    return counteducation;
+};
+let educations: educations;
+
+const seteducations = (educations: educations): void => {
+    educations = educations;
+};
+
+const geteducations= (): educations=> {
+    return educations;
+};
 let buttonClicked :number;
 const setbuttonClicked = (Clicked: number):void=>{
     buttonClicked= Clicked;
@@ -63,7 +85,14 @@ const getUserName = (): string | null => {
     }
     return null;
 };
+let fileUrl : string;
 
+const setfileUrl =(fileUrl : string):void=>{
+    fileUrl=fileUrl;
+}
+const getfileUrl =():string=>{
+    return fileUrl;
+}
 
 const getUserRole = (): string | null => {
     const token = getToken();
@@ -98,5 +127,5 @@ const logOut = (): void => {
     localStorage.clear();
 };
 
-export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked  };
+export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked, setcounteducation, getcounteducation,seteducations ,geteducations,setfileUrl, getfileUrl  };
 

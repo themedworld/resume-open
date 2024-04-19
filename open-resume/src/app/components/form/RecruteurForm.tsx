@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Multiselect } from "multiselect-react-dropdown";
-
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import "bootstrap/dist/css/bootstrap.min.css";
 interface Resume {
   id: number;
   name: string;
@@ -12,7 +13,10 @@ const Recruteur = () => {
   const [workExperiences, setWorkExperiences] = useState<number>(0);
   const [selectedValues, setSelectedValues] = useState<any[]>([]);
   const [resumeData, setResumeData] = useState<Resume[]>([]);
-  
+  const [showLanguages, setShowLanguages] = useState<boolean>(false);
+  const [showLocation, setShowLocation] = useState<boolean>(false);
+  const [showWorkExperiences, setShowWorkExperiences] = useState<boolean>(false);
+  const [showSkills, setShowSkills] = useState<boolean>(false);
   const Skillsoptions = {
     displayValue: 'key',
     groupBy: 'cat',
@@ -65,9 +69,11 @@ const Recruteur = () => {
         const response = await fetch(`http://localhost:3001/api/v1/language/findLanguage/${language.value}`);
         if (response.ok) {
           const data = await response.json();
+          console.log(data);
           data.languages.forEach((language: { resumeid: number }) => {
             if (language.resumeid) {
               resumeIdsSet.add(language.resumeid); 
+              
             }
           });
         } else {
@@ -98,62 +104,111 @@ const Recruteur = () => {
 
   return (
 <div className="container mx-auto flex justify-start mt-5">
-  <div className="w-full max-w-xl flex">
-    <div className="flex-1 mr-5">
-      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label htmlFor="languages" className="block text-gray-700 font-medium mb-2">
-            Languages
-          </label>
-          <Multiselect
-            options={languagesOptions}
-            selectedValues={selectedValues}
-            onSelect={(selectedList, selectedItem) => setSelectedValues(selectedList)}
-            onRemove={(selectedList, removedItem) => setSelectedValues(selectedList)}
-            displayValue="label"
-          />
+      <div className="w-full max-w-xl flex">
+        <div className="flex-1 mr-5">
+          <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div className="accordion" id="accordionExample">
+              <div className="accordion-item">
+              <div className="accordion-item">
+  <h2 className="accordion-header" id="languagesHeading">
+    <button className={`accordion-button ${showLanguages ? '' : 'collapsed'}`} type="button" onClick={() => setShowLanguages(!showLanguages)} aria-expanded={showLanguages ? "true" : "false"}>
+      Languages
+    </button>
+  </h2>
+  <div id="languagesCollapse" className={`accordion-collapse ${showLanguages ? 'show' : 'collapse'}`} aria-labelledby="languagesHeading" data-bs-parent="#accordionExample">
+    <div className="accordion-body">
+      <div className="mb-4">
+        <label htmlFor="languages" className="block text-gray-700 font-medium mb-2">
+          Languages
+        </label>
+        <Multiselect
+          options={languagesOptions}
+          selectedValues={selectedValues}
+          onSelect={(selectedList, selectedItem) => setSelectedValues(selectedList)}
+          onRemove={(selectedList, removedItem) => setSelectedValues(selectedList)}
+          displayValue="label"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+              </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="locationHeading">
+            <button className={`accordion-button ${showLocation ? '' : 'collapsed'}`} type="button" onClick={() => setShowLocation(!showLocation)} aria-expanded={showLocation ? "true" : "false"}>
+      location
+    </button>
+            </h2>
+            <div id="locationCollapse" className={`accordion-collapse ${showLocation ? 'show' : 'collapse'}`} aria-labelledby="LocationHeading" data-bs-parent="#accordionExample">
+              <div className="accordion-body">
+                <div className="mb-6">
+                  <label htmlFor="location" className="block text-gray-700 font-medium mb-2">
+                    Location
+                  </label>
+                  <input
+                    id="location"
+                    type="text"
+                    placeholder="Enter your location"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="workexperiencesHeading">
+            <button className={`accordion-button ${showWorkExperiences? '' : 'collapsed'}`} type="button" onClick={() => setShowWorkExperiences(!showWorkExperiences)} aria-expanded={showWorkExperiences ? "true" : "false"}>
+            WorkExperiences
+    </button>
+            </h2>
+            <div id="workexperiencesCollapse" className={`accordion-collapse ${showWorkExperiences? 'show' : 'collapse'}`} aria-labelledby="workexperiencesHeading" data-bs-parent="#accordionExample">
+               <div className="accordion-body">
+                <div className="mb-6">
+                  <label htmlFor="workExperiences" className="block text-gray-700 font-medium mb-2">
+                    Work Experiences
+                  </label>
+                  <input
+                    id="workExperiences"
+                    type="number"
+                    placeholder="Enter work experiences demanded"
+                    value={workExperiences}
+                    onChange={(e) => setWorkExperiences(parseInt(e.target.value))}
+                    className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="skillsHeading">
+            <button className={`accordion-button ${showSkills? '' : 'collapsed'}`} type="button" onClick={() => setShowSkills(!showSkills)} aria-expanded={showSkills ? "true" : "false"}>
+            Skills
+    </button>
+            </h2>
+            <div id="SkillsCollapse" className={`accordion-collapse ${showSkills? 'show' : 'collapse'}`} aria-labelledby="SkillsHeading" data-bs-parent="#accordionExample">
+                <div className="accordion-body">
+                <div className="mb-6">
+                  <label htmlFor="Skills" className="block text-gray-700 font-medium mb-2">
+                    Skills
+                  </label>
+                  <Multiselect
+                    options={Skillsoptions.options}
+                    displayValue={Skillsoptions.displayValue}
+                    groupBy={Skillsoptions.groupBy}
+                    onKeyPressFn={Skillsoptions.onKeyPressFn}
+                    onRemove={Skillsoptions.onRemove}
+                    onSearch={Skillsoptions.onSearch}
+                    onSelect={Skillsoptions.onSelect}
+                    showCheckbox={Skillsoptions.showCheckbox}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mb-6">
-          <label htmlFor="location" className="block text-gray-700 font-medium mb-2">
-            Location
-          </label>
-          <input
-            id="location"
-            type="text"
-            placeholder="Enter your location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-6">
-          <label htmlFor="workExperiences" className="block text-gray-700 font-medium mb-2">
-            Work Experiences
-          </label>
-          <input
-            id="workExperiences"
-            type="number"
-            placeholder="Enter work experiences demanded"
-            value={workExperiences}
-            onChange={(e) => setWorkExperiences(parseInt(e.target.value))}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500"
-          />
-        </div>
-        <div className="mb-6">
-                        <label htmlFor="Skills" className="block text-gray-700 font-medium mb-2">
-                            Skills
-                        </label>
-                        <Multiselect
-                            options={Skillsoptions.options}
-                            displayValue={Skillsoptions.displayValue}
-                            groupBy={Skillsoptions.groupBy}
-                            onKeyPressFn={Skillsoptions.onKeyPressFn}
-                            onRemove={Skillsoptions.onRemove}
-                            onSearch={Skillsoptions.onSearch}
-                            onSelect={Skillsoptions.onSelect}
-                            showCheckbox={Skillsoptions.showCheckbox}
-                        />
-             </div>
       </form>
       <button
         onClick={LanguageSearch}
@@ -183,6 +238,7 @@ const Recruteur = () => {
     </div>
   </div>
 </div>
+
 
   );
 };

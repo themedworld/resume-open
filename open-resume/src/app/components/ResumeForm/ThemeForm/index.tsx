@@ -50,7 +50,7 @@ const buttonClicked = authService.getbuttonClicked();
       const responseData = await response.json();
       console.log("Response data:", responseData);
       console.log("Settings created successfully");
-      // Vous pouvez éventuellement effectuer une action supplémentaire ici après la création du profil
+     
 
     } catch (error) {
       console.error("Error:", error);

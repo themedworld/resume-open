@@ -67,7 +67,7 @@ export const CreateNewResume = () => {
             placeholder="Enter resume name"
             className="p-2 border border-gray-300 rounded-md"
           />
-
+ 
           <button type="submit" className="btn btn-primary" disabled={isSaving}>
             {isSaving ? "Saving..." : "Save"}
           </button>

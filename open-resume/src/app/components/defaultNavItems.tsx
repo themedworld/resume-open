@@ -5,7 +5,7 @@ import {
   HomeIcon,
   UserGroupIcon,
   BuildingLibraryIcon,
-  PowerIcon,
+  PowerIcon,PlusIcon,
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { authService } from "./form/authService";
@@ -43,19 +43,20 @@ export const demandeurNavItems: NavItem[] = [
     href: "/Demandeur",
     icon: <HomeIcon className="w-6 h-6" />,
   },
+
   {
     label: "Builder",
-    href: "/createnewresume",
-    icon: <BuildingLibraryIcon className="w-6 h-6" />,
-  },
-  {
-    label: "Your resume",
     href: "/fetchresumebyuserid",
     icon: <FolderIcon className="w-6 h-6" />,
   },
   {
     label: "parser",
     href: "/resume-parser",
+    icon: <CalendarIcon className="w-6 h-6" />,
+  },
+  {
+    label: "parser",
+    href: "/updatepage",
     icon: <CalendarIcon className="w-6 h-6" />,
   },
   {

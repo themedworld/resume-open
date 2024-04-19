@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import image from './bgresume.png';
-
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Getstarted = () => {
     return ( 

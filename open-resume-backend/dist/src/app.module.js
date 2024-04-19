@@ -21,6 +21,7 @@ const project_module_1 = require("./project/project.module");
 const res_set_module_1 = require("./Resume-Setting/res-set.module");
 const skills_module_1 = require("./skills/skills.module");
 const work_exp_module_1 = require("./work-experience/work-exp.module");
+const photo_module_1 = require("./photo/photo.module");
 let AppModule = class AppModule {
     configure(consumer) {
         consumer
@@ -31,7 +32,7 @@ let AppModule = class AppModule {
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forRoot(data_source_1.dataSourceOptions), users_module_1.UsersModule, resume_module_1.ResumeModule, per_inf_module_1.PerInfModule, cus_sec_module_1.CusSecModule, education_module_1.EducationModule, language_module_1.LanguageModule, project_module_1.ProjectModule, res_set_module_1.ResSetModule, skills_module_1.SkillsModule, work_exp_module_1.WorkExpModule],
+        imports: [typeorm_1.TypeOrmModule.forRoot(data_source_1.dataSourceOptions), users_module_1.UsersModule, resume_module_1.ResumeModule, per_inf_module_1.PerInfModule, cus_sec_module_1.CusSecModule, education_module_1.EducationModule, language_module_1.LanguageModule, project_module_1.ProjectModule, res_set_module_1.ResSetModule, skills_module_1.SkillsModule, work_exp_module_1.WorkExpModule, photo_module_1.PhotoModule],
         controllers: [],
         providers: [],
     })

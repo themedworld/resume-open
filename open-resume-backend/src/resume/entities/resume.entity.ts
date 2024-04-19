@@ -16,7 +16,7 @@ import {
   import { ResSet } from 'src/Resume-Setting/entities/res-set.entity';
   import { CusSec } from 'src/Custumer-serction/entities/cus-sec.entity';
   import { Language } from 'src/language/entities/language.entity';
-  
+  import { Photo } from 'src/photo/entities/photo.entity';
   @Entity()
   export class Resume {
     @PrimaryGeneratedColumn()
@@ -49,6 +49,8 @@ import {
   
     @OneToOne(() => CusSec, (CusSec) => CusSec.resume)
     CusSec: CusSec;
+    @OneToOne(() => Photo, (Photo) => Photo.resume)
+    Photo: Photo;
   
     @OneToMany(() => Language, (Language) => Language.resume)
     Language: Language[];

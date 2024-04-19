@@ -16,7 +16,7 @@ import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { cx } from "lib/cx";
 import { LanguageForm } from "components/ResumeForm/LanguageForm";
 import { authService } from "components/form/authService";
-
+import ImportImg from "importimg/page";
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
   educations: EducationsForm,
@@ -33,7 +33,7 @@ export const ResumeForm = () => {
   const [isHover, setIsHover] = useState(false);
   const [resumeName, setResumeName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [buttonClicked, setButtonClicked] = useState(0); // Ajout de la constante et initialisation à 0
+  const [buttonClicked, setButtonClicked] = useState(0); 
 
   const handleButtonClick = () => {
     setButtonClicked(1); 
@@ -50,6 +50,7 @@ authService.setbuttonClicked(buttonClicked);
       onMouseLeave={() => setIsHover(false)}
     >
       <section className="flex max-w-2xl flex-col gap-8 p-[var(--resume-padding)]">
+        <ImportImg></ImportImg>
         <ProfileForm />
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];
