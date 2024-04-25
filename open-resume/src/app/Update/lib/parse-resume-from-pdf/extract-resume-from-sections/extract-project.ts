@@ -1,20 +1,20 @@
-import type { ResumeProject } from "lib/redux/types";
+import type { ResumeProject } from "Update/lib/redux/types";
 import type {
   FeatureSet,
   ResumeSectionToLines,
-} from "lib/parse-resume-from-pdf/types";
-import { getSectionLinesByKeywords } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+} from "Update/lib/parse-resume-from-pdf/types";
+import { getSectionLinesByKeywords } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
 import {
   DATE_FEATURE_SETS,
   getHasText,
   isBold,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import { divideSectionIntoSubsections } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
-import { getTextWithHighestFeatureScore } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import { divideSectionIntoSubsections } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+import { getTextWithHighestFeatureScore } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
 import {
   getBulletPointsFromLines,
   getDescriptionsLineIdx,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 
 export const extractProject = (sections: ResumeSectionToLines) => {
   const projects: ResumeProject[] = [];

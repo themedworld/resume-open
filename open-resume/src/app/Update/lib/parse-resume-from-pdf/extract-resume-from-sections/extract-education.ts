@@ -2,21 +2,21 @@ import type {
   TextItem,
   FeatureSet,
   ResumeSectionToLines,
-} from "lib/parse-resume-from-pdf/types";
-import type { ResumeEducation } from "lib/redux/types";
-import { getSectionLinesByKeywords } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
-import { divideSectionIntoSubsections } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+} from "Update/lib/parse-resume-from-pdf/types";
+import type { ResumeEducation } from "Update/lib/redux/types";
+import { getSectionLinesByKeywords } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+import { divideSectionIntoSubsections } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
 import {
   DATE_FEATURE_SETS,
   hasComma,
   hasLetter,
   hasNumber,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import { getTextWithHighestFeatureScore } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import { getTextWithHighestFeatureScore } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
 import {
   getBulletPointsFromLines,
   getDescriptionsLineIdx,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 
 /**
  *              Unique Attribute

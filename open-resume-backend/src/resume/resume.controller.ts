@@ -4,7 +4,7 @@ import { Skills } from './../skills/entities/skill.entity';
 import { Language } from './../language/entities/language.entity';
 import { PerInf } from './../Personal-information/entities/per-inf.entity';
 import { CusSec } from './../Custumer-serction/entities/cus-sec.entity';
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe,NotFoundException } from '@nestjs/common';
 import { ResumeService } from './resume.service';
 import { CreateResumeDto } from './dto/create-resume.dto';
 import { Resume } from './entities/resume.entity';
@@ -76,16 +76,47 @@ export class ResumeController {
         const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
         const educations = await this.educationService.findEducationByResumeId(resume.id);
         const languages = await this.languageService.findLanguageByResumeId(resume.id);
-        const projects = await this.projectService.findProjectByResumeId(resume.id);
         const skills = await this.skillsService.findSkillsByResumeId(resume.id);
         const WorkExps = await this.workExpService.findWorkExpByResumeId(resume.id);
-        const cusSecs = await this.cusSecService.findCusSecByResumeId(resume.id);
-        const resSets = await this.resSetService.findResSetByResumeId(resume.id);
-        return { resume, perInfs, educations, languages, projects,WorkExps, skills, cusSecs,resSets };
+
+        return { resume, perInfs, educations, languages, WorkExps, skills };
       }));
       return { user, resumes: resumesWithDetails };
     }));
 
     return usersWithResumes;
   }
+
+  @Get("UpdateView/:id")
+  async getResumeById(@Param("id") resumeId: number): Promise<any> {
+   
+    const resume = await this.resumeService.findOne(resumeId);
+    
+    // Vérifier si le CV existe
+    if (!resume) {
+      throw new NotFoundException("CV non trouvé");
+    }
+  
+    // Récupérer les détails associés au CV
+    const perInfs = await this.perInfService.findPerInfByResumeId(resumeId);
+    const educations = await this.educationService.findEducationByResumeId(resumeId);
+    const languages = await this.languageService.findLanguageByResumeId(resumeId);
+    const projects = await this.projectService.findProjectByResumeId(resumeId);
+    const skills = await this.skillsService.findSkillsByResumeId(resumeId);
+    const workExps = await this.workExpService.findWorkExpByResumeId(resumeId);
+    const cusSecs = await this.cusSecService.findCusSecByResumeId(resumeId);
+
+  
+   
+    return {
+      ResumeProfile: perInfs,
+      educations,
+      languages,
+      projects,
+      workExperiences: workExps,
+      skills,
+      custom: cusSecs,
+    };
+  }
+  
 }

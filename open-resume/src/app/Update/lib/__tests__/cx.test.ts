@@ -1,4 +1,4 @@
-import { cx } from "lib/cx";
+import { cx } from "Update/lib/cx";
 
 test("cx", () => {
   expect(cx("px-1", "mt-2")).toEqual("px-1 mt-2");

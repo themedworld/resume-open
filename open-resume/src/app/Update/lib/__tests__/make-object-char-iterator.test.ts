@@ -1,4 +1,4 @@
-import { makeObjectCharIterator } from "lib/make-object-char-iterator";
+import { makeObjectCharIterator } from "Update/lib/make-object-char-iterator";
 
 test("Simple object", () => {
   const start = { a: "" };

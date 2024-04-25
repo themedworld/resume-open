@@ -65,16 +65,35 @@ let ResumeController = class ResumeController {
                 const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
                 const educations = await this.educationService.findEducationByResumeId(resume.id);
                 const languages = await this.languageService.findLanguageByResumeId(resume.id);
-                const projects = await this.projectService.findProjectByResumeId(resume.id);
                 const skills = await this.skillsService.findSkillsByResumeId(resume.id);
                 const WorkExps = await this.workExpService.findWorkExpByResumeId(resume.id);
-                const cusSecs = await this.cusSecService.findCusSecByResumeId(resume.id);
-                const resSets = await this.resSetService.findResSetByResumeId(resume.id);
-                return { resume, perInfs, educations, languages, projects, WorkExps, skills, cusSecs, resSets };
+                return { resume, perInfs, educations, languages, WorkExps, skills };
             }));
             return { user, resumes: resumesWithDetails };
         }));
         return usersWithResumes;
+    }
+    async getResumeById(resumeId) {
+        const resume = await this.resumeService.findOne(resumeId);
+        if (!resume) {
+            throw new common_1.NotFoundException("CV non trouvé");
+        }
+        const perInfs = await this.perInfService.findPerInfByResumeId(resumeId);
+        const educations = await this.educationService.findEducationByResumeId(resumeId);
+        const languages = await this.languageService.findLanguageByResumeId(resumeId);
+        const projects = await this.projectService.findProjectByResumeId(resumeId);
+        const skills = await this.skillsService.findSkillsByResumeId(resumeId);
+        const workExps = await this.workExpService.findWorkExpByResumeId(resumeId);
+        const cusSecs = await this.cusSecService.findCusSecByResumeId(resumeId);
+        return {
+            ResumeProfile: perInfs,
+            educations,
+            languages,
+            projects,
+            workExperiences: workExps,
+            skills,
+            custom: cusSecs,
+        };
     }
 };
 exports.ResumeController = ResumeController;
@@ -120,6 +139,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "getAllResumes", null);
+__decorate([
+    (0, common_1.Get)("UpdateView/:id"),
+    __param(0, (0, common_1.Param)("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ResumeController.prototype, "getResumeById", null);
 exports.ResumeController = ResumeController = __decorate([
     (0, common_1.Controller)('resume'),
     __metadata("design:paramtypes", [resume_service_1.ResumeService,

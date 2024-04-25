@@ -34,4 +34,5 @@ export declare class ResumeController {
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
     remove(id: string): Promise<void>;
     getAllResumes(): Promise<any>;
+    getResumeById(resumeId: number): Promise<any>;
 }

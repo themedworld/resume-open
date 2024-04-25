@@ -1,6 +1,6 @@
-import { BULLET_POINTS } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
-import { isBold } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import type { Lines, Line, Subsections } from "lib/parse-resume-from-pdf/types";
+import { BULLET_POINTS } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+import { isBold } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import type { Lines, Line, Subsections } from "Update/lib/parse-resume-from-pdf/types";
 
 /**
  * Divide lines into subsections based on difference in line gap or bold text.

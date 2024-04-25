@@ -2,16 +2,16 @@ import type {
   ResumeSectionToLines,
   TextItem,
   FeatureSet,
-} from "lib/parse-resume-from-pdf/types";
-import { getSectionLinesByKeywords } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+} from "Update/lib/parse-resume-from-pdf/types";
+import { getSectionLinesByKeywords } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
 import {
   isBold,
   hasNumber,
   hasComma,
   hasLetter,
   hasLetterAndIsAllUpperCase,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import { getTextWithHighestFeatureScore } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import { getTextWithHighestFeatureScore } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
 
 // Name
 export const matchOnlyLetterSpaceOrPeriod = (item: TextItem) =>

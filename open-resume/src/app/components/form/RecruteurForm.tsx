@@ -102,7 +102,8 @@ const Recruteur = () => {
     }
   };
 
-  return (
+  return ( 
+  <div>
 <div className="container mx-auto flex justify-start mt-5">
       <div className="w-full max-w-xl flex">
         <div className="flex-1 mr-5">
@@ -217,27 +218,58 @@ const Recruteur = () => {
         Search
       </button>
     </div>
+    </div>
+</div>
     <div className="flex-1 ml-5">
       <div className="container mt-5">
         <div className="text-center">
-          <h1 className="card-title text-primary">Resumes</h1>
+          <h1 className="card-title text-primary">Results:</h1>
         </div>
         <div className="row justify-content-center">
           {resumeData.map((resume, index) => (
-            <div className="col-lg-4 mb-4" key={resume.id}>
-              <div className="card">
-                <div className="card-body">
-                  <h5 className="card-title">{resume.name}</h5>
-                  <button type="button" className="btn btn-primary">View</button>
-                </div>
-              </div>
-            </div>
+  <div className="col-lg-3 mb-2" key={index}>
+  <div className="card">
+    <img
+      src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+      alt="Generic placeholder image"
+      className="card-img-top img-fluid"
+      style={{ borderRadius: "15px 15px 0 0" }}
+    />
+    <div className="card-body">
+      <h5 className="card-title">{resume.name}</h5>
+      <p className="card-text">JobTitle</p>
+      <div className="d-flex justify-content-between align-items-center">
+        <div>
+          <p className="small text-muted mb-1">age</p>
+          <p className="mb-0">41</p>
+        </div>
+        <div>
+          <p className="small text-muted mb-1">email</p>
+          <p className="mb-0">976</p>
+        </div>
+        <div>
+          <p className="small text-muted mb-1">location</p>
+          <p className="mb-0">Tabarka</p>
+        </div>
+      </div>
+    </div>
+    <div className="card-footer d-flex justify-content-between">
+    <button 
+type="button" 
+className="btn btn-outline-primary flex-grow-1 me-1" 
+onClick={() => LanguageSearch()}
+>
+View
+</button>
+
+  </div>
+  </div>
+ </div>
           ))}
         </div>
       </div>
     </div>
-  </div>
-</div>
+    </div>
 
 
   );

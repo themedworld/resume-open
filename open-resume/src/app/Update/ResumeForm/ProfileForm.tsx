@@ -4,53 +4,101 @@ import { authService } from "components/form/authService";
 import { useAppDispatch, useAppSelector } from "Update/lib/redux/hooks";
 import { changeProfile, selectProfile } from "Update/lib/redux/resumeSlice";
 import { ResumeProfile } from "Update/lib/redux/types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ImportImg from "importimg/page";
+
 export const ProfileForm = () => {
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
-  const { name, email, phone, url, summary, location } = profile;
-  const resumeid =authService.getResumeId();
-  const profilewithresumeid ={name:profile.name,email:profile.email,phone:profile.phone,url:profile.url,summary:profile.summary,location:profile.location,resumeid:resumeid}; 
+  const [namef, setname] = useState("");
 
-const buttonClicked = authService.getbuttonClicked();
+  const { name, email, phone, url, summary, location } = profile;
+
+  const resumeid = authService.getResumeId();
+  const profilewithresumeid = { ...profile, resumeid: resumeid };
+
+  const buttonClicked = authService.getbuttonClicked();
+
   const handleProfileChange = (field: keyof ResumeProfile, value: string) => {
     dispatch(changeProfile({ field, value }));
   };
-  useEffect(() => {
-    if (buttonClicked === 1 && resumeid) {
-      handleSubmit();
-    }
-  }, [buttonClicked]); 
-  const handleSubmit = async () => {
 
+  useEffect(() => {
+    const fetchresumeById = async () => {
+      try {
+        const resume = await fetchResumeById();
+        if (resume) {
+          
+          const { name, email, phone, url, summary, location } = resume.ResumeProfile;
+
+         
+          dispatch(changeProfile({ field: "name", value: name }));
+          dispatch(changeProfile({ field: "email", value: email }));
+          dispatch(changeProfile({ field: "phone", value: phone }));
+          dispatch(changeProfile({ field: "url", value: url }));
+          dispatch(changeProfile({ field: "summary", value: summary }));
+          dispatch(changeProfile({ field: "location", value: location }));
+        }
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      }
+    };
+
+    fetchresumeById();
+  }, [dispatch]);
+
+  const handleSubmit = async () => {
     try {
       const response = await fetch("http://localhost:3001/api/v1/per-inf/createPerInf", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify( profilewithresumeid),
+        body: JSON.stringify(profilewithresumeid),
       });
 
       if (!response.ok) {
         throw new Error("Failed to create profile");
       }
+
       const responseData = await response.json();
       console.log("Response data:", responseData);
       console.log("Profile created successfully");
       // Vous pouvez éventuellement effectuer une action supplémentaire ici après la création du profil
-
     } catch (error) {
       console.error("Error:", error);
-    } finally {
-    
     }
   };
 
+  const fetchResumeById = async () => {
+    try {
+      const resumeid = authService.getResumeId();
 
-  return ( 
-   
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const resume = await response.json();
+      console.log(resume);
+      return resume;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };
+
+  return (
     <BaseForm>
       <div className="grid grid-cols-6 gap-3">
         <Input
@@ -91,7 +139,7 @@ const buttonClicked = authService.getbuttonClicked();
           name="url"
           placeholder="linkedin.com/in/khanacademy"
           value={url}
-          onChange={handleProfileChange}
+          onChange={ handleProfileChange}
         />
         <Input
           label="Location"

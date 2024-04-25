@@ -1,14 +1,14 @@
-import type { ResumeKey } from "lib/redux/types";
+import type { ResumeKey } from "Update/lib/redux/types";
 import type {
   Line,
   Lines,
   ResumeSectionToLines,
-} from "lib/parse-resume-from-pdf/types";
+} from "Update/lib/parse-resume-from-pdf/types";
 import {
   hasLetterAndIsAllUpperCase,
   hasOnlyLettersSpacesAmpersands,
   isBold,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
 
 export const PROFILE_SECTION: ResumeKey = "profile";
 

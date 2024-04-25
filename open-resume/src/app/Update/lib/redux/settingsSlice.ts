@@ -1,5 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
-import type { RootState } from "lib/redux/store";
+import type { RootState } from "Update/lib/redux/store";
 
 export interface Settings {
   themeColor: string;

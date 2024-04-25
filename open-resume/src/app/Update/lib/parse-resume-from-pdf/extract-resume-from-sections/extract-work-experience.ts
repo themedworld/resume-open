@@ -1,22 +1,22 @@
-import type { ResumeWorkExperience } from "lib/redux/types";
+import type { ResumeWorkExperience } from "Update/lib/redux/types";
 import type {
   TextItem,
   FeatureSet,
   ResumeSectionToLines,
-} from "lib/parse-resume-from-pdf/types";
-import { getSectionLinesByKeywords } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
+} from "Update/lib/parse-resume-from-pdf/types";
+import { getSectionLinesByKeywords } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/get-section-lines";
 import {
   DATE_FEATURE_SETS,
   hasNumber,
   getHasText,
   isBold,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
-import { divideSectionIntoSubsections } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
-import { getTextWithHighestFeatureScore } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/common-features";
+import { divideSectionIntoSubsections } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/subsections";
+import { getTextWithHighestFeatureScore } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/feature-scoring-system";
 import {
   getBulletPointsFromLines,
   getDescriptionsLineIdx,
-} from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+} from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
 
 // prettier-ignore
 const WORK_EXPERIENCE_KEYWORDS_LOWERCASE = ['work', 'experience', 'employment', 'history', 'job'];

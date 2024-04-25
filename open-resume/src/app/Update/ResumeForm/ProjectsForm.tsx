@@ -25,6 +25,34 @@ export const ProjectsForm = () => {
       handleSubmitProject();
     }
   }, [buttonClicked]); 
+  const fetchResumeById = async () => {
+    try {
+      const resumeid = authService.getResumeId();
+
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const resume = await response.json();
+      console.log(resume);
+      return resume.projects
+      ;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };
   const handleSubmitProject = async () => {
     try {
       const updatedProjects = projects.map((project) => {
@@ -56,6 +84,7 @@ export const ProjectsForm = () => {
       console.error("Error:", error);
     }
   };
+  
   return (
     <Form form="projects" addButtonText="Add Project">
       {projects.map(({ project, date, descriptions }, idx) => {

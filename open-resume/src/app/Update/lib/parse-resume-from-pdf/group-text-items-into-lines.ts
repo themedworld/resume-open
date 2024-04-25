@@ -1,5 +1,5 @@
-import { BULLET_POINTS } from "lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
-import type { TextItems, Line, Lines } from "lib/parse-resume-from-pdf/types";
+import { BULLET_POINTS } from "Update/lib/parse-resume-from-pdf/extract-resume-from-sections/lib/bullet-points";
+import type { TextItems, Line, Lines } from "Update/lib/parse-resume-from-pdf/types";
 
 /**
  * Step 2: Group text items into lines. This returns an array where each position

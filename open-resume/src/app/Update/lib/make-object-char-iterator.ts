@@ -1,4 +1,4 @@
-import { deepClone } from "lib/deep-clone";
+import { deepClone } from "Update/lib/deep-clone";
 
 type Object = { [key: string]: any };
 

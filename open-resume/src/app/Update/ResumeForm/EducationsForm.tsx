@@ -19,6 +19,7 @@ import { useState } from "react";
 import { ResumeForm } from ".";
 
 export const EducationsForm = () => {
+  
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
   const showDelete = educations.length > 1;
@@ -68,19 +69,18 @@ export const EducationsForm = () => {
     }
   };
 
-
-  const fetchEducationById = async (resumeid: number) => {
+ /* const fetchresumeById = async () => {
     try {
-      // Récupération de l'ID du CV
+      
       const resumeid = authService.getResumeId();
   
-      // Vérification que l'ID du CV est disponible
+      
       if (!resumeid) {
         throw new Error("Resume ID not available");
       }
   
-      // Appel de l'API avec l'ID de l'éducation
-      const response = await fetch(`http://localhost:3001/api/v1/education/${resumeid}`, {
+      
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -92,19 +92,18 @@ export const EducationsForm = () => {
       if (!response.ok) {
         throw new Error("Failed to fetch education data");
       }
-      const educationData = await response.json();
-      console.log(educationData);
-      setEducation(educationData?.educations);
-      setcount(educationData?.count);
-
-      return educationData;
+      const resume = await response.json();
+      console.log(resume);
+  
+  
+      return resume;
     } catch (error) {
       console.error("Error fetching education data:", error);
       return null;
     }
   };
-  fetchEducationById(resumeid);
-console.log(count);
+  fetchresumeById();*/
+
 
   return (
     <Form form={form} addButtonText="Add School">
