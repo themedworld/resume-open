@@ -4,6 +4,6 @@ export declare class WorkExp {
     company: string;
     jobTitle: string;
     date: string;
-    descriptions: string;
+    descriptions: string[];
     resume: Resume;
 }

@@ -39,6 +39,6 @@ export class ResSetService {
     return this.ResSetRepository.find({ where: { resume: { id } } });
   }
   async remove(id: number): Promise<void> {
-    await this.ResSetRepository.delete(id);
+    await this.ResSetRepository.delete({ resume: { id } });
   }
 }

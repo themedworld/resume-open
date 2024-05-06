@@ -21,8 +21,9 @@ export const Resume = () => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
+  const image ="blob:http://localhost:3000/e641d356-2a39-404d-ad2a-9ef4d6eb19dd"
   const document = useMemo(
-    () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
+    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} />,
     [resume, settings]
   );
 

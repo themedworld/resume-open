@@ -3,5 +3,5 @@ export declare class CreateWorkExpDto {
     company: string;
     jobTitle: string;
     date: string;
-    descriptions: string;
+    descriptions: string[];
 }

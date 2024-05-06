@@ -4,7 +4,9 @@ import { Photo } from './entities/photo.entity';
 export declare class UploadedFileController {
     private readonly uploadedFileService;
     constructor(uploadedFileService: UploadedFileService);
-    createPhoto(photoDto: PhotoDto): Promise<{
-        photo: Photo;
+    craetePerInf(createPhotofDto: PhotoDto): Promise<{
+        Photo: Photo;
     }>;
+    remove(id: string): Promise<void>;
+    findPerInfByResumeId(id: any): Promise<Photo>;
 }

@@ -24,10 +24,12 @@ const ResumePage = () => {
   const router = useRouter();
   const handleViewClick = (resumeId : number) => {
     authService.setResumeId(resumeId);
+    authService.setdel(1)
     console.log(resumeId)
     router.push('/updatepage');
     
   };
+
   const [resumeData, setResumeData] = useState<ResumeData>({ resumes: [], count: 0 });
   const [userId, setUserId] = useState<number | null>(null);
   const [username, setUserName] = useState<string | null>(null);

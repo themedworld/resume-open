@@ -46,7 +46,7 @@ let LanguageService = class LanguageService {
         return this.LanguageRepository.save(language);
     }
     async remove(id) {
-        await this.LanguageRepository.delete(id);
+        await this.LanguageRepository.delete({ resume: { id } });
     }
     async findLanguageByResumeId(id) {
         return this.LanguageRepository.find({ where: { resume: { id } } });

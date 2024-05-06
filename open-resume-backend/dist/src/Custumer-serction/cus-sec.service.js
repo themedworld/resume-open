@@ -41,7 +41,7 @@ let CusSecService = class CusSecService {
         return this.CusSecRepository.save(cusSec);
     }
     async remove(id) {
-        await this.CusSecRepository.delete(id);
+        await this.CusSecRepository.delete({ resume: { id } });
     }
     async findCusSecByResumeId(id) {
         return this.CusSecRepository.find({ where: { resume: { id } } });

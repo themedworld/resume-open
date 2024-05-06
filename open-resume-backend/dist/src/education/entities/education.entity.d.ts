@@ -5,6 +5,6 @@ export declare class Education {
     date: string;
     degree: string;
     gpa: string;
-    descriptions: string;
+    descriptions: string[];
     resume: Resume;
 }

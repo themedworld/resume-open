@@ -5,12 +5,13 @@ import {
 } from "Update/ResumeForm/Form/InputGroup";
 import type { CreateHandleChangeArgsWithDescriptions } from "Update/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "Update/lib/redux/hooks";
-import { selectProjects, changeProjects } from "Update/lib/redux/resumeSlice";
+import { selectProjects, changeProjects,deleteSectionInFormByIdx } from "Update/lib/redux/resumeSlice";
 import type { ResumeProject } from "Update/lib/redux/types";
 import { authService } from "components/form/authService";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { selectShowBulletPoints } from "Update/lib/redux/settingsSlice";
 import { changeShowBulletPoints } from "Update/lib/redux/settingsSlice";
+import { addProjectSection } from "Update/lib/redux/resumeSlice";
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
@@ -19,41 +20,46 @@ export const ProjectsForm = () => {
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const resumeid = authService.getResumeId();
   const buttonClicked = authService.getbuttonClicked();
+  const [count, setcount] = useState(0);
+  const [addSectionExecuted, setAddSectionExecuted] = useState(false);
 
+
+  useEffect(() => {
+    const fetchresumeById = async () => {
+      try {
+        const resume = await fetchResumeById();
+        if (resume) {
+          const projects = resume.projects;
+          setcount(projects.length);
+          for (let i = 0; i < projects.length; i++) {
+            dispatch(addProjectSection());
+            const project = projects[i];
+            dispatch(changeProjects({ idx: i, field: "project", value: project.project }));
+            dispatch(changeProjects({ idx: i, field: "date", value: project.date }));
+            dispatch(changeProjects({ idx: i, field: "descriptions", value: [project.descriptions] }));
+            
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      }
+    };
+  
+    fetchresumeById();
+  }, [dispatch]);
   useEffect(() => {
     if (buttonClicked === 1 && resumeid) {
       handleSubmitProject();
     }
   }, [buttonClicked]); 
-  const fetchResumeById = async () => {
-    try {
-      const resumeid = authService.getResumeId();
-
-      if (!resumeid) {
-        throw new Error("Resume ID not available");
-      }
-
-      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch education data");
-      }
-
-      const resume = await response.json();
-      console.log(resume);
-      return resume.projects
-      ;
-    } catch (error) {
-      console.error("Error fetching education data:", error);
-      return null;
-    }
-  };
   const handleSubmitProject = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/project/${resumeid}`, {
+        method: 'DELETE',
+      });
+  } catch (error) {
+    console.error('Une erreur est survenue lors de la suppression :', error);
+  }
     try {
       const updatedProjects = projects.map((project) => {
         return {
@@ -84,7 +90,56 @@ export const ProjectsForm = () => {
       console.error("Error:", error);
     }
   };
+
+
   
+
+
+  
+  
+  const fetchResumeById = async () => {
+
+    try {
+      const resumeid = authService.getResumeId();
+
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const resume = await response.json();
+      console.log(resume);
+      return resume;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };
+
+  const [activationCount, setActivationCount] = useState(0);
+  console.log(activationCount);
+  
+  useEffect(() => {
+  
+    if (projects.length > count && activationCount < 500) {
+      for (let i = projects.length; i > count; i--) {
+        dispatch(deleteSectionInFormByIdx({ form: "projects", idx: i }));
+        setActivationCount(prevCount => prevCount + 1);
+      }
+      
+    }
+  }, [activationCount]);
+
   return (
     <Form form="projects" addButtonText="Add Project">
       {projects.map(({ project, date, descriptions }, idx) => {
@@ -136,6 +191,7 @@ export const ProjectsForm = () => {
               onChange={handleProjectChange}
               labelClassName="col-span-full"
             />
+            
           </FormSection>
         );
       })}

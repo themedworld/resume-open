@@ -85,6 +85,7 @@ let ResumeController = class ResumeController {
         const skills = await this.skillsService.findSkillsByResumeId(resumeId);
         const workExps = await this.workExpService.findWorkExpByResumeId(resumeId);
         const cusSecs = await this.cusSecService.findCusSecByResumeId(resumeId);
+        const resSet = await this.resSetService.findResSetByResumeId(resumeId);
         return {
             ResumeProfile: perInfs,
             educations,
@@ -93,6 +94,7 @@ let ResumeController = class ResumeController {
             workExperiences: workExps,
             skills,
             custom: cusSecs,
+            Setting: resSet,
         };
     }
 };

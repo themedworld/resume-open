@@ -4,6 +4,6 @@ declare class CreateEducationDto {
     date: string;
     degree: string;
     gpa: string;
-    descriptions: string;
+    descriptions: string[];
 }
 export { CreateEducationDto };

@@ -105,7 +105,7 @@ export class ResumeController {
     const skills = await this.skillsService.findSkillsByResumeId(resumeId);
     const workExps = await this.workExpService.findWorkExpByResumeId(resumeId);
     const cusSecs = await this.cusSecService.findCusSecByResumeId(resumeId);
-
+    const resSet = await this.resSetService.findResSetByResumeId(resumeId);
   
    
     return {
@@ -116,6 +116,7 @@ export class ResumeController {
       workExperiences: workExps,
       skills,
       custom: cusSecs,
+      Setting:resSet,
     };
   }
   

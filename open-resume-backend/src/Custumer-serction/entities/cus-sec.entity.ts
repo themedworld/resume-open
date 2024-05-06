@@ -8,8 +8,8 @@ export class CusSec {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  descriptions: string;
+  @Column('text', { array: true })
+  descriptions: string[];
 
   @ManyToOne(() => Resume, (resume) => resume.CusSec, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

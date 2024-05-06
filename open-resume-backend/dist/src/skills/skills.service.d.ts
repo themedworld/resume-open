@@ -2,7 +2,7 @@ import { CreateSkillsDto } from './dto/create-skill.dto';
 import { Skills } from './entities/skill.entity';
 import { Repository } from 'typeorm';
 import { Resume } from 'src/resume/entities/resume.entity';
-import { UpdateSkillsDto } from './dto/update-skills.dto';
+import { UpdateSkillsDto, FeaturedSkillDto } from './dto/update-skills.dto';
 export declare class SkillsService {
     private SkillsRepository;
     private ResumeRepository;
@@ -11,4 +11,10 @@ export declare class SkillsService {
     updateSkills(id: number, updateSkillsDto: UpdateSkillsDto): Promise<Skills>;
     findSkillsByResumeId(id: number): Promise<Skills[]>;
     remove(id: number): Promise<void>;
+    findSkill(skill: string): Promise<{
+        id: number;
+        resumeid: number;
+        FeaturedSkills: FeaturedSkillDto[];
+        descriptions: string;
+    }[]>;
 }

@@ -18,51 +18,25 @@ const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const photo_entity_1 = require("./entities/photo.entity");
 const resume_entity_1 = require("../resume/entities/resume.entity");
-const fs = require("fs");
-const path = require("path");
 let UploadedFileService = class UploadedFileService {
     constructor(photoRepository, resumeRepository) {
         this.photoRepository = photoRepository;
         this.resumeRepository = resumeRepository;
     }
-    async createPhoto(photoDto, fileBuffer) {
-        const resume = await this.resumeRepository.findOne({ where: { id: photoDto.resumeid } });
+    async createPhoto(createphotoDto) {
+        const resume = await this.resumeRepository.findOne({ where: { id: createphotoDto.resumeid } });
         if (!resume) {
             throw new common_1.NotFoundException('Resume not found');
         }
-        const photo = this.photoRepository.create(photoDto);
-        photo.resume = resume;
-        try {
-            const savedPhoto = await this.photoRepository.save(photo);
-            const folderPath = 'C:\\Users\\XPS\\Desktop\\Open-resume-app\\open-resume-backend\\assets\\photo';
-            const filePath = path.join(folderPath, photoDto.name);
-            await this.saveFile(fileBuffer, filePath);
-            const fileContent = await this.readFile(filePath);
-            savedPhoto.fileUrl = filePath;
-            await this.photoRepository.save(savedPhoto);
-            return savedPhoto;
-        }
-        catch (error) {
-            throw new Error(`Failed to create photo: ${error.message}`);
-        }
+        const Photo = this.photoRepository.create(createphotoDto);
+        Photo.resume = resume;
+        return this.photoRepository.save(Photo);
     }
-    async saveFile(fileBuffer, filePath) {
-        return new Promise((resolve, reject) => {
-            const fileStream = fs.createWriteStream(filePath);
-            fileStream.write(fileBuffer);
-            fileStream.end();
-            fileStream.on('error', (error) => reject(error));
-            fileStream.on('finish', () => resolve());
-        });
+    async remove(id) {
+        await this.photoRepository.delete({ resume: { id } });
     }
-    async readFile(filePath) {
-        try {
-            const fileContent = await fs.promises.readFile(filePath);
-            return fileContent;
-        }
-        catch (error) {
-            throw new Error(`Failed to read file: ${error.message}`);
-        }
+    async findPerInfByResumeId(id) {
+        return this.photoRepository.findOne({ where: { resume: { id } } });
     }
 };
 exports.UploadedFileService = UploadedFileService;

@@ -59,7 +59,7 @@ authService.setbuttonClicked(buttonClicked);
         <ThemeForm />
         <br />
         <button onClick={handleButtonClick} className="col-span-full bg-blue-500 text-white py-2 px-4 rounded">
-          save
+          Update
         </button>
         
       </section>

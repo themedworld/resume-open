@@ -1,5 +1,5 @@
 declare class CreateCusSecDto {
     resumeid: number;
-    descriptions: string;
+    descriptions: string[];
 }
 export { CreateCusSecDto };

@@ -3,6 +3,6 @@ declare class UpdateEducationDto {
     date: string;
     degree: string;
     gpa: string;
-    descriptions: string;
+    descriptions: string[];
 }
 export { UpdateEducationDto };

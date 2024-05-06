@@ -11,8 +11,8 @@ export class Project {
   @Column()
   date: string; // Renommez "Dte" en "date" pour plus de clarté
 
-  @Column()
-  descriptions: string; // Utilisez la convention de nommage camelCase
+  @Column('text', { array: true })
+  descriptions: string[]; // Utilisez la convention de nommage camelCase
 
 
   @ManyToOne(() => Resume, (resume) => resume.projects, { onDelete: 'CASCADE' })

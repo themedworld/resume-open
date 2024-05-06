@@ -9,8 +9,8 @@ export class Language {
   @Column()
   language: string; // Utilisez la convention de nommage camelCase
 
-  @Column()
-  descriptions: string; // Modifiez "degree" en "proficiency" pour plus de clarté
+  @Column('text', { array: true })
+  descriptions: string[]; // Modifiez "degree" en "proficiency" pour plus de clarté
 
   @ManyToOne(() => Resume, (resume) => resume.Language, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

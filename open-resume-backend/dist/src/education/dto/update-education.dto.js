@@ -35,8 +35,9 @@ __decorate([
     __metadata("design:type", String)
 ], UpdateEducationDto.prototype, "gpa", void 0);
 __decorate([
-    (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsString)({ message: 'additional information must be a string' }),
-    __metadata("design:type", String)
+    (0, class_validator_1.IsNotEmpty)({ message: 'The descriptions array is required' }),
+    (0, class_validator_1.IsArray)({ message: 'The descriptions must be an array' }),
+    (0, class_validator_1.IsString)({ each: true, message: 'Each description must be a string' }),
+    __metadata("design:type", Array)
 ], UpdateEducationDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=update-education.dto.js.map

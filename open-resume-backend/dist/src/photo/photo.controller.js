@@ -20,15 +20,15 @@ let UploadedFileController = class UploadedFileController {
     constructor(uploadedFileService) {
         this.uploadedFileService = uploadedFileService;
     }
-    async createPhoto(photoDto) {
-        try {
-            const fileBuffer = Buffer.from(photoDto.fileUrl, 'base64');
-            const photo = await this.uploadedFileService.createPhoto(photoDto, fileBuffer);
-            return { photo };
-        }
-        catch (error) {
-            throw new common_1.HttpException(`Failed to create photo: ${error.message}`, common_1.HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    async craetePerInf(createPhotofDto) {
+        const Photo = await this.uploadedFileService.createPhoto(createPhotofDto);
+        return { Photo };
+    }
+    remove(id) {
+        return this.uploadedFileService.remove(+id);
+    }
+    async findPerInfByResumeId(id) {
+        return this.uploadedFileService.findPerInfByResumeId(parseInt(id));
     }
 };
 exports.UploadedFileController = UploadedFileController;
@@ -38,7 +38,21 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_photo_dto_1.PhotoDto]),
     __metadata("design:returntype", Promise)
-], UploadedFileController.prototype, "createPhoto", null);
+], UploadedFileController.prototype, "craetePerInf", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UploadedFileController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UploadedFileController.prototype, "findPerInfByResumeId", null);
 exports.UploadedFileController = UploadedFileController = __decorate([
     (0, common_1.Controller)("uploaded-files"),
     __metadata("design:paramtypes", [photo_service_1.UploadedFileService])

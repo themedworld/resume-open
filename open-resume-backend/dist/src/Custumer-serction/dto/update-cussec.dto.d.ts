@@ -1,4 +1,4 @@
 declare class UpdateCusSecDto {
-    descriptions: string;
+    descriptions: string[];
 }
 export { UpdateCusSecDto };

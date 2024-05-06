@@ -6,12 +6,14 @@ import {
 import type { CreateHandleChangeArgsWithDescriptions } from "Update/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "lib/redux/hooks";
 import {
+  addWorkExperienceSection,
   changeWorkExperiences,
   selectWorkExperiences,
+  deleteSectionInFormByIdx,
 } from "Update/lib/redux/resumeSlice";
 import type { ResumeWorkExperience } from "lib/redux/types";
 import { authService } from "components/form/authService";
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { selectShowBulletPoints } from "Update/lib/redux/settingsSlice";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
@@ -22,13 +24,20 @@ export const WorkExperiencesForm = () => {
   const showBulletPoints = useAppSelector(selectShowBulletPoints(form));
   const resumeid = authService.getResumeId();
   const buttonClicked = authService.getbuttonClicked();
-
+  const [count, setcount] = useState(0);
   useEffect(() => {
     if (buttonClicked === 1 && resumeid) {
       handleSubmitProject();
     }
   }, [buttonClicked]); 
   const handleSubmitProject = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/work-exp/${resumeid}`, {
+        method: 'DELETE',
+      });
+  } catch (error) {
+    console.error('Une erreur est survenue lors de la suppression :', error);
+  }
     try {
       const updatedworkExperiences = workExperiences.map((workExperience) => {
         return {
@@ -59,6 +68,74 @@ export const WorkExperiencesForm = () => {
       console.error("Error:", error);
     }
   };
+  const fetchResumeById = async () => {
+    try {
+      const resumeid = authService.getResumeId();
+
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const resume = await response.json();
+      console.log(resume);
+      return resume;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const fetchresumeById = async () => {
+      try {
+        const resume = await fetchResumeById();
+        if (resume) {
+          const WorkExperiences = resume.workExperiences;
+          setcount(WorkExperiences.length);
+          
+          for (let i = 0; i < WorkExperiences.length; i++) {
+          
+            dispatch(addWorkExperienceSection());
+            const WorkExperience = WorkExperiences[i];
+            dispatch(changeWorkExperiences({ idx: i, field: "company", value: WorkExperience.company }));
+            dispatch(changeWorkExperiences({ idx: i, field: "jobTitle", value: WorkExperience.jobTitle }));
+            dispatch(changeWorkExperiences({ idx: i, field: "date", value: WorkExperience.date }));
+            dispatch(changeWorkExperiences({ idx: i, field: "descriptions", value: [WorkExperience.descriptions] }));
+         
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      }
+    };
+  
+    fetchresumeById();
+  }, []);
+
+  const [activationCount, setActivationCount] = useState(0);
+  console.log(activationCount);
+  
+  useEffect(() => {
+  
+    if (workExperiences.length > count && activationCount < 500) {
+      for (let i = workExperiences.length; i > count; i--) {
+        dispatch(deleteSectionInFormByIdx({ form: "workExperiences", idx: i }));
+        setActivationCount(prevCount => prevCount + 1);
+      }
+      
+    }
+  }, [activationCount]);
   return (
     <Form form="workExperiences" addButtonText="Add Job">
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {

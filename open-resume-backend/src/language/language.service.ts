@@ -44,7 +44,7 @@ export class LanguageService {
 
 
   async remove(id: number): Promise<void> {
-    await this.LanguageRepository.delete(id);
+    await this.LanguageRepository.delete({ resume: { id } });
   }
 
   async findLanguageByResumeId(id: number): Promise<Language[]> {

@@ -37,8 +37,8 @@ __decorate([
     __metadata("design:type", String)
 ], Education.prototype, "gpa", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)('text', { array: true }),
+    __metadata("design:type", Array)
 ], Education.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.Education, { onDelete: 'CASCADE' }),

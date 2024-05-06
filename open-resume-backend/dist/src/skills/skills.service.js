@@ -45,7 +45,21 @@ let SkillsService = class SkillsService {
         return this.SkillsRepository.find({ where: { resume: { id } } });
     }
     async remove(id) {
-        await this.SkillsRepository.delete(id);
+        await this.SkillsRepository.delete({ resume: { id } });
+    }
+    async findSkill(skill) {
+        const skills = await this.SkillsRepository
+            .createQueryBuilder('skills')
+            .select(['skills.id', 'resume.id as resumeid', 'skills.featuredSkills', 'skills.descriptions'])
+            .leftJoin('skills.resume', 'resume')
+            .where('CAST(skills."featuredSkills" AS TEXT) LIKE :skill', { skill: `%${skill}%` })
+            .getRawMany();
+        return skills.map(skill => ({
+            id: skill.id,
+            resumeid: skill.resumeid,
+            FeaturedSkills: skill.featuredSkills,
+            descriptions: skill.descriptions,
+        }));
     }
 };
 exports.SkillsService = SkillsService;

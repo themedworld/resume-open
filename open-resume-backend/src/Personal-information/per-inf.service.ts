@@ -40,7 +40,7 @@ export class PerInfService {
 
 
   async remove(id: number): Promise<void> {
-    await this.PerInfRepository.delete(id);
+    await this.PerInfRepository.delete({ resume: { id } });
   }
   async findPerInfByResumeId(id) {
     return this.PerInfRepository.findOne({ where: { resume: { id } } });

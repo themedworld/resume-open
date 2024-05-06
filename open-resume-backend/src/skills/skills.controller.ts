@@ -3,6 +3,7 @@ import { SkillsService } from './skills.service';
 import { CreateSkillsDto } from './dto/create-skill.dto';
 import { Skills } from './entities/skill.entity';
 import { UpdateSkillsDto } from './dto/update-skills.dto';
+import { FeaturedSkillDto } from './dto/create-skill.dto';
 @Controller('skills')
 export class SkillsController {
   constructor(private readonly skillsService: SkillsService) {}
@@ -28,4 +29,10 @@ export class SkillsController {
   remove(@Param('id') id: string) {
     return this.skillsService.remove(+id);
   }
+  @Get('findSkill/:skill')
+  async findSkill(@Param('skill') skill: string): Promise<{ id: number, resumeid: number, FeaturedSkills: FeaturedSkillDto[], descriptions: string }[]> {
+    const skills = await this.skillsService.findSkill(skill);
+    return skills;
+  }
+
 }

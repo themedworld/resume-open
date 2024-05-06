@@ -50,7 +50,7 @@ let ProjectService = class ProjectService {
         return this.ProjectRepository.find({ where: { resume: { id } } });
     }
     async remove(id) {
-        await this.ProjectRepository.delete(id);
+        await this.ProjectRepository.delete({ resume: { id } });
     }
 };
 exports.ProjectService = ProjectService;

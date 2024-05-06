@@ -49,7 +49,7 @@ let EducationService = class EducationService {
         return this.EducationRepository.save(education);
     }
     async remove(id) {
-        await this.EducationRepository.delete(id);
+        await this.EducationRepository.delete({ resume: { id } });
     }
     async findEducationByResumeId(id) {
         return this.EducationRepository.find({ where: { resume: { id } } });

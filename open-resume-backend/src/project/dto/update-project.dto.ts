@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString} from 'class-validator';
+import { IsNotEmpty, IsString,  IsArray} from 'class-validator';
 
  class UpdateProjectDto {
 
@@ -10,8 +10,9 @@ import { IsNotEmpty, IsString} from 'class-validator';
   @IsString({ message: 'the date must be a valid date' })
   date: string;
 
-  @IsNotEmpty({ message: 'the description is required' })
-  @IsString({ message: 'the description must be a string' })
-  descriptions: string;
+  @IsNotEmpty({ message: 'The descriptions array is required' })
+  @IsArray({ message: 'The descriptions must be an array' })
+  @IsString({ each: true, message: 'Each description must be a string' })
+  descriptions: string[];
 }
 export { UpdateProjectDto};

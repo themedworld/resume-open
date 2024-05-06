@@ -25,8 +25,9 @@ __decorate([
     __metadata("design:type", String)
 ], CreateLanguageDto.prototype, "language", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: 'the proficiency level is required' }),
-    (0, class_validator_1.IsString)({ message: 'the proficiency level must be a string' }),
-    __metadata("design:type", String)
+    (0, class_validator_1.IsNotEmpty)({ message: 'The descriptions array is required' }),
+    (0, class_validator_1.IsArray)({ message: 'The descriptions must be an array' }),
+    (0, class_validator_1.IsString)({ each: true, message: 'Each description must be a string' }),
+    __metadata("design:type", Array)
 ], CreateLanguageDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-language.dto.js.map

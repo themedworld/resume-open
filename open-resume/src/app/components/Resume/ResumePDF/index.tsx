@@ -13,6 +13,7 @@ import { SuppressResumePDFErrorMessage } from "components/Resume/ResumePDF/commo
 import { ResumePDFLanguage } from "./ResumePDFLanguage";
 import { authService } from "components/form/authService";
 import { useEffect, useState } from "react";
+
 export const ResumePDF = ({
   resume,
   settings,
@@ -24,13 +25,9 @@ export const ResumePDF = ({
   isPDF?: boolean;
 
 }) => {
-  const [fileUrl, setfileUrl] = useState("11");
+  
  
-  useEffect(() => {
-    // Utilisation de authService pour obtenir l'URL de l'image
-    const imgUrl = authService.getfileUrl();
-    setfileUrl(imgUrl); // Mise à jour de l'URL de l'image
-  }, [resume, settings,authService])
+
   const { profile, workExperiences, educations, projects, skills, custom, languages } = resume;
   const { name } = profile;
   const {
@@ -91,8 +88,44 @@ export const ResumePDF = ({
         languages={languages}
         themeColor={themeColor}
       />)
+      
   };
-console.log(fileUrl);
+
+  useEffect(() => {
+    fetchphotoById();
+  console.log(imageUrl)
+    }, [ ]);
+    const fetchphotoById = async () => {
+      try {
+        const resumeid = authService.getResumeId();
+  
+        if (!resumeid) {
+          throw new Error("Resume ID not available");
+        }
+  
+        const response = await fetch(`http://localhost:3001/api/v1/uploaded-files/${resumeid}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (!response.ok) {
+          throw new Error("Failed to fetch education data");
+        }
+  
+        const photo = await response.json();
+        setimageUrl(photo.fileUrl);
+        console.log(photo);
+        return photo;
+      } catch (error) {
+        console.error("Error fetching education data:", error);
+        return null;
+      }
+    };  
+  const [imageUrl, setimageUrl] = useState<string>("");
+  const imageWidth = 100;
+  const imageHeight = 100;
   return (
     <>
       <Document title={`${name} Resume`} author={name} producer={"OpenResume"}>
@@ -120,13 +153,9 @@ console.log(fileUrl);
               padding: `${spacing[0]} ${spacing[20]}`,
             }}
           > 
-          {fileUrl}
-
-               {fileUrl && (
-              <View style={{ alignSelf: "center", marginBottom: spacing[2] }}>
-                <Image src={fileUrl} />
-              </View>
-            )}
+<img src={imageUrl} alt="Photo" width={imageWidth} height={imageHeight} />
+            <br />
+            <br />
             
 
             <ResumePDFProfile

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsDate, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsNumber,  IsArray } from 'class-validator';
 
 export class CreateWorkExpDto {
   @IsNotEmpty({ message: 'the job title is required' })
@@ -17,7 +17,8 @@ export class CreateWorkExpDto {
   @IsString({ message: 'the date must be a valid date' })
   date: string;
 
-  @IsNotEmpty({ message: 'the description is required' })
-  @IsString({ message: 'the description must be a string' })
-  descriptions: string;
+  @IsNotEmpty({ message: 'The descriptions array is required' })
+  @IsArray({ message: 'The descriptions must be an array' })
+  @IsString({ each: true, message: 'Each description must be a string' })
+  descriptions: string[];
 }

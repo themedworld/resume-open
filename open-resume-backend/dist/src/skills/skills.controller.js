@@ -36,6 +36,10 @@ let SkillsController = class SkillsController {
     remove(id) {
         return this.skillsService.remove(+id);
     }
+    async findSkill(skill) {
+        const skills = await this.skillsService.findSkill(skill);
+        return skills;
+    }
 };
 exports.SkillsController = SkillsController;
 __decorate([
@@ -67,6 +71,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], SkillsController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('findSkill/:skill'),
+    __param(0, (0, common_1.Param)('skill')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], SkillsController.prototype, "findSkill", null);
 exports.SkillsController = SkillsController = __decorate([
     (0, common_1.Controller)('skills'),
     __metadata("design:paramtypes", [skills_service_1.SkillsService])

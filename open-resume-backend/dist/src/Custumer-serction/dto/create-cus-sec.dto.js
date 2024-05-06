@@ -19,8 +19,9 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateCusSecDto.prototype, "resumeid", void 0);
 __decorate([
-    (0, class_validator_1.IsNotEmpty)({ message: "is required" }),
-    (0, class_validator_1.IsString)({ message: "is a string" }),
-    __metadata("design:type", String)
+    (0, class_validator_1.IsNotEmpty)({ message: 'The descriptions array is required' }),
+    (0, class_validator_1.IsArray)({ message: 'The descriptions must be an array' }),
+    (0, class_validator_1.IsString)({ each: true, message: 'Each description must be a string' }),
+    __metadata("design:type", Array)
 ], CreateCusSecDto.prototype, "descriptions", void 0);
 //# sourceMappingURL=create-cus-sec.dto.js.map

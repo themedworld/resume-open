@@ -1,3 +1,4 @@
+import { AppDispatch } from './store';
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import { authService } from "components/form/authService";
 import type { RootState } from "Update/lib/redux/store";
@@ -238,40 +239,28 @@ export const {
   deleteSectionInFormByIdx,
   setResume,
 } = resumeSlice.actions;
-const fetchresumeById = async () => {
-  try {
-    
-    const resumeid = authService.getResumeId();
 
-    
-    if (!resumeid) {
-      throw new Error("Resume ID not available");
-    }
-
-    
-    const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-     
-    });
-
-    
-    if (!response.ok) {
-      throw new Error("Failed to fetch education data");
-    }
-    const resume = await response.json();
-    console.log(resume);
-    
-
-    return resume;
-  } catch (error) {
-    console.error("Error fetching education data:", error);
-    return null;
-  }
+export const addProjectSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "projects" }));
 };
-
+export const deleteEducationSection = () => (dispatch:AppDispatch,idx:number) => {
+  dispatch(deleteSectionInFormByIdx({ form: "educations",idx:idx }));
+};
+export const addEducationSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "educations" }));
+};
+export const addWorkExperienceSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "workExperiences" }));
+};
+export const addskillsSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "skills" }));
+};
+export const addcustomSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "custom" }));
+};
+export const addlanguagesSection = () => (dispatch:AppDispatch) => {
+  dispatch(addSectionInForm({ form: "languages" }));
+};
 export const selectResume = (state: RootState) => state.resume;
 
 export const selectProfile = (state: RootState) => state.resume.profile;

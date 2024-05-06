@@ -3,6 +3,6 @@ export declare class Project {
     id: number;
     project: string;
     date: string;
-    descriptions: string;
+    descriptions: string[];
     resume: Resume;
 }

@@ -47,6 +47,13 @@ useEffect(() => {
 
   const handleSubmit = async () => {
     try {
+      const response = await fetch(`http://localhost:3001/api/v1/skills/${resumeid}`, {
+        method: 'DELETE',
+      });
+  } catch (error) {
+    console.error('Une erreur est survenue lors de la suppression :', error);
+  }
+    try {
       const response = await fetch("http://localhost:3001/api/v1/skills/createSkills", {
         method: "POST",
         headers: {
@@ -66,6 +73,59 @@ useEffect(() => {
       console.error("Error:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchresumeById = async () => {
+      try {
+        const resume = await fetchResumeById();
+        if (resume) {
+          
+          const skills = resume.skills[0];
+          dispatch(changeSkills({  field: "descriptions", value: [skills.descriptions] }));
+          for (let i = 0; i < 6; i++) {
+            const featuredSkill = skills.featuredSkills[i];
+            console.log(featuredSkill.skill)
+            dispatch(changeSkills({ field: "featuredSkills", idx: i, skill: featuredSkill.skill, rating: featuredSkill.rating }));
+        }
+        
+     
+        }
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      }
+    };
+
+    fetchresumeById();
+  }, [dispatch]);
+  const fetchResumeById = async () => {
+
+    try {
+      const resumeid = authService.getResumeId();
+
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const resume = await response.json();
+      console.log(resume);
+      return resume;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };
+
 
   return (
     <Form form={form}>

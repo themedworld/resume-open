@@ -56,7 +56,7 @@ export const initialSettings: Settings = {
     projects: true,
     languages:true,
     skills: true,
-    custom: false,
+    custom: true,
  
   },
   formToHeading: {

@@ -1,12 +1,13 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString,  IsArray } from 'class-validator';
 
 class CreateCusSecDto {
   @IsNotEmpty()
 
   resumeid: number;
-  @IsNotEmpty({ message: "is required" })
-  @IsString({ message: "is a string" })
-  descriptions: string;
+  @IsNotEmpty({ message: 'The descriptions array is required' })
+  @IsArray({ message: 'The descriptions must be an array' })
+  @IsString({ each: true, message: 'Each description must be a string' })
+  descriptions: string[];
 }
 
 export { CreateCusSecDto };

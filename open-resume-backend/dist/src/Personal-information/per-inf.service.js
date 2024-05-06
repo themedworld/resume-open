@@ -46,7 +46,7 @@ let PerInfService = class PerInfService {
         return this.PerInfRepository.save(perInf);
     }
     async remove(id) {
-        await this.PerInfRepository.delete(id);
+        await this.PerInfRepository.delete({ resume: { id } });
     }
     async findPerInfByResumeId(id) {
         return this.PerInfRepository.findOne({ where: { resume: { id } } });

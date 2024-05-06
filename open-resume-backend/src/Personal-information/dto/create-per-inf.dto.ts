@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString,  IsArray } from 'class-validator';
 
 export class CreatePerInfDto {
   @IsNotEmpty({ message: 'the name is required' })

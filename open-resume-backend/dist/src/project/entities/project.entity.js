@@ -28,8 +28,8 @@ __decorate([
     __metadata("design:type", String)
 ], Project.prototype, "date", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)('text', { array: true }),
+    __metadata("design:type", Array)
 ], Project.prototype, "descriptions", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => resume_entity_1.Resume, (resume) => resume.projects, { onDelete: 'CASCADE' }),

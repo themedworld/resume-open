@@ -20,36 +20,30 @@ const defaultFileState = {
 export const ResumeDropzone = ({
   onFileUrlChange,
   className,
-  playgroundView = false,
 }: {
   onFileUrlChange: (fileUrl: string) => void;
   className?: string;
-  playgroundView?: boolean;
 }) => {
   const [file, setFile] = useState(defaultFileState);
- authService.setfileUrl(file.fileUrl);
-  
-  const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
-  const [hasNonPdfFile, setHasNonPdfFile] = useState(false);
+  authService.setfileUrl(file.fileUrl);
 
-  
+  const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
+  const [fileUrl, setfileUrl] = useState<string>("");
+  authService.setfileUrl(fileUrl)
+
   const resumeId = authService.getResumeId();
   const hasFile = Boolean(file.name);
 
   const setNewFile = (newFile: File) => {
     if (file.fileUrl) {
       URL.revokeObjectURL(file.fileUrl);
-     
-
     }
 
     const { name, size } = newFile;
     const fileUrl = URL.createObjectURL(newFile);
-    
-    
+
     setFile({ name, size, fileUrl });
     onFileUrlChange(fileUrl);
-    
   };
 
   const buttonClicked = authService.getbuttonClicked();
@@ -63,19 +57,16 @@ export const ResumeDropzone = ({
     event.preventDefault();
     const newFile = event.dataTransfer.files[0];
     setNewFile(newFile);
-  
+
     setIsHoveredOnDropzone(false);
   };
 
-  const onInputChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (!files) return;
 
     const newFile = files[0];
     setNewFile(newFile);
-    
   };
 
   const onRemove = () => {
@@ -83,26 +74,22 @@ export const ResumeDropzone = ({
     onFileUrlChange("");
   };
 
-  const onImportClick = async () => {
-    
-    if (file.name.toLowerCase().endsWith(".jpg")) {
-      const resume = await parseResumeFromPdf(file.fileUrl);
-      const settings = deepClone(initialSettings);
-      
-      
-    } else {
-    
-    }
-  };
-
   const uploadFileToDatabase = async () => {
+  try {
+      const res = await fetch(`http://localhost:3001/api/v1/uploaded-files/${resumeId}`, {
+        method: 'DELETE',
+      });
+  } catch (error) {
+    console.error('Une erreur est survenue lors de la suppression :', error);
+  }
     try {
       const fileInfo = {
         name: file.name,
         size: file.size,
         fileUrl: file.fileUrl,
-        resumeid: resumeId, 
+        resumeid: resumeId,
       };
+
 
       const response = await axios.post(
         "http://localhost:3001/api/v1/uploaded-files/createPhoto",
@@ -111,55 +98,26 @@ export const ResumeDropzone = ({
 
       if (response.status === 200) {
         console.log("File information uploaded successfully");
-
-        // Save image to a folder
-        const imageResponse = await fetch(file.fileUrl);
-        const imageBuffer = await imageResponse.blob();
-        const imagePath = await saveImageToFolder(imageBuffer, file.name);
-        console.log("Image saved at:", imagePath);
       } else {
         console.error("Failed to upload file information");
       }
-    } catch (error) {
+
+      
+    }
+
+    
+    catch (error) {
       console.error("Error uploading file information:", error);
     }
   };
-  const saveImageToFolder = async (imageBlob :Blob, fileName:string) => {
-    // Convert Blob to File
-    const file = new File([imageBlob], fileName);
+
   
-    // Create FormData and append the file
-    const formData = new FormData();
-    formData.append("photo", file);
-  
-    try {
-      // Send the FormData to the backend
-      const response = await axios.post(
-        "http://localhost:3001/api/v1/uploaded-files/savePhoto",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-  
-      // Return the file path from the response
-      return response.data.filePath;
-    } catch (error) {
-      // Handle errors here
-      console.error("Error saving image:", error);
-      throw error; // Propagate the error up
-    }
-  };
-  
-  
+
   return (
     <div
       className={cx(
         "flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 ",
         isHoveredOnDropzone && "border-sky-400",
-        playgroundView ? "pb-6 pt-4" : "py-12",
         className
       )}
       onDragOver={(event) => {
@@ -169,33 +127,23 @@ export const ResumeDropzone = ({
       onDragLeave={() => setIsHoveredOnDropzone(false)}
       onDrop={onDrop}
     >
-      <div
-        className={cx(
-          "text-center",
-          playgroundView ? "space-y-2" : "space-y-3"
-        )}
-      >
-        {!playgroundView && (
-          <Image
-            src={addPdfSrc}
-            className="mx-auto h-14 w-14"
-            alt="Add pdf"
-            aria-hidden="true"
-            priority
-          />
-        )}
+      <div className="text-center">
+        <Image
+          src={addPdfSrc}
+          className="mx-auto h-14 w-14"
+          alt="Add pdf"
+          aria-hidden="true"
+          priority
+        />
         {!hasFile ? (
           <>
             <p
               className={cx(
                 "pt-3 text-gray-700",
-                !playgroundView && "text-lg font-semibold"
+                "text-lg font-semibold"
               )}
             >
-              Browse your photo file or drop it here
-            </p>
-            <p className="flex text-sm text-gray-500">
-              <LockClosedIcon className="mr-1 mt-1 h-3 w-3 text-gray-400" />
+              Browse your file or drop it here
             </p>
           </>
         ) : (
@@ -219,44 +167,28 @@ export const ResumeDropzone = ({
               <label
                 className={cx(
                   "within-outline-theme-purple cursor-pointer rounded-full px-6 pb-2.5 pt-2 font-semibold shadow-sm",
-                  playgroundView ? "border" : "bg-primary"
+                  "border"
                 )}
               >
-                Browse photo
+                Browse file
                 <input
                   type="file"
-                  className="sr-only"
                   accept=".jpg,.jpeg,.png"
+                  className="sr-only"
                   onChange={onInputChange}
                 />
               </label>
-              {hasNonPdfFile && (
-                <p className="mt-6 text-red-400">
-                  Only image formats (jpg, jpeg, png) are supported
-                </p>
-              )}
             </>
           ) : (
             <>
-              {!playgroundView && (
-                <button
-                  type="button"
-                  className="btn-primary mr-3"
-                  onClick={onImportClick}
-                >
-                  Import and Continue <span aria-hidden="true">→</span>
-                </button>
-              )}
               <button
                 type="button"
-                className="btn-primary"
+                className="btn-primary mr-3"
                 onClick={uploadFileToDatabase}
               >
                 Upload to Database
               </button>
-              <p className={cx(" text-gray-500", !playgroundView && "mt-6")}>
-                Note: {!playgroundView ? "Import" : "Parser"}
-              </p>
+              <p className={cx(" text-gray-500")}>Note:</p>
             </>
           )}
         </div>

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsDate, IsOptional} from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsOptional,  IsArray} from 'class-validator';
 
 class UpdateEducationDto {
 
@@ -18,9 +18,10 @@ class UpdateEducationDto {
   @IsString({ message: 'the GPA must be a string' })
   gpa: string;
 
-  @IsOptional()
-  @IsString({ message: 'additional information must be a string' })
-  descriptions: string;
+  @IsNotEmpty({ message: 'The descriptions array is required' })
+  @IsArray({ message: 'The descriptions must be an array' })
+  @IsString({ each: true, message: 'Each description must be a string' })
+  descriptions: string[];
 }
 
 export { UpdateEducationDto  } ;

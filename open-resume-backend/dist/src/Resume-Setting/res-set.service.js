@@ -47,7 +47,7 @@ let ResSetService = class ResSetService {
         return this.ResSetRepository.find({ where: { resume: { id } } });
     }
     async remove(id) {
-        await this.ResSetRepository.delete(id);
+        await this.ResSetRepository.delete({ resume: { id } });
     }
 };
 exports.ResSetService = ResSetService;

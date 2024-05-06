@@ -25,7 +25,7 @@ const Recruteur = () => {
     onSearch: () => {},
     onSelect: () => {},
     options: [
-        { cat: 'Programming', key: 'Python' },
+        { cat: 'Programming', key: 'Python'  },
         { cat: 'Programming', key: 'Java' },
         { cat: 'Programming', key: 'C++' },
         { cat: 'Web Development', key: 'React' },

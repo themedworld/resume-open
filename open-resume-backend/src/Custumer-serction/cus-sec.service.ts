@@ -35,7 +35,7 @@ export class CusSecService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.CusSecRepository.delete(id);
+    await this.CusSecRepository.delete({ resume: { id } });
   }
   async findCusSecByResumeId(id: number): Promise<CusSec[]> {
     return this.CusSecRepository.find({ where: { resume: { id } } });

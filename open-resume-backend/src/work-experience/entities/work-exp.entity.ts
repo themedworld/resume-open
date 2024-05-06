@@ -15,8 +15,8 @@ export class WorkExp {
   @Column()
   date: string;
 
-  @Column()
-  descriptions: string;
+  @Column('text', { array: true })
+  descriptions: string[];
 
 
   @ManyToOne(() => Resume, (resume) => resume.workExp, { onDelete: 'CASCADE' })

@@ -1,4 +1,4 @@
 export declare class UpdateLanguageDto {
     language: string;
-    descriptions: string;
+    descriptions: string[];
 }

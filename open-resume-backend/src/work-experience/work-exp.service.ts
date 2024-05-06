@@ -46,6 +46,6 @@ export class WorkExpService {
     return this.WorkExpRepository.find({ where: { resume: { id } } });
   }
   async remove(id: number): Promise<void> {
-    await this.WorkExpRepository.delete(id);
+    await this.WorkExpRepository.delete({ resume: { id } });
   }
 }

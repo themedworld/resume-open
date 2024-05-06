@@ -46,6 +46,6 @@ export class ProjectService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.ProjectRepository.delete(id);
+    await this.ProjectRepository.delete({ resume: { id } });
   }
 }

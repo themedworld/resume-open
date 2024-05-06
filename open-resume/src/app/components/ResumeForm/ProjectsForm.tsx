@@ -26,6 +26,7 @@ export const ProjectsForm = () => {
     }
   }, [buttonClicked]); 
   const handleSubmitProject = async () => {
+    
     try {
       const updatedProjects = projects.map((project) => {
         return {

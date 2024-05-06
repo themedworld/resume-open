@@ -18,9 +18,8 @@ export class Education {
 
   @Column()
   gpa: string;
-
-  @Column()
-  descriptions: string;
+  @Column('text', { array: true })
+  descriptions: string[];
 
   @ManyToOne(() => Resume, (resume) => resume.Education, { onDelete:'CASCADE' })
   @JoinColumn({ name: 'resumeid' })

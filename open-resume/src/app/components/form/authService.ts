@@ -1,3 +1,4 @@
+import { delimiter } from "node:path/posix";
 import axiosInstance from "./axiosInstance";
 import { ResumeEducation } from "lib/redux/types";
 
@@ -94,6 +95,16 @@ const getfileUrl =():string=>{
     return fileUrl;
 }
 
+
+let del : number;
+
+const setdel =(del : number):void=>{
+    del=del;
+}
+const getdel =():number=>{
+    return del;
+}
+
 const getUserRole = (): string | null => {
     const token = getToken();
     if (token) {
@@ -127,5 +138,6 @@ const logOut = (): void => {
     localStorage.clear();
 };
 
-export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked, setcounteducation, getcounteducation,seteducations ,geteducations,setfileUrl, getfileUrl  };
+
+export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked, setcounteducation, getcounteducation,seteducations ,geteducations,setfileUrl, getfileUrl,setdel,getdel  };
 

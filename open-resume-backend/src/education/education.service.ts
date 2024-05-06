@@ -43,7 +43,8 @@ export class EducationService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.EducationRepository.delete(id);
+    await this.EducationRepository.delete({ resume: { id } });
+
   }
 
   async findEducationByResumeId(id: number): Promise<Education[]> {

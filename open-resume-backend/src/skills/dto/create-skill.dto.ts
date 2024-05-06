@@ -6,7 +6,7 @@ export class CreateSkillsDto {
 
   @IsNotEmpty({ message: 'The featuredSkills array is required' })
   @IsArray({ message: 'The featuredSkills must be an array' })
-  @ValidateNested({ each: true }) // Validate each object in the array
+  @ValidateNested({ each: true }) 
   @Type(() => FeaturedSkillDto)
   featuredSkills: FeaturedSkillDto[];
 

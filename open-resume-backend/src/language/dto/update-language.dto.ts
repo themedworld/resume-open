@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsString,  IsArray } from 'class-validator';
 
 export class UpdateLanguageDto {
 
@@ -6,7 +6,8 @@ export class UpdateLanguageDto {
   @IsString({ message: 'the language name must be a string' })
   language: string;
 
-  @IsNotEmpty({ message: 'the proficiency level is required' })
-  @IsString({ message: 'the proficiency level must be a string' })
-  descriptions: string;
+  @IsNotEmpty({ message: 'The descriptions array is required' })
+  @IsArray({ message: 'The descriptions must be an array' })
+  @IsString({ each: true, message: 'Each description must be a string' })
+  descriptions: string[];
 }

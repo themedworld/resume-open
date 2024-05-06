@@ -9,7 +9,7 @@ import { authService } from "components/form/authService";
 import { BulletListIconButton } from "Update/ResumeForm/Form/IconButton";
 import type { CreateHandleChangeArgsWithDescriptions } from "Update/ResumeForm/types";
 import { useAppDispatch, useAppSelector } from "Update/lib/redux/hooks";
-import { changeEducations, selectEducations } from "Update/lib/redux/resumeSlice";
+import { changeEducations, selectEducations,deleteSectionInFormByIdx } from "Update/lib/redux/resumeSlice";
 import type { ResumeEducation } from "Update/lib/redux/types";
 import {
   changeShowBulletPoints,
@@ -17,6 +17,7 @@ import {
 } from "Update/lib/redux/settingsSlice";
 import { useState } from "react";
 import { ResumeForm } from ".";
+import { addEducationSection } from "Update/lib/redux/resumeSlice";
 
 export const EducationsForm = () => {
   
@@ -28,16 +29,23 @@ export const EducationsForm = () => {
   const router = useRouter();
   const resumeid = authService.getResumeId();
   const buttonClicked = authService.getbuttonClicked();
-  const [count, setcount] = useState(0);
+  let [count, setcount] = useState(0);
   const [educationData, setEducation] = useState([]);
+  const [addSectionExecuted, setAddSectionExecuted] = useState(false);
 
   useEffect(() => {
     if (buttonClicked === 1 && resumeid) {
       handleSubmitEducation();
     }
-  }, [buttonClicked]); // Run the effect whenever buttonClicked changes
-
+  }, [buttonClicked]);
   const handleSubmitEducation = async () => {
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/education/${resumeid}`, {
+        method: 'DELETE',
+      });
+  } catch (error) {
+    console.error('Une erreur est survenue lors de la suppression :', error);
+  }
     try {
       const updatedEducations = educations.map((education) => {
         return {
@@ -68,41 +76,79 @@ export const EducationsForm = () => {
       console.error("Error:", error);
     }
   };
+  useEffect(() => {
+    const fetchresumeById = async () => {
+      try {
+        const resume = await fetchResumeById();
+        if (resume) {
+          const NEWeducations = resume.educations;
+          setcount(NEWeducations.length);
+          console.log(count)
+          for (let i = 0; i < NEWeducations.length; i++) {
+            dispatch(addEducationSection());
+            const education = NEWeducations[i];
+            dispatch(changeEducations({ idx: i, field: "school", value: education.school }));
+            dispatch(changeEducations({ idx: i, field: "date", value: education.date }));
+            dispatch(changeEducations({ idx: i, field: "descriptions", value: [education.descriptions] }));
+            dispatch(changeEducations({ idx: i, field: "degree", value: education.degree }));
+            dispatch(changeEducations({ idx: i, field: "gpa", value: education.gpa }));         
+          }
 
- /* const fetchresumeById = async () => {
-    try {
-      
-      const resumeid = authService.getResumeId();
+
+          
+      }
+      } catch (error) {
+        console.error("Error fetching resume data:", error);
+      }
+    };
   
-      
+    fetchresumeById();
+  }, []);
+  const fetchResumeById = async () => {
+    try {
+      const resumeid = authService.getResumeId();
+
       if (!resumeid) {
         throw new Error("Resume ID not available");
       }
-  
-      
+
       const response = await fetch(`http://localhost:3001/api/v1/resume/UpdateView/${resumeid}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-       
       });
-  
-      
+
       if (!response.ok) {
         throw new Error("Failed to fetch education data");
       }
+
       const resume = await response.json();
       console.log(resume);
-  
-  
       return resume;
     } catch (error) {
       console.error("Error fetching education data:", error);
       return null;
     }
   };
-  fetchresumeById();*/
+  
+ 
+
+
+const [activationCount, setActivationCount] = useState(0);
+console.log(activationCount);
+
+useEffect(() => {
+
+  if (educations.length > count && activationCount < 500) {
+    for (let i = educations.length; i > count; i--) {
+      dispatch(deleteSectionInFormByIdx({ form: "educations", idx: i }));
+      setActivationCount(prevCount => prevCount + 1);
+    }
+    
+  }
+}, [activationCount]);
+  
 
 
   return (

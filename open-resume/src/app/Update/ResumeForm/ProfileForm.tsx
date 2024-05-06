@@ -46,9 +46,20 @@ export const ProfileForm = () => {
 
     fetchresumeById();
   }, [dispatch]);
-
+  useEffect(() => {
+    if (buttonClicked === 1 && resumeid) {
+      handleSubmit();
+    }
+  }, [buttonClicked]); 
   const handleSubmit = async () => {
     try {
+      try {
+        const response = await fetch(`http://localhost:3001/api/v1/per-inf/${resumeid}`, {
+          method: 'DELETE',
+        });
+    } catch (error) {
+      console.error('Une erreur est survenue lors de la suppression :', error);
+    }
       const response = await fetch("http://localhost:3001/api/v1/per-inf/createPerInf", {
         method: "POST",
         headers: {
