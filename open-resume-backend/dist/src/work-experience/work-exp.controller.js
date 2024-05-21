@@ -31,8 +31,12 @@ let WorkExpController = class WorkExpController {
     async updateWorkExp(id, updateWorkExpDto) {
         return this.workExpService.updateWorkExp(id, updateWorkExpDto);
     }
-    remove(id) {
-        return this.workExpService.remove(+id);
+    async remove(id) {
+        await this.workExpService.remove(+id);
+    }
+    async findjobTitle(jobTitle) {
+        const workExp = await this.workExpService.findjobtitle(jobTitle);
+        return { workExp };
     }
 };
 exports.WorkExpController = WorkExpController;
@@ -63,8 +67,15 @@ __decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], WorkExpController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('findjobTitle/:jobTitle'),
+    __param(0, (0, common_1.Param)('jobTitle')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], WorkExpController.prototype, "findjobTitle", null);
 exports.WorkExpController = WorkExpController = __decorate([
     (0, common_1.Controller)('work-exp'),
     __metadata("design:paramtypes", [work_exp_service_1.WorkExpService])

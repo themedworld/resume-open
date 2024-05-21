@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { PerInf } from 'src/Personal-information/entities/per-inf.entity';
 import { Module } from '@nestjs/common';
 import { PerInfService } from './per-inf.service';

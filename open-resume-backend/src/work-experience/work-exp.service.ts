@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWorkExpDto } from './dto/create-work-exp.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,6 +8,13 @@ import { Resume } from 'src/resume/entities/resume.entity';
 import { UpdateWorkExpDto } from './dto/update-work-exp.tdo';
 @Injectable()
 export class WorkExpService {
+  findJob: any;
+  findJobTitle: any;
+
+  findWorkExpByJobTitle(_jobTitle: string) {
+    throw new Error('Method not implemented.');
+  }
+  find: any;
 
   constructor(
     @InjectRepository(WorkExp)
@@ -47,5 +55,22 @@ export class WorkExpService {
   }
   async remove(id: number): Promise<void> {
     await this.WorkExpRepository.delete({ resume: { id } });
+  }
+  async findjobtitle(jobTitle: string): Promise<{ id: number, resumeid: number, company: string, jobTitle: string, date: string, description: string }[]> {
+    const workExp = await this.WorkExpRepository
+      .createQueryBuilder('workExp')
+      .select(['workExp.id', 'resume.id as resumeid', 'workExp.company', 'workExp.jobTitle', 'workExp.date', 'workExp.descriptions']) // Utilisation de "workExp" au lieu de "jobTitle"
+      .leftJoin('workExp.resume', 'resume')
+      .where('workExp.jobTitle ILIKE :jobTitle', { jobTitle: `%${jobTitle}%` })
+      .getRawMany();
+  
+    return workExp.map(workExp => ({
+      id: workExp.id,
+      resumeid: workExp.resumeid,
+      company: workExp.company,
+      jobTitle: workExp.jobTitle,
+      date: workExp.date,
+      description: workExp.descriptions, // Utilisation de "descriptions" au lieu de "description"
+    }));
   }
 }

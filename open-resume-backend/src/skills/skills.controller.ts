@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Controller, Get, Post, Body, Patch, Param, Delete, Put, ParseIntPipe } from '@nestjs/common';
 import { SkillsService } from './skills.service';
 import { CreateSkillsDto } from './dto/create-skill.dto';
@@ -22,6 +23,7 @@ export class SkillsController {
     return { skills, count };
   }
   @Put(':id')
+  // eslint-disable-next-line prettier/prettier
   async updateSkills(@Param('id') id: number, @Body() updateSkillsDto: UpdateSkillsDto): Promise<Skills> {
     return this.skillsService.updateSkills(id, updateSkillsDto);
   }

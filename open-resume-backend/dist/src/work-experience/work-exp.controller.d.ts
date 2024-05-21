@@ -12,4 +12,14 @@ export declare class WorkExpController {
     }>;
     updateWorkExp(id: number, updateWorkExpDto: UpdateWorkExpDto): Promise<WorkExp>;
     remove(id: string): Promise<void>;
+    findjobTitle(jobTitle: string): Promise<{
+        workExp: {
+            id: number;
+            resumeid: number;
+            company: string;
+            jobTitle: string;
+            date: string;
+            description: string;
+        }[];
+    }>;
 }

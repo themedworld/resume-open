@@ -19,6 +19,9 @@ const work_exp_entity_1 = require("./entities/work-exp.entity");
 const typeorm_2 = require("typeorm");
 const resume_entity_1 = require("../resume/entities/resume.entity");
 let WorkExpService = class WorkExpService {
+    findWorkExpByJobTitle(_jobTitle) {
+        throw new Error('Method not implemented.');
+    }
     constructor(WorkExpRepository, ResumeRepository) {
         this.WorkExpRepository = WorkExpRepository;
         this.ResumeRepository = ResumeRepository;
@@ -52,6 +55,22 @@ let WorkExpService = class WorkExpService {
     }
     async remove(id) {
         await this.WorkExpRepository.delete({ resume: { id } });
+    }
+    async findjobtitle(jobTitle) {
+        const workExp = await this.WorkExpRepository
+            .createQueryBuilder('workExp')
+            .select(['workExp.id', 'resume.id as resumeid', 'workExp.company', 'workExp.jobTitle', 'workExp.date', 'workExp.descriptions'])
+            .leftJoin('workExp.resume', 'resume')
+            .where('workExp.jobTitle ILIKE :jobTitle', { jobTitle: `%${jobTitle}%` })
+            .getRawMany();
+        return workExp.map(workExp => ({
+            id: workExp.id,
+            resumeid: workExp.resumeid,
+            company: workExp.company,
+            jobTitle: workExp.jobTitle,
+            date: workExp.date,
+            description: workExp.descriptions,
+        }));
     }
 };
 exports.WorkExpService = WorkExpService;
