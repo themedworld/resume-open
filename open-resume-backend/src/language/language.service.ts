@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLanguageDto } from './dto/create-language.dto';
 import { InjectRepository } from '@nestjs/typeorm';

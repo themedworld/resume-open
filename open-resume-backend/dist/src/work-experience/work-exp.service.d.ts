@@ -6,6 +6,10 @@ import { UpdateWorkExpDto } from './dto/update-work-exp.tdo';
 export declare class WorkExpService {
     private WorkExpRepository;
     private ResumeRepository;
+    findJob: any;
+    findJobTitle: any;
+    findWorkExpByJobTitle(_jobTitle: string): void;
+    find: any;
     constructor(WorkExpRepository: Repository<WorkExp>, ResumeRepository: Repository<Resume>);
     createWorkExp(createWorkExpDtoArray: CreateWorkExpDto[]): Promise<WorkExp[]>;
     updateWorkExp(id: number, updateWorkExpDto: UpdateWorkExpDto): Promise<WorkExp>;

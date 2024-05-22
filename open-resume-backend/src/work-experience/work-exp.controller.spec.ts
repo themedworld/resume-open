@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Test, TestingModule } from '@nestjs/testing';
 import { WorkExpController } from './work-exp.controller';
 import { WorkExpService } from './work-exp.service';

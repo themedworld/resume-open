@@ -5,10 +5,22 @@ import { UpdatePerInfDto } from './dto/update-per-inf.dto';
 export declare class PerInfController {
     private readonly perInfService;
     constructor(perInfService: PerInfService);
-    craetePerInf(createPerInfDto: CreatePerInfDto): Promise<{
-        perinf: PerInf;
+    createPerInf(createPerInfDto: CreatePerInfDto): Promise<{
+        perInf: PerInf;
     }>;
     updatePerInf(id: number, updatePerInfDto: UpdatePerInfDto): Promise<PerInf>;
-    findPerInfByResumeId(id: any): Promise<PerInf>;
-    remove(id: string): Promise<void>;
+    findPerInfByResumeId(id: number): Promise<PerInf>;
+    remove(id: number): Promise<void>;
+    findLocation(location: string): Promise<{
+        perInf: {
+            id: number;
+            resumeid: number;
+            name: string;
+            summary: string;
+            email: string;
+            phone: string;
+            location: string;
+            url: string;
+        }[];
+    }>;
 }

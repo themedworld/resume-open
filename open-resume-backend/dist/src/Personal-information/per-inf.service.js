@@ -13,43 +13,65 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PerInfService = void 0;
-const per_inf_entity_1 = require("./entities/per-inf.entity");
-const resume_entity_1 = require("../resume/entities/resume.entity");
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
+const per_inf_entity_1 = require("./entities/per-inf.entity");
+const resume_entity_1 = require("../resume/entities/resume.entity");
 let PerInfService = class PerInfService {
-    constructor(PerInfRepository, ResumeRepository) {
-        this.PerInfRepository = PerInfRepository;
-        this.ResumeRepository = ResumeRepository;
+    constructor(perInfRepository, resumeRepository) {
+        this.perInfRepository = perInfRepository;
+        this.resumeRepository = resumeRepository;
     }
     async createPerInf(createPerInfDto) {
-        const resume = await this.ResumeRepository.findOne({ where: { id: createPerInfDto.resumeid } });
+        const resume = await this.resumeRepository.findOne({ where: { id: createPerInfDto.resumeid } });
         if (!resume) {
             throw new common_1.NotFoundException('Resume not found');
         }
-        const PerInf = this.PerInfRepository.create(createPerInfDto);
-        PerInf.resume = resume;
-        return this.PerInfRepository.save(PerInf);
+        const perInf = this.perInfRepository.create(createPerInfDto);
+        perInf.resume = resume;
+        return this.perInfRepository.save(perInf);
     }
     async updatePerInf(id, updatePerInfDto) {
-        const perInf = await this.PerInfRepository.findOne({ where: { id } });
+        const perInf = await this.perInfRepository.findOne({ where: { id } });
         if (!perInf) {
             throw new common_1.NotFoundException(`PerInf with id ${id} not found`);
         }
-        perInf.name = updatePerInfDto.name;
-        perInf.summary = updatePerInfDto.summary;
-        perInf.email = updatePerInfDto.email;
-        perInf.phone = updatePerInfDto.phone;
-        perInf.location = updatePerInfDto.location;
-        perInf.url = updatePerInfDto.url;
-        return this.PerInfRepository.save(perInf);
+        Object.assign(perInf, updatePerInfDto);
+        return this.perInfRepository.save(perInf);
     }
     async remove(id) {
-        await this.PerInfRepository.delete({ resume: { id } });
+        await this.perInfRepository.delete(id);
     }
     async findPerInfByResumeId(id) {
-        return this.PerInfRepository.findOne({ where: { resume: { id } } });
+        return this.perInfRepository.findOne({ where: { resume: { id } } });
+    }
+    async findLocation(location) {
+        const perInf = await this.perInfRepository
+            .createQueryBuilder('perInf')
+            .select([
+            'perInf.id',
+            'resume.id AS resumeid',
+            'perInf.name',
+            'perInf.summary',
+            'perInf.email',
+            'perInf.phone',
+            'perInf.location',
+            'perInf.url',
+        ])
+            .leftJoin('perInf.resume', 'resume')
+            .where('perInf.location ILIKE :location', { location: `%${location}%` })
+            .getRawMany();
+        return perInf.map((item) => ({
+            id: item.id,
+            resumeid: item.resumeid,
+            name: item.name,
+            summary: item.summary,
+            email: item.email,
+            phone: item.phone,
+            location: item.location,
+            url: item.url,
+        }));
     }
 };
 exports.PerInfService = PerInfService;

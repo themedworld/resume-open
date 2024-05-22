@@ -5,3 +5,6 @@ export declare class CreateWorkExpDto {
     date: string;
     descriptions: string[];
 }
+export declare class work_exp {
+    jobtitle: string;
+}

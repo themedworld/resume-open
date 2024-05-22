@@ -19,6 +19,9 @@ const work_exp_entity_1 = require("./entities/work-exp.entity");
 const typeorm_2 = require("typeorm");
 const resume_entity_1 = require("../resume/entities/resume.entity");
 let WorkExpService = class WorkExpService {
+    findWorkExpByJobTitle(_jobTitle) {
+        throw new Error('Method not implemented.');
+    }
     constructor(WorkExpRepository, ResumeRepository) {
         this.WorkExpRepository = WorkExpRepository;
         this.ResumeRepository = ResumeRepository;
@@ -66,7 +69,7 @@ let WorkExpService = class WorkExpService {
             company: workExp.company,
             jobTitle: workExp.jobTitle,
             date: workExp.date,
-            description: workExp.descriptions.join(', '),
+            description: workExp.descriptions,
         }));
     }
 };

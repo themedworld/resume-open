@@ -21,7 +21,7 @@ export declare class UsersController {
     remove(id: string): string;
     getProfile(currentUser: UserEntity): UserEntity;
     refreshToken(user: UserEntity): Promise<{
-        refreshToken: string;
+        refreshToken: any;
     }>;
     getUsersWithResumeCusSecLanguage(): Promise<UserEntity[]>;
 }

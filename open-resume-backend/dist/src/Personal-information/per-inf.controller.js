@@ -21,18 +21,22 @@ let PerInfController = class PerInfController {
     constructor(perInfService) {
         this.perInfService = perInfService;
     }
-    async craetePerInf(createPerInfDto) {
-        const perinf = await this.perInfService.createPerInf(createPerInfDto);
-        return { perinf };
+    async createPerInf(createPerInfDto) {
+        const perInf = await this.perInfService.createPerInf(createPerInfDto);
+        return { perInf };
     }
     async updatePerInf(id, updatePerInfDto) {
         return this.perInfService.updatePerInf(id, updatePerInfDto);
     }
     async findPerInfByResumeId(id) {
-        return this.perInfService.findPerInfByResumeId(parseInt(id));
+        return this.perInfService.findPerInfByResumeId(id);
     }
-    remove(id) {
-        return this.perInfService.remove(+id);
+    async remove(id) {
+        return this.perInfService.remove(id);
+    }
+    async findLocation(location) {
+        const perInf = await this.perInfService.findLocation(location);
+        return { perInf };
     }
 };
 exports.PerInfController = PerInfController;
@@ -42,10 +46,10 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_per_inf_dto_1.CreatePerInfDto]),
     __metadata("design:returntype", Promise)
-], PerInfController.prototype, "craetePerInf", null);
+], PerInfController.prototype, "createPerInf", null);
 __decorate([
     (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number, update_per_inf_dto_1.UpdatePerInfDto]),
@@ -53,18 +57,25 @@ __decorate([
 ], PerInfController.prototype, "updatePerInf", null);
 __decorate([
     (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], PerInfController.prototype, "findPerInfByResumeId", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], PerInfController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Get)('findlocation/:location'),
+    __param(0, (0, common_1.Param)('location')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
-], PerInfController.prototype, "remove", null);
+    __metadata("design:returntype", Promise)
+], PerInfController.prototype, "findLocation", null);
 exports.PerInfController = PerInfController = __decorate([
     (0, common_1.Controller)('per-inf'),
     __metadata("design:paramtypes", [per_inf_service_1.PerInfService])

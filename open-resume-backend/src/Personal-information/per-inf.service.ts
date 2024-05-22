@@ -1,48 +1,74 @@
-import { PerInf } from 'src/Personal-information/entities/per-inf.entity';
-import { Resume } from 'src/resume/entities/resume.entity';
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreatePerInfDto } from './dto/create-per-inf.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PerInf } from './entities/per-inf.entity';
+import { Resume } from 'src/resume/entities/resume.entity';
+import { CreatePerInfDto } from './dto/create-per-inf.dto';
 import { UpdatePerInfDto } from './dto/update-per-inf.dto';
+
 @Injectable()
 export class PerInfService {
-
   constructor(
     @InjectRepository(PerInf)
-    private PerInfRepository: Repository<PerInf>,
+    private readonly perInfRepository: Repository<PerInf>,
     @InjectRepository(Resume)
-    private ResumeRepository: Repository<Resume>,
+    private readonly resumeRepository: Repository<Resume>,
   ) {}
 
   async createPerInf(createPerInfDto: CreatePerInfDto): Promise<PerInf> {
-    const resume = await this.ResumeRepository.findOne({ where: { id: createPerInfDto.resumeid } });
+    const resume = await this.resumeRepository.findOne({ where: { id: createPerInfDto.resumeid } });
     if (!resume) {
       throw new NotFoundException('Resume not found');
     }
-    const PerInf = this.PerInfRepository.create(createPerInfDto);
-    PerInf.resume = resume;
-    return this.PerInfRepository.save(PerInf);
+    const perInf = this.perInfRepository.create(createPerInfDto);
+    perInf.resume = resume;
+    return this.perInfRepository.save(perInf);
   }
+
   async updatePerInf(id: number, updatePerInfDto: UpdatePerInfDto): Promise<PerInf> {
-    const perInf = await this.PerInfRepository.findOne({ where: { id } });
+    const perInf = await this.perInfRepository.findOne({ where: { id } });
     if (!perInf) {
       throw new NotFoundException(`PerInf with id ${id} not found`);
     }
-    perInf.name = updatePerInfDto.name;
-    perInf.summary = updatePerInfDto.summary;
-    perInf.email = updatePerInfDto.email;
-    perInf.phone = updatePerInfDto.phone;
-    perInf.location = updatePerInfDto.location;
-    perInf.url = updatePerInfDto.url;
-    return this.PerInfRepository.save(perInf);
+    Object.assign(perInf, updatePerInfDto);
+    return this.perInfRepository.save(perInf);
   }
-
 
   async remove(id: number): Promise<void> {
-    await this.PerInfRepository.delete({ resume: { id } });
+    await this.perInfRepository.delete(id);
   }
-  async findPerInfByResumeId(id) {
-    return this.PerInfRepository.findOne({ where: { resume: { id } } });
+
+  async findPerInfByResumeId(id: number): Promise<PerInf> {
+    return this.perInfRepository.findOne({ where: { resume: { id } } });
+  }
+
+  async findLocation(location: string): Promise<{ id: number, resumeid: number, name: string, summary: string, email: string, phone: string, location: string, url: string }[]> {
+    const perInf = await this.perInfRepository
+      .createQueryBuilder('perInf')
+      .select([
+        'perInf.id',
+        'resume.id AS resumeid',
+        'perInf.name',
+        'perInf.summary',
+        'perInf.email',
+        'perInf.phone',
+        'perInf.location',
+        'perInf.url',
+      ])
+      .leftJoin('perInf.resume', 'resume')
+      .where('perInf.location ILIKE :location', { location: `%${location}%` })
+      .getRawMany();
+
+    return perInf.map((item) => ({
+      id: item.id,
+      resumeid: item.resumeid,
+      name: item.name,
+      summary: item.summary,
+      email: item.email,
+      phone: item.phone,
+      location: item.location,
+      url: item.url,
+    }));
   }
 }

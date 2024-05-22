@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { IsNotEmpty, IsString, IsDate, IsNumber,  IsArray } from 'class-validator';
 
 export class CreateWorkExpDto {
@@ -21,4 +22,9 @@ export class CreateWorkExpDto {
   @IsArray({ message: 'The descriptions must be an array' })
   @IsString({ each: true, message: 'Each description must be a string' })
   descriptions: string[];
+}
+export class work_exp {
+  @IsNotEmpty({ message: 'The job title name is required' })
+  @IsString({ message: 'The job title name must be a string' })
+  jobtitle: string;
 }

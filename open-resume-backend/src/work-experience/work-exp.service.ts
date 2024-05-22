@@ -7,6 +7,13 @@ import { Resume } from 'src/resume/entities/resume.entity';
 import { UpdateWorkExpDto } from './dto/update-work-exp.tdo';
 @Injectable()
 export class WorkExpService {
+  findJob: any;
+  findJobTitle: any;
+
+  findWorkExpByJobTitle(_jobTitle: string) {
+    throw new Error('Method not implemented.');
+  }
+  find: any;
 
   constructor(
     @InjectRepository(WorkExp)
@@ -48,7 +55,6 @@ export class WorkExpService {
   async remove(id: number): Promise<void> {
     await this.WorkExpRepository.delete({ resume: { id } });
   }
-
   async findjobtitle(jobTitle: string): Promise<{ id: number, resumeid: number, company: string, jobTitle: string, date: string, description: string }[]> {
     const workExp = await this.WorkExpRepository
       .createQueryBuilder('workExp')
@@ -63,9 +69,7 @@ export class WorkExpService {
       company: workExp.company,
       jobTitle: workExp.jobTitle,
       date: workExp.date,
-      description: workExp.descriptions.join(', '), // Utilisation de "descriptions" au lieu de "description"
+      description: workExp.descriptions, // Utilisation de "descriptions" au lieu de "description"
     }));
   }
-  
-
 }
