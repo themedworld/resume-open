@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserEntity = exports.UserRole = void 0;
 const typeorm_1 = require("typeorm");
 const resume_entity_1 = require("../../resume/entities/resume.entity");
+const message_entity_1 = require("../../message/entities/message.entity");
 var UserRole;
 (function (UserRole) {
     UserRole["Recruteur"] = "recruteur";
@@ -80,6 +81,14 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => resume_entity_1.Resume, resume => resume.user),
     __metadata("design:type", Array)
 ], UserEntity.prototype, "resume", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => message_entity_1.Message, message => message.sender),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "sentMessages", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => message_entity_1.Message, message => message.receiver),
+    __metadata("design:type", Array)
+], UserEntity.prototype, "receivedMessages", void 0);
 exports.UserEntity = UserEntity = __decorate([
     (0, typeorm_1.Entity)()
 ], UserEntity);

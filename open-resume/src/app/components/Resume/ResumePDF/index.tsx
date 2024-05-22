@@ -1,4 +1,5 @@
-import { Page, View, Document, Image } from "@react-pdf/renderer";
+"use client";
+import { Page, View, Document, Image ,PDFDownloadLink} from "@react-pdf/renderer";
 import { styles, spacing } from "components/Resume/ResumePDF/styles";
 import { ResumePDFProfile } from "components/Resume/ResumePDF/ResumePDFProfile";
 import { ResumePDFWorkExperience } from "components/Resume/ResumePDF/ResumePDFWorkExperience";
@@ -13,16 +14,18 @@ import { SuppressResumePDFErrorMessage } from "components/Resume/ResumePDF/commo
 import { ResumePDFLanguage } from "./ResumePDFLanguage";
 import { authService } from "components/form/authService";
 import { useEffect, useState } from "react";
-
+import Img from 'C:/Users/XPS/Desktop/Open-resume-app/open-resume-backend/assets/photo/th.jpg';
 export const ResumePDF = ({
   resume,
   settings,
   isPDF = false,
+  imageUrl,
  
 }: {
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
+  imageUrl:string
 
 }) => {
   
@@ -90,42 +93,9 @@ export const ResumePDF = ({
       />)
       
   };
+  
 
-  useEffect(() => {
-    fetchphotoById();
-  console.log(imageUrl)
-    }, [ ]);
-    const fetchphotoById = async () => {
-      try {
-        const resumeid = authService.getResumeId();
-  
-        if (!resumeid) {
-          throw new Error("Resume ID not available");
-        }
-  
-        const response = await fetch(`http://localhost:3001/api/v1/uploaded-files/${resumeid}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-  
-        if (!response.ok) {
-          throw new Error("Failed to fetch education data");
-        }
-  
-        const photo = await response.json();
-        setimageUrl(photo.fileUrl);
-        console.log(photo);
-        return photo;
-      } catch (error) {
-        console.error("Error fetching education data:", error);
-        return null;
-      }
-    };  
-  const [imageUrl, setimageUrl] = useState<string>("");
-  const imageWidth = 100;
-  const imageHeight = 100;
+
   return (
     <>
       <Document title={`${name} Resume`} author={name} producer={"OpenResume"}>
@@ -152,16 +122,14 @@ export const ResumePDF = ({
               ...styles.flexCol,
               padding: `${spacing[0]} ${spacing[20]}`,
             }}
-          > 
-<img src={imageUrl} alt="Photo" width={imageWidth} height={imageHeight} />
-            <br />
-            <br />
-            
+          >  
+
 
             <ResumePDFProfile
               profile={profile}
               themeColor={themeColor}
               isPDF={isPDF}
+              imageUrl={imageUrl}
             />  
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];
@@ -171,7 +139,9 @@ export const ResumePDF = ({
         </Page>
       </Document>
       <SuppressResumePDFErrorMessage />
+
     </>
+    
   );
 };
 

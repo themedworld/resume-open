@@ -20,16 +20,19 @@ const defaultFileState = {
 export const ResumeDropzone = ({
   onFileUrlChange,
   className,
+  
 }: {
   onFileUrlChange: (fileUrl: string) => void;
   className?: string;
+  
 }) => {
   const [file, setFile] = useState(defaultFileState);
   authService.setfileUrl(file.fileUrl);
 
   const [isHoveredOnDropzone, setIsHoveredOnDropzone] = useState(false);
-  const [fileUrl, setfileUrl] = useState<string>("");
-  authService.setfileUrl(fileUrl)
+
+
+
 
   const resumeId = authService.getResumeId();
   const hasFile = Boolean(file.name);
@@ -46,13 +49,7 @@ export const ResumeDropzone = ({
     onFileUrlChange(fileUrl);
   };
 
-  const buttonClicked = authService.getbuttonClicked();
-  useEffect(() => {
-    if (buttonClicked === 1 && resumeId) {
-      uploadFileToDatabase();
-    }
-  }, [buttonClicked]);
-
+  
   const onDrop = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const newFile = event.dataTransfer.files[0];
@@ -83,10 +80,11 @@ export const ResumeDropzone = ({
     console.error('Une erreur est survenue lors de la suppression :', error);
   }
     try {
+      
       const fileInfo = {
         name: file.name,
         size: file.size,
-        fileUrl: file.fileUrl,
+        fileUrl: await blobToBase64(file.fileUrl),
         resumeid: resumeId,
       };
 
@@ -104,12 +102,53 @@ export const ResumeDropzone = ({
 
       
     }
+    
 
     
     catch (error) {
       console.error("Error uploading file information:", error);
     }
+    
   };
+  const fetchphotoById = async () => {
+    try {
+      const resumeid = authService.getResumeId();
+
+      if (!resumeid) {
+        throw new Error("Resume ID not available");
+      }
+
+      const response = await fetch(`http://localhost:3001/api/v1/uploaded-files/${resumeid}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch education data");
+      }
+
+      const photo = await response.json();
+      defaultFileState.fileUrl=photo.fileUrl;
+      
+
+      
+      console.log(photo);
+      return photo;
+    } catch (error) {
+      console.error("Error fetching education data:", error);
+      return null;
+    }
+  };  
+
+  
+  async function blobToBase64(blobUrl: string): Promise<string> {
+    const response = await axios.get(blobUrl, { responseType: 'arraybuffer' });
+    const buffer = Buffer.from(response.data);
+    const base64 = buffer.toString('base64');
+    return base64;
+  }
 
   
 

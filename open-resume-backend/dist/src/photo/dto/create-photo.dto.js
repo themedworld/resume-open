@@ -26,7 +26,6 @@ __decorate([
 ], PhotoDto.prototype, "size", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)({ message: 'Le nom du fichier est requis' }),
-    (0, class_validator_1.IsString)({ message: 'Le fichier ne peut pas être vide' }),
     __metadata("design:type", String)
 ], PhotoDto.prototype, "fileUrl", void 0);
 __decorate([

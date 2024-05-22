@@ -28,7 +28,7 @@ __decorate([
     __metadata("design:type", String)
 ], Photo.prototype, "size", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ type: "text" }),
     __metadata("design:type", String)
 ], Photo.prototype, "fileUrl", void 0);
 __decorate([

@@ -1,4 +1,5 @@
 "use client";
+import  { createContext, useContext} from 'react';
 import { useState, useMemo } from "react";
 import { ResumeIframeCSR } from "components/Resume/ResumeIFrame";
 import { ResumePDF } from "components/Resume/ResumePDF";
@@ -6,6 +7,7 @@ import {
   ResumeControlBarCSR,
   ResumeControlBarBorder,
 } from "components/Resume/ResumeControlBar";
+import { View } from "@react-pdf/renderer";
 import { FlexboxSpacer } from "components/FlexboxSpacer";
 import { useAppSelector } from "lib/redux/hooks";
 import { selectResume } from "lib/redux/resumeSlice";
@@ -16,15 +18,26 @@ import {
   useRegisterReactPDFHyphenationCallback,
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
+import axios from "axios";
+import { authService } from "components/form/authService";
+import React, { useEffect } from "react";
+import { usePDF } from "@react-pdf/renderer";
 
-export const Resume = () => {
+const DocumentContext = createContext(null);
+export const Resume = ({
+  imageUrl,
+
+}: {
+  imageUrl: string;
+ 
+}) => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
-  const image ="blob:http://localhost:3000/e641d356-2a39-404d-ad2a-9ef4d6eb19dd"
+  
   const document = useMemo(
-    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} />,
-    [resume, settings]
+    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} imageUrl={imageUrl} />,
+    [resume, settings,imageUrl]
   );
 
   useRegisterReactPDFFont();
@@ -32,6 +45,7 @@ export const Resume = () => {
 
   return (
     <>
+
       <NonEnglishFontsCSSLazyLoader />
       <div className="relative flex justify-center md:justify-start">
         <FlexboxSpacer maxWidth={50} className="hidden md:block" />
@@ -42,10 +56,12 @@ export const Resume = () => {
               scale={scale}
               enablePDFViewer={DEBUG_RESUME_PDF_FLAG}
             >
+
               <ResumePDF
                 resume={resume}
                 settings={settings}
                 isPDF={DEBUG_RESUME_PDF_FLAG}
+                imageUrl={imageUrl}
               />
             </ResumeIframeCSR>
           </section>
@@ -59,6 +75,9 @@ export const Resume = () => {
         </div>
         <ResumeControlBarBorder />
       </div>
+
+
     </>
   );
 };
+export const useDocument = () => useContext(DocumentContext);

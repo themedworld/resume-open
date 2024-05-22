@@ -1,3 +1,6 @@
+import { Resumeimage } from 'src/resumeimage/entities/resumeimage.entity';
+import { Photo } from './../photo/entities/photo.entity';
+
 import { ResSet } from './../Resume-Setting/entities/res-set.entity';
 import { WorkExp } from './../work-experience/entities/work-exp.entity';
 import { Skills } from './../skills/entities/skill.entity';
@@ -18,6 +21,8 @@ import { ProjectService } from 'src/project/project.service';
 import { ResSetService } from 'src/Resume-Setting/res-set.service';
 import { SkillsService } from 'src/skills/skills.service';
 import { WorkExpService } from 'src/work-experience/work-exp.service';
+import { UploadedFileService } from 'src/photo/photo.service';
+import { ResumeimageService } from 'src/resumeimage/resumeimage.service';
 @Controller('resume')
 export class ResumeController {
   constructor(
@@ -31,7 +36,8 @@ export class ResumeController {
     private readonly skillsService: SkillsService,
     private readonly workExpService: WorkExpService,
     private readonly cusSecService: CusSecService,
-
+    private readonly uploadedFileService:UploadedFileService,
+    private readonly resumeimageService:ResumeimageService,
   ) {}
 
   @Post('createresume')
@@ -71,22 +77,28 @@ export class ResumeController {
 
     // Mappez chaque utilisateur pour obtenir ses résumés avec les sections personnalisées et les éducations associées
     const usersWithResumes = await Promise.all(users.map(async (user) => {
+      // Récupérer le nom et l'ID de l'utilisateur
+      const { name, id } = user;
+
+      // Récupérer les résumés de l'utilisateur avec les détails associés
       const resumes = await this.resumeService.findResumeByUserId(user.id);
       const resumesWithDetails = await Promise.all(resumes.map(async (resume) => {
         const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
-        const educations = await this.educationService.findEducationByResumeId(resume.id);
+        const location = perInfs ? perInfs.location : null;
         const languages = await this.languageService.findLanguageByResumeId(resume.id);
+        const Languagess = languages.map(Language => ({ Language: Language.language }));
         const skills = await this.skillsService.findSkillsByResumeId(resume.id);
+        const featuredSkills = skills.map(skill => ({ skill: skill.featuredSkills }));
         const WorkExps = await this.workExpService.findWorkExpByResumeId(resume.id);
-
-        return { resume, perInfs, educations, languages, WorkExps, skills };
+        const workExpsWithJobTitles = WorkExps.map(workExp => ({ jobTitle: workExp.jobTitle }));
+        return { resume, location, languagess:Languagess, jobTitle:workExpsWithJobTitles, featuredSkills:featuredSkills };
       }));
-      return { user, resumes: resumesWithDetails };
+
+      return { user: { name, id }, resumes: resumesWithDetails };
     }));
 
     return usersWithResumes;
   }
-
   @Get("UpdateView/:id")
   async getResumeById(@Param("id") resumeId: number): Promise<any> {
    
@@ -109,6 +121,7 @@ export class ResumeController {
   
    
     return {
+      resume,
       ResumeProfile: perInfs,
       educations,
       languages,
@@ -120,4 +133,35 @@ export class ResumeController {
     };
   }
   
+
+  @Get(':userId/resumes')
+  async getUserResumes(@Param('userId', ParseIntPipe) userId: number): Promise<any> {
+    // Trouver les CV associés à l'utilisateur
+    const resumes: Resume[] = await this.resumeService.findResumeByUserId(userId);
+    const count = resumes.length;
+    // Vérifier si l'utilisateur a des CV
+    if (resumes.length === 0) {
+      throw new NotFoundException('Aucun CV trouvé pour cet utilisateur');
+    }
+
+    // Récupérer les informations pour chaque CV
+    const resumesWithDetails = await Promise.all(
+      resumes.map(async (resume) => {
+        const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
+        const photo=await this.uploadedFileService.findPhotoByResumeId(resume.id);
+        const Resumeimage=await this.resumeimageService.findPhotoByResumeId(resume.id);
+
+        return {
+          resume,
+          ResumeProfile: perInfs,
+          Photo:photo,
+          Resumeimage:Resumeimage,
+       
+        };
+      }),
+    );
+
+    return {resumesWithDetails ,count};
+  }
+
 }

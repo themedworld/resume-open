@@ -6,6 +6,7 @@ import {
   UserGroupIcon,
   BuildingLibraryIcon,
   PowerIcon,PlusIcon,
+  ChatBubbleBottomCenterIcon
 } from "@heroicons/react/24/outline";
 import { useRouter } from "next/navigation";
 import { authService } from "./form/authService";
@@ -21,9 +22,9 @@ export const defaultNavItems: NavItem[] = [
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {
-    label: "Team",
-    href: "/team",
-    icon: <UserGroupIcon className="w-6 h-6" />,
+    label: "messager",
+    href: "/Messager",
+    icon: <ChatBubbleBottomCenterIcon className="w-6 h-6" />,
   },
   {
     label: "Projects",
@@ -55,9 +56,9 @@ export const demandeurNavItems: NavItem[] = [
     icon: <CalendarIcon className="w-6 h-6" />,
   },
   {
-    label: "parser",
-    href: "/updatepage",
-    icon: <CalendarIcon className="w-6 h-6" />,
+    label: "message",
+    href: "/Messages",
+    icon: < ChatBubbleBottomCenterIcon className="w-6 h-6" />,
   },
   {
     label: "logout",
@@ -73,9 +74,9 @@ export const recriteurNavItems: NavItem[] = [
     icon: <HomeIcon className="w-6 h-6" />,
   },
   {
-    label: "Team",
-    href: "/Recruteur",
-    icon: <UserGroupIcon className="w-6 h-6" />,
+    label: "messager",
+    href: "/Messager",
+    icon: < ChatBubbleBottomCenterIcon className="w-6 h-6" />,
   },
   {
     label: "recriteur",

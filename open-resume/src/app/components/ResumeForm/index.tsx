@@ -17,16 +17,43 @@ import { cx } from "lib/cx";
 import { LanguageForm } from "components/ResumeForm/LanguageForm";
 import { authService } from "components/form/authService";
 import ImportImg from "importimg/page";
-const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
+import { ResumePDF } from "components/Resume/ResumePDF";
+import { selectResume } from "lib/redux/resumeSlice";
+import { selectSettings } from "lib/redux/settingsSlice";
+import { useMemo } from "react";
+import { usePDF } from "@react-pdf/renderer";
+import axios from "axios";
+const formTypeToComponent: { [type in ShowForm]: () => JSX.Element  } = {
   workExperiences: WorkExperiencesForm,
   educations: EducationsForm,
   languages: LanguageForm,
   projects: ProjectsForm,
   skills: SkillsForm,
   custom: CustomForm,
+ 
 };
 
-export const ResumeForm = () => {
+
+export const ResumeForm = ({
+  imageUrl,
+
+}: {
+  imageUrl: string;
+ 
+}) => {
+  const resume = useAppSelector(selectResume);
+  const settings = useAppSelector(selectSettings);
+  
+  const document = useMemo(
+    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} imageUrl={imageUrl} />,
+    [resume, settings,imageUrl]
+  );
+
+  const [instance, update] = usePDF({ document });
+  useEffect(() => {
+    update();
+  }, [update, document]);
+
   useSetInitialStore();
   useSaveStateToLocalStorageOnChange();
   const formsOrder = useAppSelector(selectFormsOrder);
@@ -38,6 +65,26 @@ export const ResumeForm = () => {
   const handleButtonClick = () => {
     setButtonClicked(1); 
   };
+
+ 
+
+
+
+
+  
+    
+ 
+
+  
+
+
+
+
+
+
+
+
+
 console.log (buttonClicked)
 authService.setbuttonClicked(buttonClicked);
   return (
@@ -50,7 +97,7 @@ authService.setbuttonClicked(buttonClicked);
       onMouseLeave={() => setIsHover(false)}
     >
       <section className="flex max-w-2xl flex-col gap-8 p-[var(--resume-padding)]">
-        <ImportImg></ImportImg>
+       
         <ProfileForm />
         {formsOrder.map((form) => {
           const Component = formTypeToComponent[form];

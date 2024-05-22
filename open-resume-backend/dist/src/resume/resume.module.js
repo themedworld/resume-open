@@ -30,16 +30,20 @@ const project_entity_1 = require("../project/entities/project.entity");
 const skill_entity_1 = require("../skills/entities/skill.entity");
 const education_entity_1 = require("../education/entities/education.entity");
 const education_service_1 = require("../education/education.service");
+const photo_service_1 = require("../photo/photo.service");
+const photo_entity_1 = require("../photo/entities/photo.entity");
+const resumeimage_entity_1 = require("../resumeimage/entities/resumeimage.entity");
+const resumeimage_service_1 = require("../resumeimage/resumeimage.service");
 let ResumeModule = class ResumeModule {
 };
 exports.ResumeModule = ResumeModule;
 exports.ResumeModule = ResumeModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forFeature([resume_entity_1.Resume, language_entity_1.Language, per_inf_entity_1.PerInf, cus_sec_entity_1.CusSec, res_set_entity_1.ResSet, work_exp_entity_1.WorkExp, project_entity_1.Project, skill_entity_1.Skills, education_entity_1.Education]), users_module_1.UsersModule,
+            typeorm_1.TypeOrmModule.forFeature([resume_entity_1.Resume, language_entity_1.Language, per_inf_entity_1.PerInf, cus_sec_entity_1.CusSec, res_set_entity_1.ResSet, work_exp_entity_1.WorkExp, project_entity_1.Project, skill_entity_1.Skills, education_entity_1.Education, photo_entity_1.Photo, resumeimage_entity_1.Resumeimage]), users_module_1.UsersModule,
         ],
         controllers: [resume_controller_1.ResumeController],
-        providers: [resume_service_1.ResumeService, users_service_1.UsersService, res_set_service_1.ResSetService, language_service_1.LanguageService, per_inf_service_1.PerInfService, project_service_1.ProjectService, project_service_1.ProjectService, skills_service_1.SkillsService, work_exp_service_1.WorkExpService, cus_sec_service_1.CusSecService, education_service_1.EducationService],
+        providers: [resume_service_1.ResumeService, users_service_1.UsersService, res_set_service_1.ResSetService, language_service_1.LanguageService, per_inf_service_1.PerInfService, project_service_1.ProjectService, project_service_1.ProjectService, skills_service_1.SkillsService, work_exp_service_1.WorkExpService, cus_sec_service_1.CusSecService, education_service_1.EducationService, photo_service_1.UploadedFileService, resumeimage_service_1.ResumeimageService],
         exports: [typeorm_1.TypeOrmModule],
     })
 ], ResumeModule);

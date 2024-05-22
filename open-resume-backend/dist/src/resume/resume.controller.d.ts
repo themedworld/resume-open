@@ -11,6 +11,8 @@ import { ProjectService } from 'src/project/project.service';
 import { ResSetService } from 'src/Resume-Setting/res-set.service';
 import { SkillsService } from 'src/skills/skills.service';
 import { WorkExpService } from 'src/work-experience/work-exp.service';
+import { UploadedFileService } from 'src/photo/photo.service';
+import { ResumeimageService } from 'src/resumeimage/resumeimage.service';
 export declare class ResumeController {
     private readonly resumeService;
     private readonly usersService;
@@ -22,7 +24,9 @@ export declare class ResumeController {
     private readonly skillsService;
     private readonly workExpService;
     private readonly cusSecService;
-    constructor(resumeService: ResumeService, usersService: UsersService, educationService: EducationService, languageService: LanguageService, perInfService: PerInfService, projectService: ProjectService, resSetService: ResSetService, skillsService: SkillsService, workExpService: WorkExpService, cusSecService: CusSecService);
+    private readonly uploadedFileService;
+    private readonly resumeimageService;
+    constructor(resumeService: ResumeService, usersService: UsersService, educationService: EducationService, languageService: LanguageService, perInfService: PerInfService, projectService: ProjectService, resSetService: ResSetService, skillsService: SkillsService, workExpService: WorkExpService, cusSecService: CusSecService, uploadedFileService: UploadedFileService, resumeimageService: ResumeimageService);
     createresume(createResumeDto: CreateResumeDto): Promise<{
         resume: Resume;
     }>;
@@ -35,4 +39,5 @@ export declare class ResumeController {
     remove(id: string): Promise<void>;
     getAllResumes(): Promise<any>;
     getResumeById(resumeId: number): Promise<any>;
+    getUserResumes(userId: number): Promise<any>;
 }

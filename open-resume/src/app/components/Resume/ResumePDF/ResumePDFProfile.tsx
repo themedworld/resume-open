@@ -10,21 +10,66 @@ import {
   ResumePDFText,
 } from "components/Resume/ResumePDF/common";
 import type { ResumeProfile } from "lib/redux/types";
+import { Image } from "@react-pdf/renderer";
+import { ResumeDropzone } from "components/importimg";
 
 export const ResumePDFProfile = ({
   profile,
   themeColor,
   isPDF,
+  imageUrl,
 }: {
   profile: ResumeProfile;
   themeColor: string;
   isPDF: boolean;
+  imageUrl:string;
 }) => {
   const { name, email, phone, url, summary, location } = profile;
   const iconProps = { email, phone, location, url };
-
+  
+  
   return (
     <ResumePDFSection style={{ marginTop: spacing["4"] }}>
+          
+          <div
+  style={{
+    width: 150, 
+    height: 150, 
+    marginBottom: spacing["2"], 
+    borderRadius: '50%', 
+    border: `5px solid ${themeColor}`, 
+    position: 'relative', // Ajouté pour permettre le positionnement absolu des enfants
+    overflow: 'hidden' // Pour s'assurer que rien ne dépasse du conteneur circulaire
+  }}
+>
+  <Image
+    src={imageUrl}
+    style={{
+      width: '100%',
+      height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
+      borderRadius: '50%',
+      objectFit: 'cover',
+      position: 'absolute', // Positionnement absolu pour superposition
+      top: 0,
+      left: 0
+    }}
+  />
+  <img  
+    src={imageUrl}
+    style={{
+      width: '100%',
+      height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
+      borderRadius: '50%',
+      objectFit: 'cover',
+      position: 'absolute', // Positionnement absolu pour superposition
+      top: 0,
+      left: 0
+    }} 
+  />
+</div>
+
+       
+
       <ResumePDFText
         bold={true}
         themeColor={themeColor}

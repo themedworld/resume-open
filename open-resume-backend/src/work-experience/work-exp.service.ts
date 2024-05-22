@@ -48,4 +48,24 @@ export class WorkExpService {
   async remove(id: number): Promise<void> {
     await this.WorkExpRepository.delete({ resume: { id } });
   }
+
+  async findjobtitle(jobTitle: string): Promise<{ id: number, resumeid: number, company: string, jobTitle: string, date: string, description: string }[]> {
+    const workExp = await this.WorkExpRepository
+      .createQueryBuilder('workExp')
+      .select(['workExp.id', 'resume.id as resumeid', 'workExp.company', 'workExp.jobTitle', 'workExp.date', 'workExp.descriptions']) // Utilisation de "workExp" au lieu de "jobTitle"
+      .leftJoin('workExp.resume', 'resume')
+      .where('workExp.jobTitle ILIKE :jobTitle', { jobTitle: `%${jobTitle}%` })
+      .getRawMany();
+  
+    return workExp.map(workExp => ({
+      id: workExp.id,
+      resumeid: workExp.resumeid,
+      company: workExp.company,
+      jobTitle: workExp.jobTitle,
+      date: workExp.date,
+      description: workExp.descriptions.join(', '), // Utilisation de "descriptions" au lieu de "description"
+    }));
+  }
+  
+
 }

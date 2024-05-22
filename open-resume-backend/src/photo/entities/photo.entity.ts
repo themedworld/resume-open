@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn } from "typeorm";
 import { Resume } from 'src/resume/entities/resume.entity';
 @Entity()
 export class Photo {
@@ -9,7 +9,7 @@ export class Photo {
   name:string;
   @Column()
   size:string;
-  @Column()
+  @Column({ type: "text" })
   fileUrl:string;
   
 

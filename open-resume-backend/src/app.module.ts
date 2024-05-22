@@ -13,11 +13,13 @@ import { ResSetModule } from './Resume-Setting/res-set.module';
 import { SkillsModule } from './skills/skills.module';
 import { WorkExpModule } from './work-experience/work-exp.module';
 import { PhotoModule } from './photo/photo.module';
+import { MessageModule } from './message/message.module';
+import { ResumeimageModule } from './resumeimage/resumeimage.module';
 
 
 
 @Module({
-  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, ResumeModule, PerInfModule, CusSecModule, EducationModule, LanguageModule, ProjectModule, ResSetModule, SkillsModule, WorkExpModule, PhotoModule],
+  imports: [TypeOrmModule.forRoot(dataSourceOptions), UsersModule, ResumeModule, PerInfModule, CusSecModule, EducationModule, LanguageModule, ProjectModule, ResSetModule, SkillsModule, WorkExpModule, PhotoModule, MessageModule, ResumeimageModule],
   controllers: [],
   providers: [],
 })

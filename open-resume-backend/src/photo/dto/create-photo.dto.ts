@@ -10,7 +10,6 @@ export class PhotoDto {
     @IsString({ message: 'Le fichier ne peut pas être vide' })
     size: string;
     @IsNotEmpty({ message: 'Le nom du fichier est requis' })
-    @IsString({ message: 'Le fichier ne peut pas être vide' })
     fileUrl: string;
     @IsNotEmpty({ message: 'the name name is required' })
     @IsNumber({}, { message: 'the name name must be a number' })

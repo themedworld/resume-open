@@ -27,17 +27,24 @@ import { ResumePDFLanguage } from "./ResumePDFLanguage";
  *    suppress these messages in <SuppressResumePDFErrorMessage />.
  *    https://github.com/diegomura/react-pdf/issues/239#issuecomment-487255027
  */
+
 export const ResumePDF = ({
   resume,
   settings,
   isPDF = false,
+  imageUrl,
+ 
 }: {
   resume: Resume;
   settings: Settings;
   isPDF?: boolean;
+  imageUrl:string
+
 }) => {
-  const { profile, workExperiences, educations, projects, skills, custom,languages } =
-    resume;
+  
+ 
+
+  const { profile, workExperiences, educations, projects, skills, custom, languages } = resume;
   const { name } = profile;
   const {
     fontFamily,
@@ -97,7 +104,10 @@ export const ResumePDF = ({
         languages={languages}
         themeColor={themeColor}
       />)
+      
   };
+  
+
 
   return (
     <>
@@ -125,12 +135,15 @@ export const ResumePDF = ({
               ...styles.flexCol,
               padding: `${spacing[0]} ${spacing[20]}`,
             }}
-          >
+          >  
+
+
             <ResumePDFProfile
               profile={profile}
               themeColor={themeColor}
               isPDF={isPDF}
-            />
+              imageUrl={imageUrl}
+            />  
             {showFormsOrder.map((form) => {
               const Component = formTypeToComponent[form];
               return <Component key={form} />;
@@ -139,6 +152,9 @@ export const ResumePDF = ({
         </Page>
       </Document>
       <SuppressResumePDFErrorMessage />
+
     </>
+    
   );
 };
+

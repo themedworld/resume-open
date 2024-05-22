@@ -8,6 +8,7 @@ import { ResSet } from 'src/Resume-Setting/entities/res-set.entity';
 import { CusSec } from 'src/Custumer-serction/entities/cus-sec.entity';
 import { Language } from 'src/language/entities/language.entity';
 import { Photo } from 'src/photo/entities/photo.entity';
+import { Resumeimage } from 'src/resumeimage/entities/resumeimage.entity';
 export declare class Resume {
     id: number;
     user: UserEntity;
@@ -20,5 +21,6 @@ export declare class Resume {
     resSet: ResSet;
     CusSec: CusSec;
     Photo: Photo;
+    Resumeimage: Resumeimage;
     Language: Language[];
 }

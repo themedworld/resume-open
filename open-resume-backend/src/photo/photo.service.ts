@@ -29,7 +29,7 @@ export class UploadedFileService {
     await this.photoRepository.delete({ resume: { id } });
   }
 
-  async findPerInfByResumeId(id) {
+  async findPhotoByResumeId(id) {
     return this.photoRepository.findOne({ where: { resume: { id } } });
   }
 }

@@ -44,14 +44,14 @@ const setResumeId = (id: number): void => {
 const getResumeId = (): number=> {
     return resumeId;
 };
-let counteducation: number;
+let button1Clicked: number;
 
-const setcounteducation = (counteducation: number): void => {
-    counteducation = counteducation;
+const setbutton1Clicked = (button1Clicked: number): void => {
+    button1Clicked = button1Clicked;
 };
 
-const getcounteducation= (): number=> {
-    return counteducation;
+const getbutton1Clicked= (): number=> {
+    return button1Clicked;
 };
 let educations: educations;
 
@@ -139,5 +139,5 @@ const logOut = (): void => {
 };
 
 
-export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked, setcounteducation, getcounteducation,seteducations ,geteducations,setfileUrl, getfileUrl,setdel,getdel  };
+export const authService = { logOut, getToken, setToken, login, getUserName, getUserRole, isLoggedIn, getUserId, getResumeId, setResumeId,resumesave,setbuttonClicked,getbuttonClicked, setbutton1Clicked, getbutton1Clicked,seteducations ,geteducations,setfileUrl, getfileUrl,setdel,getdel  };
 

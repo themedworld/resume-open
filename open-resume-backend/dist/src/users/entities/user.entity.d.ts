@@ -1,5 +1,6 @@
 import { Timestamp } from 'typeorm';
 import { Resume } from 'src/resume/entities/resume.entity';
+import { Message } from 'src/message/entities/message.entity';
 export declare enum UserRole {
     Recruteur = "recruteur",
     Demandeur = "demandeur"
@@ -18,4 +19,6 @@ export declare class UserEntity {
     createdAt: Timestamp;
     updateAt: Timestamp;
     resume: Resume[];
+    sentMessages: Message[];
+    receivedMessages: Message[];
 }

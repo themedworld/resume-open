@@ -19,6 +19,6 @@ export class UploadedFileController {
   }
   @Get(':id')
   async findPerInfByResumeId(@Param('id') id) {
-    return this.uploadedFileService.findPerInfByResumeId(parseInt(id));
+    return this.uploadedFileService.findPhotoByResumeId(parseInt(id));
   }
 }

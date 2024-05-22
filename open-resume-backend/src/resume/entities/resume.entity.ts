@@ -17,6 +17,7 @@ import {
   import { CusSec } from 'src/Custumer-serction/entities/cus-sec.entity';
   import { Language } from 'src/language/entities/language.entity';
   import { Photo } from 'src/photo/entities/photo.entity';
+  import { Resumeimage } from 'src/resumeimage/entities/resumeimage.entity';
   @Entity()
   export class Resume {
     @PrimaryGeneratedColumn()
@@ -51,6 +52,8 @@ import {
     CusSec: CusSec;
     @OneToOne(() => Photo, (Photo) => Photo.resume)
     Photo: Photo;
+    @OneToOne(() => Resumeimage, (Resumeimage) => Resumeimage.resume)
+    Resumeimage: Resumeimage;
   
     @OneToMany(() => Language, (Language) => Language.resume)
     Language: Language[];

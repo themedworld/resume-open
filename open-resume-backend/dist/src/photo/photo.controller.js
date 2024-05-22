@@ -28,7 +28,7 @@ let UploadedFileController = class UploadedFileController {
         return this.uploadedFileService.remove(+id);
     }
     async findPerInfByResumeId(id) {
-        return this.uploadedFileService.findPerInfByResumeId(parseInt(id));
+        return this.uploadedFileService.findPhotoByResumeId(parseInt(id));
     }
 };
 exports.UploadedFileController = UploadedFileController;

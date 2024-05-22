@@ -21,14 +21,17 @@ import { Project } from 'src/project/entities/project.entity';
 import { Skills } from 'src/skills/entities/skill.entity';
 import { Education } from 'src/education/entities/education.entity';
 import { EducationService } from 'src/education/education.service';
-
+import { UploadedFileService } from 'src/photo/photo.service';
+import { Photo } from 'src/photo/entities/photo.entity';
+import { Resumeimage } from 'src/resumeimage/entities/resumeimage.entity';
+import { ResumeimageService } from 'src/resumeimage/resumeimage.service';
 @Module({
   imports: [
     
-    TypeOrmModule.forFeature([Resume, Language, PerInf, CusSec,ResSet,WorkExp,Project,Skills,Education]), UsersModule,
+    TypeOrmModule.forFeature([Resume, Language, PerInf, CusSec,ResSet,WorkExp,Project,Skills,Education,Photo,Resumeimage ]), UsersModule,
   ], 
   controllers: [ResumeController],
-  providers: [ResumeService, UsersService,ResSetService, LanguageService, PerInfService, ProjectService, ProjectService, SkillsService, WorkExpService, CusSecService,EducationService],
+  providers: [ResumeService, UsersService,ResSetService, LanguageService, PerInfService, ProjectService, ProjectService, SkillsService, WorkExpService, CusSecService,EducationService,UploadedFileService , ResumeimageService],
   exports: [TypeOrmModule],
 })
 export class ResumeModule {}

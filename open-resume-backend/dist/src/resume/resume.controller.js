@@ -26,8 +26,10 @@ const project_service_1 = require("../project/project.service");
 const res_set_service_1 = require("../Resume-Setting/res-set.service");
 const skills_service_1 = require("../skills/skills.service");
 const work_exp_service_1 = require("../work-experience/work-exp.service");
+const photo_service_1 = require("../photo/photo.service");
+const resumeimage_service_1 = require("../resumeimage/resumeimage.service");
 let ResumeController = class ResumeController {
-    constructor(resumeService, usersService, educationService, languageService, perInfService, projectService, resSetService, skillsService, workExpService, cusSecService) {
+    constructor(resumeService, usersService, educationService, languageService, perInfService, projectService, resSetService, skillsService, workExpService, cusSecService, uploadedFileService, resumeimageService) {
         this.resumeService = resumeService;
         this.usersService = usersService;
         this.educationService = educationService;
@@ -38,6 +40,8 @@ let ResumeController = class ResumeController {
         this.skillsService = skillsService;
         this.workExpService = workExpService;
         this.cusSecService = cusSecService;
+        this.uploadedFileService = uploadedFileService;
+        this.resumeimageService = resumeimageService;
     }
     async createresume(createResumeDto) {
         const resume = await this.resumeService.createResume(createResumeDto);
@@ -60,16 +64,20 @@ let ResumeController = class ResumeController {
     async getAllResumes() {
         const users = await this.usersService.findUsersByRole('demandeur');
         const usersWithResumes = await Promise.all(users.map(async (user) => {
+            const { name, id } = user;
             const resumes = await this.resumeService.findResumeByUserId(user.id);
             const resumesWithDetails = await Promise.all(resumes.map(async (resume) => {
                 const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
-                const educations = await this.educationService.findEducationByResumeId(resume.id);
+                const location = perInfs ? perInfs.location : null;
                 const languages = await this.languageService.findLanguageByResumeId(resume.id);
+                const Languagess = languages.map(Language => ({ Language: Language.language }));
                 const skills = await this.skillsService.findSkillsByResumeId(resume.id);
+                const featuredSkills = skills.map(skill => ({ skill: skill.featuredSkills }));
                 const WorkExps = await this.workExpService.findWorkExpByResumeId(resume.id);
-                return { resume, perInfs, educations, languages, WorkExps, skills };
+                const workExpsWithJobTitles = WorkExps.map(workExp => ({ jobTitle: workExp.jobTitle }));
+                return { resume, location, languagess: Languagess, jobTitle: workExpsWithJobTitles, featuredSkills: featuredSkills };
             }));
-            return { user, resumes: resumesWithDetails };
+            return { user: { name, id }, resumes: resumesWithDetails };
         }));
         return usersWithResumes;
     }
@@ -87,6 +95,7 @@ let ResumeController = class ResumeController {
         const cusSecs = await this.cusSecService.findCusSecByResumeId(resumeId);
         const resSet = await this.resSetService.findResSetByResumeId(resumeId);
         return {
+            resume,
             ResumeProfile: perInfs,
             educations,
             languages,
@@ -96,6 +105,25 @@ let ResumeController = class ResumeController {
             custom: cusSecs,
             Setting: resSet,
         };
+    }
+    async getUserResumes(userId) {
+        const resumes = await this.resumeService.findResumeByUserId(userId);
+        const count = resumes.length;
+        if (resumes.length === 0) {
+            throw new common_1.NotFoundException('Aucun CV trouvé pour cet utilisateur');
+        }
+        const resumesWithDetails = await Promise.all(resumes.map(async (resume) => {
+            const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
+            const photo = await this.uploadedFileService.findPhotoByResumeId(resume.id);
+            const Resumeimage = await this.resumeimageService.findPhotoByResumeId(resume.id);
+            return {
+                resume,
+                ResumeProfile: perInfs,
+                Photo: photo,
+                Resumeimage: Resumeimage,
+            };
+        }));
+        return { resumesWithDetails, count };
     }
 };
 exports.ResumeController = ResumeController;
@@ -148,6 +176,13 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "getResumeById", null);
+__decorate([
+    (0, common_1.Get)(':userId/resumes'),
+    __param(0, (0, common_1.Param)('userId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", Promise)
+], ResumeController.prototype, "getUserResumes", null);
 exports.ResumeController = ResumeController = __decorate([
     (0, common_1.Controller)('resume'),
     __metadata("design:paramtypes", [resume_service_1.ResumeService,
@@ -159,6 +194,8 @@ exports.ResumeController = ResumeController = __decorate([
         res_set_service_1.ResSetService,
         skills_service_1.SkillsService,
         work_exp_service_1.WorkExpService,
-        cus_sec_service_1.CusSecService])
+        cus_sec_service_1.CusSecService,
+        photo_service_1.UploadedFileService,
+        resumeimage_service_1.ResumeimageService])
 ], ResumeController);
 //# sourceMappingURL=resume.controller.js.map

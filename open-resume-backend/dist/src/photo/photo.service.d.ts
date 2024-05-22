@@ -8,5 +8,5 @@ export declare class UploadedFileService {
     constructor(photoRepository: Repository<Photo>, resumeRepository: Repository<Resume>);
     createPhoto(createphotoDto: PhotoDto): Promise<Photo>;
     remove(id: number): Promise<void>;
-    findPerInfByResumeId(id: any): Promise<Photo>;
+    findPhotoByResumeId(id: any): Promise<Photo>;
 }

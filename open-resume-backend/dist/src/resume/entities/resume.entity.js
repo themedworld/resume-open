@@ -21,6 +21,7 @@ const res_set_entity_1 = require("../../Resume-Setting/entities/res-set.entity")
 const cus_sec_entity_1 = require("../../Custumer-serction/entities/cus-sec.entity");
 const language_entity_1 = require("../../language/entities/language.entity");
 const photo_entity_1 = require("../../photo/entities/photo.entity");
+const resumeimage_entity_1 = require("../../resumeimage/entities/resumeimage.entity");
 let Resume = class Resume {
 };
 exports.Resume = Resume;
@@ -69,6 +70,10 @@ __decorate([
     (0, typeorm_1.OneToOne)(() => photo_entity_1.Photo, (Photo) => Photo.resume),
     __metadata("design:type", photo_entity_1.Photo)
 ], Resume.prototype, "Photo", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => resumeimage_entity_1.Resumeimage, (Resumeimage) => Resumeimage.resume),
+    __metadata("design:type", resumeimage_entity_1.Resumeimage)
+], Resume.prototype, "Resumeimage", void 0);
 __decorate([
     (0, typeorm_1.OneToMany)(() => language_entity_1.Language, (Language) => Language.resume),
     __metadata("design:type", Array)

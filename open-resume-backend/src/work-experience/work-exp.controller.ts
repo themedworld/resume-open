@@ -26,5 +26,13 @@ export class WorkExpController {
   remove(@Param('id') id: string) {
     return this.workExpService.remove(+id);
   }
+
+  @Get('findjobTitle/:jobTitle')
+  async findjobTitle(
+    @Param('jobTitle') jobTitle: string,
+  ): Promise<{ workExp: { id: number, resumeid: number,company:string, jobTitle: string, date:string , description: string }[] }> {
+    const workExp = await this.workExpService.findjobtitle(jobTitle);
+    return { workExp};
+  }
  
 }

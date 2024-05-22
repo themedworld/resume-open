@@ -53,6 +53,22 @@ let WorkExpService = class WorkExpService {
     async remove(id) {
         await this.WorkExpRepository.delete({ resume: { id } });
     }
+    async findjobtitle(jobTitle) {
+        const workExp = await this.WorkExpRepository
+            .createQueryBuilder('workExp')
+            .select(['workExp.id', 'resume.id as resumeid', 'workExp.company', 'workExp.jobTitle', 'workExp.date', 'workExp.descriptions'])
+            .leftJoin('workExp.resume', 'resume')
+            .where('workExp.jobTitle ILIKE :jobTitle', { jobTitle: `%${jobTitle}%` })
+            .getRawMany();
+        return workExp.map(workExp => ({
+            id: workExp.id,
+            resumeid: workExp.resumeid,
+            company: workExp.company,
+            jobTitle: workExp.jobTitle,
+            date: workExp.date,
+            description: workExp.descriptions.join(', '),
+        }));
+    }
 };
 exports.WorkExpService = WorkExpService;
 exports.WorkExpService = WorkExpService = __decorate([

@@ -17,20 +17,31 @@ import {
 } from "components/fonts/hooks";
 import { NonEnglishFontsCSSLazyLoader } from "components/fonts/NonEnglishFontsCSSLoader";
 
-export const Resume = () => {
+
+export const Resume = ({
+  imageUrl,
+
+}: {
+  imageUrl: string;
+ 
+}) => {
   const [scale, setScale] = useState(0.8);
   const resume = useAppSelector(selectResume);
   const settings = useAppSelector(selectSettings);
+  
   const document = useMemo(
-    () => <ResumePDF resume={resume} settings={settings} isPDF={true} />,
-    [resume, settings]
+    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} imageUrl={imageUrl} />,
+    [resume, settings,imageUrl]
   );
 
   useRegisterReactPDFFont();
   useRegisterReactPDFHyphenationCallback(settings.fontFamily);
 
+  
+
   return (
     <>
+
       <NonEnglishFontsCSSLazyLoader />
       <div className="relative flex justify-center md:justify-start">
         <FlexboxSpacer maxWidth={50} className="hidden md:block" />
@@ -41,10 +52,12 @@ export const Resume = () => {
               scale={scale}
               enablePDFViewer={DEBUG_RESUME_PDF_FLAG}
             >
+
               <ResumePDF
                 resume={resume}
                 settings={settings}
                 isPDF={DEBUG_RESUME_PDF_FLAG}
+                imageUrl={imageUrl}
               />
             </ResumeIframeCSR>
           </section>
@@ -58,6 +71,8 @@ export const Resume = () => {
         </div>
         <ResumeControlBarBorder />
       </div>
+
+
     </>
   );
 };

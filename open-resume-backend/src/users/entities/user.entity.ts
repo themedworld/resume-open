@@ -1,5 +1,6 @@
 import {OneToMany, Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn , Timestamp } from 'typeorm';
 import { Resume } from 'src/resume/entities/resume.entity'
+import { Message } from 'src/message/entities/message.entity';
 
 export enum UserRole {
     Recruteur = 'recruteur',
@@ -54,6 +55,14 @@ export class UserEntity {
 
     @OneToMany(() => Resume, resume => resume.user)
     resume: Resume[];
+
+
+    @OneToMany(() => Message, message => message.sender)
+    sentMessages: Message[];
+  
+    @OneToMany(() => Message, message => message.receiver)
+    receivedMessages: Message[];
+
 
 
 }
