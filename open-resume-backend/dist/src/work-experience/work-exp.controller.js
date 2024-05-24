@@ -38,10 +38,6 @@ let WorkExpController = class WorkExpController {
         const workExp = await this.workExpService.findjobtitle(jobTitle);
         return { workExp };
     }
-    async findjobTitle(jobTitle) {
-        const workExp = await this.workExpService.findjobtitle(jobTitle);
-        return { workExp };
-    }
 };
 exports.WorkExpController = WorkExpController;
 __decorate([

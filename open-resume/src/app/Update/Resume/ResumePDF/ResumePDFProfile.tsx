@@ -70,45 +70,8 @@ export const ResumePDFProfile = ({
   return (
     <ResumePDFSection style={{ marginTop: spacing["4"] }}>
           
-          <div
-  style={{
-    width: 150, 
-    height: 150, 
-    marginBottom: spacing["2"], 
-    borderRadius: '50%', 
-    border: `5px solid ${themeColor}`, 
-    position: 'relative', // Ajouté pour permettre le positionnement absolu des enfants
-    overflow: 'hidden' // Pour s'assurer que rien ne dépasse du conteneur circulaire
-  }}
->
-  <Image
-    src={ imageUrl ? imageUrl :   "data:image/jpeg;base64," + fileUrl }
-
-    style={{
-      width: '100%',
-      height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
-      borderRadius: '50%',
-      objectFit: 'cover',
-      position: 'absolute', // Positionnement absolu pour superposition
-      top: 0,
-      left: 0
-    }}
-  />
-  <img  
-    src={ imageUrl ? imageUrl :   "data:image/jpeg;base64," + fileUrl }
-    style={{
-      width: '100%',
-      height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
-      borderRadius: '50%',
-      objectFit: 'cover',
-      position: 'absolute', // Positionnement absolu pour superposition
-      top: 0,
-      left: 0
-    }} 
-  />
-</div>
-
-       
+         
+          <View style={{ ...styles.flexRowBetween, alignItems: 'center' }}>  
 
       <ResumePDFText
         bold={true}
@@ -118,6 +81,48 @@ export const ResumePDFProfile = ({
         {name}
       </ResumePDFText>
       {summary && <ResumePDFText>{summary}</ResumePDFText>}
+
+      
+      <View
+         style={{
+           width: 150,
+           height: 150,
+           borderRadius: '50%',
+           border: `5px solid ${themeColor}`,
+           overflow: 'hidden',
+           marginLeft: spacing["2"],
+           position: 'relative'
+         }}
+       >
+         <Image
+          
+
+    src={ imageUrl ? imageUrl :   "data:image/jpeg;base64," + fileUrl }
+           style={{
+             width: '100%',
+             height: '100%',
+             borderRadius: '50%',
+             objectFit: 'cover',
+             position: 'absolute',
+             top: 0,
+             left: 0
+           }}
+         />
+           <img  
+     
+
+    src={ imageUrl ? imageUrl :   "data:image/jpeg;base64," + fileUrl }
+     style={{
+       width: '100%',
+       height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
+       borderRadius: '50%',
+       objectFit: 'cover',
+       position: 'absolute', // Positionnement absolu pour superposition
+       top: 0,
+       left: 0
+     }} 
+   />       </View>
+    </View>
       <View
         style={{
           ...styles.flexRowBetween,

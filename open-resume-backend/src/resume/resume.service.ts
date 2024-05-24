@@ -46,12 +46,19 @@ export class ResumeService {
     return this.ResumeRepository.find({ where: { user: { id } } });
   }
   async findOne(id: number) {
-    const options: FindOneOptions<Resume> = { where: { id } };
+    const options: FindOneOptions<Resume> = {
+      where: { id },
+      relations: [
+        'user',
+      ],
+    };
+    
     const resume = await this.ResumeRepository.findOne(options);
-    if (!resume) throw new NotFoundException('User not found');
-    return resume;
-}
-
+    if (!resume) throw new NotFoundException('Resume not found');
+    
+    return { ...resume, userId: resume.user.id };
+  }
+  
 
   async remove(id: number): Promise<void> {
     await this.ResumeRepository.delete(id);

@@ -15,8 +15,8 @@ export declare class UsersService {
     update(id: number, updateUserDto: UpdateUserDto): string;
     remove(id: number): string;
     findUserByUsername(username: string): Promise<UserEntity>;
-    accessToken(user: UserEntity): Promise<any>;
-    refreshToken(user: UserEntity): Promise<any>;
+    accessToken(user: UserEntity): Promise<string>;
+    refreshToken(user: UserEntity): Promise<string>;
     getUserWithResumeAndCusSecAndLanguage(): Promise<UserEntity[]>;
     findUsersByRole(role: any): Promise<UserEntity[]>;
 }

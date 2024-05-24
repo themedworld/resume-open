@@ -17,6 +17,12 @@ import { cx } from "lib/cx";
 import { LanguageForm } from "Update/ResumeForm/LanguageForm";
 import { authService } from "components/form/authService";
 import ImportImg from "importimg/page";
+import { ResumePDF } from "Update/Resume/ResumePDF";
+import axios from "axios";
+import { useMemo } from "react";
+import { usePDF } from "@react-pdf/renderer";
+import { selectResume } from "Update/lib/redux/resumeSlice";
+import { selectSettings } from "Update/lib/redux/settingsSlice";
 const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   workExperiences: WorkExperiencesForm,
   educations: EducationsForm,
@@ -26,7 +32,28 @@ const formTypeToComponent: { [type in ShowForm]: () => JSX.Element } = {
   custom: CustomForm,
 };
 
-export const ResumeForm = () => {
+export const ResumeForm = ({
+  imageUrl,
+
+}: {
+  imageUrl: string;
+ 
+}) => {
+
+
+  const resume = useAppSelector(selectResume);
+  const settings = useAppSelector(selectSettings);
+  
+  const document = useMemo(
+    () => <ResumePDF resume={resume} settings={settings}  isPDF={true} imageUrl={imageUrl} />,
+    [resume, settings,imageUrl]
+  );
+
+  const [instance, update] = usePDF({ document });
+  useEffect(() => {
+    update();
+  }, [update, document]);
+
   useSetInitialStore();
   useSaveStateToLocalStorageOnChange();
   const formsOrder = useAppSelector(selectFormsOrder);
@@ -37,7 +64,57 @@ export const ResumeForm = () => {
 
   const handleButtonClick = () => {
     setButtonClicked(1); 
+    uploadFileToDatabase();
   };
+
+  const uploadFileToDatabase = async () => {
+    const resumeId =authService.getResumeId();
+    try {
+        const res = await fetch(`http://localhost:3001/api/v1/resumeimage/${resumeId}`, {
+          method: 'DELETE',
+        });
+    } catch (error) {
+      console.error('Une erreur est survenue lors de la suppression :', error);
+    }
+      try {
+        
+        const fileInfo = {
+          fileName: resume.profile.name + " - Resume",
+          documentSize: settings.documentSize,
+          document: await blobToBase64(instance.url!),
+          resumeid: resumeId,
+        };
+  
+  
+        const response = await axios.post(
+          "http://localhost:3001/api/v1/resumeimage/createResumeimage",
+          fileInfo
+        );
+  console.log("sheeepp")
+        if (response.status === 200) {
+          console.log("File information uploaded successfully");
+        } else {
+          console.error("Failed to upload file information");
+        }
+  
+        
+      }
+      
+  
+      
+      catch (error) {
+        console.error("Error uploading file information:", error);
+      }
+      
+    };
+
+
+    async function blobToBase64(blobUrl: string): Promise<string> {
+      const response = await axios.get(blobUrl, { responseType: 'arraybuffer' });
+      const buffer = Buffer.from(response.data);
+      const base64 = buffer.toString('base64');
+      return base64;
+    }
 console.log (buttonClicked)
 authService.setbuttonClicked(buttonClicked);
   return (

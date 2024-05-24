@@ -7,9 +7,10 @@ import Discussion from "./discution/discution";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Bars3Icon,BarsArrowUpIcon,XCircleIcon } from "@heroicons/react/24/outline";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+
 export default function Sidebarre() {
   const [Contactid, setContactid] = useState(2);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
@@ -38,19 +39,23 @@ export default function Sidebarre() {
   
 
   return (
+    
     <DemandeurRoute1>
      
-      <main className="relative h-screen overflow-hidden bg-gray-50">
+      <main className="relative h-full w-full overflow-hidden bg-gray-50">
+      
         <div className="grid min-h-screen grid-cols-1 md:grid-cols-3 bg-zinc-100">
           {/* Sidebar fixe */}
+
           <div className={`md:col-span-2 lg:col-span-1 bg-white fixed left-0 top-0 bottom-0 z-10 shadow-lg transition-transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`} style={{ width: '300px' }}>
             <Sidebar onContactChange={setContactid} />
           </div>
-
+          
           {/* Zone de discussion */}
           <div className="md:col-span-4 lg:col-span-4 p-4 overflow-y-auto">
             <Discussion Contactid={Contactid} />
           </div>
+      
           <button className="fixed top-4  z-20 bg-gray-200 px-3 py-2 rounded" onClick={toggleSidebar}>
              {sidebarOpen ? (
                 <Bars3Icon style={{ color: 'blue' }} className="w-6 h-6"></Bars3Icon>
@@ -61,12 +66,13 @@ export default function Sidebarre() {
               )}
         </button>
         </div>
-
+     
      
 
       </main>
      
     </DemandeurRoute1>
+ 
   );
 }
 

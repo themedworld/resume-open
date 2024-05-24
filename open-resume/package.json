@@ -43,6 +43,7 @@
     "react-feather": "^2.0.10",
     "react-frame-component": "^5.2.6",
     "react-redux": "^8.0.7",
+    "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.2.1",
     "tailwind-scrollbar": "^3.0.4",
     "typescript": "5.0.4",

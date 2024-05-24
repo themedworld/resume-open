@@ -13,6 +13,7 @@ const message_controller_1 = require("./message.controller");
 const message_entity_1 = require("./entities/message.entity");
 const users_module_1 = require("../users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
+const message_gateway_1 = require("./message.gateway");
 let MessageModule = class MessageModule {
 };
 exports.MessageModule = MessageModule;
@@ -22,7 +23,7 @@ exports.MessageModule = MessageModule = __decorate([
             typeorm_1.TypeOrmModule.forFeature([message_entity_1.Message]), users_module_1.UsersModule,
         ],
         controllers: [message_controller_1.MessageController],
-        providers: [message_service_1.MessageService],
+        providers: [message_service_1.MessageService, message_gateway_1.MessageGateway],
     })
 ], MessageModule);
 //# sourceMappingURL=message.module.js.map

@@ -1,3 +1,11 @@
+import { Resumeimage } from 'src/resumeimage/entities/resumeimage.entity';
+import { Photo } from './../photo/entities/photo.entity';
+import { ResSet } from './../Resume-Setting/entities/res-set.entity';
+import { WorkExp } from './../work-experience/entities/work-exp.entity';
+import { Skills } from './../skills/entities/skill.entity';
+import { Language } from './../language/entities/language.entity';
+import { PerInf } from './../Personal-information/entities/per-inf.entity';
+import { CusSec } from './../Custumer-serction/entities/cus-sec.entity';
 import { ResumeService } from './resume.service';
 import { CreateResumeDto } from './dto/create-resume.dto';
 import { Resume } from './entities/resume.entity';
@@ -34,7 +42,22 @@ export declare class ResumeController {
         resumes: Resume[];
         count: number;
     }>;
-    findOne(id: string): Promise<Resume>;
+    findOne(id: string): Promise<{
+        userId: number;
+        id: number;
+        user: import("../users/entities/user.entity").UserEntity;
+        name: string;
+        perInf: PerInf;
+        Education: import("../education/entities/education.entity").Education[];
+        projects: import("../project/entities/project.entity").Project[];
+        workExp: WorkExp[];
+        skills: Skills[];
+        resSet: ResSet;
+        CusSec: CusSec;
+        Photo: Photo;
+        Resumeimage: Resumeimage;
+        Language: Language[];
+    }>;
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
     remove(id: string): Promise<void>;
     getAllResumes(): Promise<any>;

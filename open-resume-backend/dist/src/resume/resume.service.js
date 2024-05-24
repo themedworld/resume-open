@@ -44,11 +44,16 @@ let ResumeService = class ResumeService {
         return this.ResumeRepository.find({ where: { user: { id } } });
     }
     async findOne(id) {
-        const options = { where: { id } };
+        const options = {
+            where: { id },
+            relations: [
+                'user',
+            ],
+        };
         const resume = await this.ResumeRepository.findOne(options);
         if (!resume)
-            throw new common_1.NotFoundException('User not found');
-        return resume;
+            throw new common_1.NotFoundException('Resume not found');
+        return { ...resume, userId: resume.user.id };
     }
     async remove(id) {
         await this.ResumeRepository.delete(id);

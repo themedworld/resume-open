@@ -64,12 +64,58 @@ export const ResumeForm = ({
 
   const handleButtonClick = () => {
     setButtonClicked(1); 
+    uploadFileToDatabase();
   };
 
- 
+  const uploadFileToDatabase = async () => {
+    const resumeId =authService.getResumeId();
+    try {
+        const res = await fetch(`http://localhost:3001/api/v1/resumeimage/${resumeId}`, {
+          method: 'DELETE',
+        });
+    } catch (error) {
+      console.error('Une erreur est survenue lors de la suppression :', error);
+    }
+      try {
+        
+        const fileInfo = {
+          fileName: resume.profile.name + " - Resume",
+          documentSize: settings.documentSize,
+          document: await blobToBase64(instance.url!),
+          resumeid: resumeId,
+        };
+  
+  
+        const response = await axios.post(
+          "http://localhost:3001/api/v1/resumeimage/createResumeimage",
+          fileInfo
+        );
+  console.log("sheeepp")
+        if (response.status === 200) {
+          console.log("File information uploaded successfully");
+        } else {
+          console.error("Failed to upload file information");
+        }
+  
+        
+      }
+      
+  
+      
+      catch (error) {
+        console.error("Error uploading file information:", error);
+      }
+      
+    };
 
 
-
+    async function blobToBase64(blobUrl: string): Promise<string> {
+      const response = await axios.get(blobUrl, { responseType: 'arraybuffer' });
+      const buffer = Buffer.from(response.data);
+      const base64 = buffer.toString('base64');
+      return base64;
+    }
+  
 
   
     

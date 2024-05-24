@@ -5,14 +5,8 @@ import { Multiselect } from "multiselect-react-dropdown";
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { number, string } from "zod";
-<<<<<<< HEAD
 import { authService } from "./authService";
-import Router from "next/router";
 import { useRouter } from "next/navigation";
-=======
-
-
->>>>>>> ab34cff2909dcc0afc4ee7dca0a47e7936ab611b
 
 interface Resume {
   id: number;
@@ -20,7 +14,6 @@ interface Resume {
 }
 
 const Recruteur = () => {
-  const router = useRouter();
   const [location, setLocation] = useState<string>("");
   const [selectedValues, setSelectedValues] = useState<any[]>([]);
   const [selectedskillValues, setSelectedskillValues] = useState<any[]>([]);
@@ -30,15 +23,8 @@ const Recruteur = () => {
   const [showLocation, setShowLocation] = useState<boolean>(false);
   const [showJobtitle, setShowjobtitle] = useState<boolean>(false);
   const [showSkills, setShowSkills] = useState<boolean>(false);
-<<<<<<< HEAD
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newLocation = e.target.value;
-    setLocation(newLocation);  
-  };
-=======
   const [searched, setSearched] = useState(false);
   const [noResult, setNoResult] = useState(false);
->>>>>>> ab34cff2909dcc0afc4ee7dca0a47e7936ab611b
 
   const Skillsoptions = [
     { label: 'python', value: 'p' },
@@ -251,22 +237,6 @@ const Recruteur = () => {
       console.error("Error:", error);
     }
   };
-<<<<<<< HEAD
-  const handleViewClick = (resumeId: number) => {
-    authService.setResumeId(resumeId);
-    authService.setdel(1);
-    console.log(resumeId);
-    router.push('/Viewresume');
-  };
-
-  
-  return (
-    <div className="flex flex-col md:flex-row">
-      <div className="container mx-auto mt-5 md:w-full"> 
-        <div className="w-full max-w-4xl flex md:w-3/4"> 
-          <div className="flex-1 mr-5">
-            <form className="bg-white shadow-md rounded px-6 pt-6 pb-6 mb-6 formulaire-custom">
-=======
   const handleLocationChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setLocation(event.target.value);
   };
@@ -285,6 +255,15 @@ const Recruteur = () => {
       setNoResult(false); // Sinon, masquer "No resume found"
     }
   }, [searched, resumeData]);
+
+
+  const router = useRouter();
+  const handleViewClick = (resumeId: number) => {
+    authService.setResumeId(resumeId);
+    authService.setdel(1);
+    console.log(resumeId);
+    router.push('/Viewresume');
+  };
   
   return (
     <div className="flex flex-col md:flex-row">
@@ -292,7 +271,6 @@ const Recruteur = () => {
         <div className="w-full max-w-4xl flex md:w-4/4">
           <div className="flex-5 mr-5">
             <form className="bg-white shadow-2xl rounded-3xl px-6 pt-6 pb-6 mb-6 formulaire-custom">
->>>>>>> ab34cff2909dcc0afc4ee7dca0a47e7936ab611b
               <div className="accordion" id="accordionExample">
                 <div className="accordion-item">
                   <h2 className="accordion-header" id="languagesHeading">
@@ -400,73 +378,6 @@ const Recruteur = () => {
               </div>
             </form>
             <button
-<<<<<<< HEAD
-                onClick={() => {
-                LanguageSearch();
-                  
-                locationSearch();
-                jobtitleSearch();
-
-                SkillsSearch();
-                
-                }}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
-              >
-                Search
-              </button>
-            
-          </div>
-        </div>
-      </div>
-      <div className="container mt-5">
-  <div className="row">
-    {resumeData.map((resume, index) => (
-      <div className="col-lg-4 mb-2" key={index}>
-        <div className="card">
-          <img
-            src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-            alt="Generic placeholder image"
-            className="card-img-top img-fluid rounded-top"
-            style={{ width: "400px", height: "200px" }}
-          />
-          <div className="card-body">
-            <h5 className="card-title">{resume.name}</h5>
-            <p className="card-text">{/* Remplacer "JobTitle" par le titre du poste de travail de ce candidat */}</p>
-            <div className="d-flex justify-content-between align-items-center">
-              <div>
-                <p className="small text-muted mb-1">Age</p>
-                <p className="mb-0">{/* Remplacer "41" par l'âge de ce candidat */}</p>
-              </div>
-              <div>
-                <p className="small text-muted mb-1">Email</p>
-                <p className="mb-0"></p>
-              </div>
-              <div>
-                <p className="small text-muted mb-1">Location</p>
-                <p className="mb-0">{/* Remplacer "Tabarka" par la localisation de ce candidat */}</p>
-              </div>
-            </div>
-          </div>
-              <div className="card-footer d-flex justify-content-between">
-              <button
-                type="button"
-                className="btn btn-outline-primary flex-grow-1 me-1"
-                onClick={() => {
-                  handleViewClick(resume.id);
-                }}
-              >
-                View
-              </button>
-            </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-
-  );
-=======
               onClick={handleSearch}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-4"
             >
@@ -511,10 +422,7 @@ const Recruteur = () => {
                       type="button"
                       className="btn btn-outline-primary flex-grow-1 me-1"
                       onClick={() => {
-                        LanguageSearch();
-                        locationSearch();
-                        jobtitleSearch();
-                        SkillsSearch();
+                        handleViewClick(resume.id)
                       }}
                     >
                       View
@@ -531,7 +439,6 @@ const Recruteur = () => {
   );
        
 
->>>>>>> ab34cff2909dcc0afc4ee7dca0a47e7936ab611b
 };
 export default Recruteur;
 
