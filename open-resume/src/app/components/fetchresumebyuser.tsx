@@ -109,7 +109,7 @@ const ResumePage = () => {
         <h2 className="display-2">You have: {resumeData.count} Resumes</h2>
       </div>
       <div className="row mt-4" >
-        {resumeData.resumesWithDetails.map((resumesWithDetail, index) => (
+        {resumeData.resumesWithDetails?.map((resumesWithDetail, index) => (
           <div className="col-lg-3 mt-6" key={index}>
             <div className="card">
 <img

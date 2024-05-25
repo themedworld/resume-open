@@ -1,43 +1,101 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import image from './bgresume.png';
+import React from 'react';
+import styles from './index.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import "bootstrap/dist/css/bootstrap.min.css";
-
-const Getstarted = () => {
-    return ( 
-<div className="bg-cover bg-center h-screen" style={{ backgroundImage: "url(./bgresume.png)" }}>
-      <header className="bg-gray-900 bg-opacity-50">
-        <div className="container mx-auto">
-          <div className="text-center">
-            <h1 className="text-4xl text-white font-bold mt-16">
-              Open-Resume
-            </h1>
-            <p className="text-white mt-2">
-             create your profectionel resume for free
-             </p>
-            <div className="flex justify-center mt-8">
-            <Link legacyBehavior href="/SignIn">
-                <a className="bg-white text-blue-500 py-2 px-4 rounded-md hover:bg-gray-100 mr-4">
-                  GET START
-                </a>
-              </Link>
-              <Link legacyBehavior href="#">
-                <a className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
-                  LEARN MORE
-                </a>
-              </Link>
-            </div>
-          </div>
-        </div>
+import { Testimonials } from "home/Testimonials";
+import Link from 'next/link';
+const HomePage: React.FC = () => {
+  return (
+    <div className={`container-fluid ${styles.container}`}>
+      <header className={`text-center p-4 ${styles.header}`}>
+        <h1>Open Resume</h1>
       </header>
-      <main className="container mx-auto py-12">
-        {/* Ajoutez ici le contenu principal */}
+
+      <main className="container py-4">
+        <section className={`text-center ${styles.hero}`}>
+          <h2 className={styles.heroTitle}>Create Your Perfect Resume</h2>
+          <p className={styles.heroDescription}>
+            Build a professional resume that highlights your skills and experiences.
+          </p>
+          <Link legacyBehavior href="/SignIn">
+  <a className={`btn btn-primary ${styles.heroButton}`}>
+    GET START
+  </a>
+</Link>
+        </section>
+
+        <section className={`mt-5 ${styles.features}`}>
+          
+        <ul className={`list-unstyled ${styles.featureList}`}>
+        <li className="my-2">
+        <FontAwesomeIcon 
+    icon={faCheckCircle} 
+    className="w-6 h-6" 
+    style={{ 
+      textAlign: 'center', 
+      marginBottom: '20px', 
+      color: 'blue', 
+      animation: 'fadeIn 1s ease-in-out' 
+    }} 
+  />  Easy-to-use templates
+</li>
+
+            <li className="my-2">
+  <FontAwesomeIcon 
+    icon={faCheckCircle} 
+    className="w-6 h-6" 
+    style={{ 
+      textAlign: 'center', 
+      marginBottom: '20px', 
+      color: 'blue', 
+      animation: 'fadeIn 1s ease-in-out' 
+    }} 
+  /> 
+ Customizable layouts
+
+            </li>
+            <li className="my-2">
+            <FontAwesomeIcon 
+    icon={faCheckCircle} 
+    className="w-6 h-6" 
+    style={{ 
+      textAlign: 'center', 
+      marginBottom: '20px', 
+      color: 'blue', 
+      animation: 'fadeIn 1s ease-in-out' 
+    }} 
+  /> Professional design
+            </li>
+            <li className="my-2">
+            <FontAwesomeIcon 
+    icon={faCheckCircle} 
+    className="w-6 h-6" 
+    style={{ 
+      textAlign: 'center', 
+      marginBottom: '20px', 
+      color: 'blue', 
+      animation: 'fadeIn 1s ease-in-out' 
+    }} 
+  />  Downloadable PDF format
+            </li>
+          </ul>
+        </section>
+
+        <Testimonials />
+
+        <section className={`text-center mt-5 ${styles.cta}`}>
+          <h2>Start Creating Your Resume Today</h2>
+          <button className={`btn btn-success ${styles.ctaButton}`}>Get Started</button>
+        </section>
       </main>
-      <footer className="bg-gray-200 py-8">
-        <p className="text-center text-gray-600">© 2024 Open-Resume</p>
+
+      <footer className={`text-center p-4 ${styles.footer}`}>
+        <p className={styles.copyright}>© 2024 Next.js Page</p>
       </footer>
     </div>
-    );
-}
+  );
+};
 
-export default Getstarted;
+export default HomePage;
+

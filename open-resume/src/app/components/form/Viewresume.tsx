@@ -39,6 +39,7 @@ const Viewresume = () => {
       };  
       useEffect(() => {
         fetchphotoById();
+        fetchuser();
       }, []);
 
       const fetchuser = async () => {
@@ -73,7 +74,7 @@ const Viewresume = () => {
         }
       };  
       const handleSendMessage = async () => {
-        fetchuser();
+       
        const userId = authService.getUserId();
        try {
           const response = await fetch(

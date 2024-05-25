@@ -9,7 +9,7 @@ import { Bars3Icon,BarsArrowUpIcon,XCircleIcon } from "@heroicons/react/24/outli
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 export default function Sidebarre() {
-  const [Contactid, setContactid] = useState(2);
+  const [Contactid, setContactid] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const toggleSidebar = () => {

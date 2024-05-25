@@ -78,7 +78,7 @@ const Sidebar = ({
       <nav className="md:sticky top-0 md:top-16">
         {/* nav items */}
         <ul>
-          {receivers.map((receiver) => (
+          {receivers?.map((receiver) => (
             <li
               className={classNames({
                 "text-blue-300 hover:bg-green-900": true,

@@ -88,7 +88,7 @@ export const ResumeDropzone = ({
         resumeid: resumeId,
       };
 
-
+console.log(file.fileUrl)
       const response = await axios.post(
         "http://localhost:3001/api/v1/uploaded-files/createPhoto",
         fileInfo
