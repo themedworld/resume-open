@@ -43,20 +43,25 @@ export declare class ResumeController {
         count: number;
     }>;
     findOne(id: string): Promise<{
-        userId: number;
-        id: number;
-        user: import("../users/entities/user.entity").UserEntity;
-        name: string;
-        perInf: PerInf;
-        Education: import("../education/entities/education.entity").Education[];
-        projects: import("../project/entities/project.entity").Project[];
-        workExp: WorkExp[];
-        skills: Skills[];
-        resSet: ResSet;
-        CusSec: CusSec;
+        resume: {
+            userId: number;
+            id: number;
+            user: import("../users/entities/user.entity").UserEntity;
+            name: string;
+            perInf: PerInf;
+            Education: import("../education/entities/education.entity").Education[];
+            projects: import("../project/entities/project.entity").Project[];
+            workExp: WorkExp[];
+            skills: Skills[];
+            resSet: ResSet;
+            CusSec: CusSec;
+            Photo: Photo;
+            Resumeimage: Resumeimage;
+            Language: Language[];
+        };
+        ResumeProfile: PerInf;
         Photo: Photo;
         Resumeimage: Resumeimage;
-        Language: Language[];
     }>;
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
     remove(id: string): Promise<void>;

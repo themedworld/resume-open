@@ -59,7 +59,11 @@ export const CustomForm = () => {
     
     }
   };
+  useEffect(() => {
+    
+    dispatch(changeCustom({  field: "descriptions", value: [] }));
 
+}, [dispatch]);
   return (
     <Form form={form}>
       <div className="col-span-full grid grid-cols-6 gap-3">

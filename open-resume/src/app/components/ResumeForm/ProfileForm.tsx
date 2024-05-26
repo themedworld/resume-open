@@ -7,9 +7,21 @@ import { ResumeProfile } from "lib/redux/types";
 import { useEffect } from "react";
 import ImportImg from "importimg/page";
 export const ProfileForm = () => {
+
+
   const profile = useAppSelector(selectProfile);
   const dispatch = useAppDispatch();
   const { name, email, phone, url, summary, location } = profile;
+  useEffect(() => {
+    
+    dispatch(changeProfile({ field: "name", value: "" }));
+   dispatch(changeProfile({ field: "email", value: "" }));
+   dispatch(changeProfile({ field: "phone", value: "" }));
+   dispatch(changeProfile({ field: "url", value: "" }));
+   dispatch(changeProfile({ field: "summary", value: "" }));
+   dispatch(changeProfile({ field: "location", value: "" }));
+
+}, [dispatch]);
   const resumeid =authService.getResumeId();
   const profilewithresumeid ={name:profile.name,email:profile.email,phone:profile.phone,url:profile.url,summary:profile.summary,location:profile.location,resumeid:resumeid}; 
 

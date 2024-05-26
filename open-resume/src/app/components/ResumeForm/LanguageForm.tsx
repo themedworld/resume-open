@@ -11,6 +11,8 @@ import { authService } from "components/form/authService";
 import { selectShowBulletPoints } from "lib/redux/settingsSlice";
 import { useEffect } from "react";
 import { changeShowBulletPoints } from "lib/redux/settingsSlice";
+import { deleteSectionInFormByIdx ,addEducationSection} from "lib/redux/resumeSlice";
+import { useState } from "react";
 export const LanguageForm = () => {
   const languages = useAppSelector(selectLanguages);
   const dispatch = useAppDispatch();
@@ -56,6 +58,22 @@ export const LanguageForm = () => {
       console.error("Error:", error);
     }
   }
+
+  const [activationCount, setActivationCount] = useState(0);
+  console.log(activationCount);
+useEffect(() => {
+     dispatch(changeLanguages({ idx: 0, field: "language", value: "" }));
+    dispatch(changeLanguages({ idx: 0, field: "descriptions", value: [] }));
+  if ( activationCount < 40) {
+    for (let i = languages.length; i > 0 ; i--) {
+      dispatch(deleteSectionInFormByIdx({ form: "languages", idx: i }));
+      setActivationCount(prevCount => prevCount + 1);
+    }
+    
+  }
+}, [activationCount]);
+
+
   return (
     <Form form="languages" addButtonText="Add Language">
       {languages.map(({ language,descriptions }, idx) => {

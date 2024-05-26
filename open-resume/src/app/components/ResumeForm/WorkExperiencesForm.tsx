@@ -13,6 +13,8 @@ import type { ResumeWorkExperience } from "lib/redux/types";
 import { authService } from "components/form/authService";
 import { useEffect } from "react";
 import { selectShowBulletPoints } from "lib/redux/settingsSlice";
+import { deleteSectionInFormByIdx ,addEducationSection} from "lib/redux/resumeSlice";
+import { useState } from "react";
 export const WorkExperiencesForm = () => {
   const workExperiences = useAppSelector(selectWorkExperiences);
   const dispatch = useAppDispatch();
@@ -59,6 +61,24 @@ export const WorkExperiencesForm = () => {
       console.error("Error:", error);
     }
   };
+
+  const [activationCount, setActivationCount] = useState(0);
+  console.log(activationCount);
+useEffect(() => {
+
+
+            dispatch(changeWorkExperiences({ idx: 0, field: "company", value: "" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "jobTitle", value: "" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "date", value: "" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "descriptions", value: [] }));
+  if ( activationCount < 40) {
+    for (let i = workExperiences.length; i > 0 ; i--) {
+      dispatch(deleteSectionInFormByIdx({ form: "workExperiences", idx: i }));
+      setActivationCount(prevCount => prevCount + 1);
+    }
+    
+  }
+}, [activationCount]);
   return (
     <Form form="workExperiences" addButtonText="Add Job">
       {workExperiences.map(({ company, jobTitle, date, descriptions }, idx) => {

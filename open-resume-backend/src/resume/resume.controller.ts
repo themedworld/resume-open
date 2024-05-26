@@ -60,6 +60,22 @@ export class ResumeController {
     return this.resumeService.findOne(+id);
   }
 
+  @Get('EYA/:id')
+  async findOne(@Param('id') id: string) {
+    const resume = await this.resumeService.findOne(+id);
+    const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
+    const photo = await this.uploadedFileService.findPhotoByResumeId(resume.id);
+    const resumeImage = await this.resumeimageService.findPhotoByResumeId(resume.id);
+
+    return {
+      resume,
+      ResumeProfile: perInfs,
+      Photo: photo,
+      Resumeimage: resumeImage,
+    };
+  }
+
+
   @Put(':id/name')
   async updateName(@Param('id') id: number, @Body() updateResumeNameDto: UpdateResumeNameDto): Promise<Resume> {
     return this.resumeService.updateName(id, updateResumeNameDto);

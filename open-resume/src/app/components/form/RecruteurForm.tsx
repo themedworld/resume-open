@@ -8,17 +8,66 @@ import { number, string } from "zod";
 import { authService } from "./authService";
 import { useRouter } from "next/navigation";
 
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  name: string;
+  numtel: string;
+  companyname: string | null;
+  adresse: string | null;
+  role: string;
+  createdAt: string;
+  updateAt: string;
+}
+
 interface Resume {
   id: number;
   name: string;
+  user: User;
+  userId: number;
 }
+
+interface ResumeProfile {
+  id: number;
+  name: string;
+  summary: string;
+  email: string;
+  phone: string;
+  url: string;
+  location: string;
+}
+
+interface Photo {
+  id: number;
+  name: string;
+  size: string;
+  fileUrl: string;
+}
+
+interface Resumeimage {
+  id: number;
+  fileName: string;
+  documentSize: string;
+  document: string;
+}
+
+interface ResumesWithDetail {
+  resume: Resume;
+  ResumeProfile: ResumeProfile;
+  Photo: Photo;
+  Resumeimage: Resumeimage;
+}
+
+
+
 
 const Recruteur = () => {
   const [location, setLocation] = useState<string>("");
   const [selectedValues, setSelectedValues] = useState<any[]>([]);
   const [selectedskillValues, setSelectedskillValues] = useState<any[]>([]);
   const [selectedjobtitleValues, setSelectedjobtitleValues] = useState<any[]>([]);
-  const [resumeData, setResumeData] = useState<Resume[]>([]);
+  const [resumeData, setResumeData] = useState<ResumesWithDetail[]>([]);
   const [showLanguages, setShowLanguages] = useState<boolean>(false);
   const [showLocation, setShowLocation] = useState<boolean>(false);
   const [showJobtitle, setShowjobtitle] = useState<boolean>(false);
@@ -76,7 +125,7 @@ const Recruteur = () => {
   const LanguageSearch = async () => {
     try {
       const resumeIdsSet = new Set<number>();
-
+  
       for (const language of selectedValues) {
         const response = await fetch(`http://localhost:3001/api/v1/language/findLanguage/${language.value}`);
         if (response.ok) {
@@ -91,38 +140,49 @@ const Recruteur = () => {
           console.error(`Error searching for ${language.value}:`, response.statusText);
         }
       }
-
+  
       const uniqueResumeIds = Array.from(resumeIdsSet);
-      const fetchedResumes: Resume[] = [];
-
+      const fetchedResumes: ResumesWithDetail[] = [];
+  
       for (const resumeId of uniqueResumeIds) {
-        const response = await fetch(`http://localhost:3001/api/v1/resume/resume/${resumeId}`);
+        const response = await fetch(`http://localhost:3001/api/v1/resume/EYA/${resumeId}`);
         if (response.ok) {
           const resumeData = await response.json();
-          fetchedResumes.push(resumeData);
-          console.log("Resume data:", resumeData);
+          const resume: Resume = resumeData.resume;
+          const resumeProfile: ResumeProfile = resumeData.ResumeProfile;
+          const photo: Photo = resumeData.Photo;
+          const resumeImage: Resumeimage = resumeData.Resumeimage;
+  
+          const resumesWithDetail: ResumesWithDetail = {
+            resume,
+            ResumeProfile: resumeProfile,
+            Photo: photo,
+            Resumeimage: resumeImage
+          };
+  
+          fetchedResumes.push(resumesWithDetail);
+          console.log("Resume data:", resumesWithDetail);
         } else {
           console.error(`Error fetching resume with id ${resumeId}:`, response.statusText);
         }
       }
-
+  
       setResumeData(fetchedResumes);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   const SkillsSearch = async () => {
     try {
       const resumeIdsSet = new Set<number>();
-
+  
       for (const skill of selectedskillValues) {
         const response = await fetch(`http://localhost:3001/api/v1/skills/findSkill/${skill.value}`);
-
+  
         if (response.ok) {
           const data = await response.json();
           console.log(data);
-
+  
           data.forEach((skillData: { resumeid: number; FeaturedSkills: any; descriptions: any; }) => {
             if (skillData.resumeid) {
               resumeIdsSet.add(skillData.resumeid);
@@ -132,32 +192,43 @@ const Recruteur = () => {
           console.error(`Error searching for ${skill.value}: ${response.statusText}`);
         }
       }
-
+  
       const uniqueResumeIds = Array.from(resumeIdsSet);
-      const fetchedResumes: Resume[] = [];
-
+      const fetchedResumes: ResumesWithDetail[] = [];
+  
       for (const resumeId of uniqueResumeIds) {
-        const response = await fetch(`http://localhost:3001/api/v1/resume/resume/${resumeId}`);
-
+        const response = await fetch(`http://localhost:3001/api/v1/resume/EYA/${resumeId}`);
+  
         if (response.ok) {
           const resumeData = await response.json();
-          fetchedResumes.push(resumeData);
-          console.log("Resume data:", resumeData);
+          const resume: Resume = resumeData.resume;
+          const resumeProfile: ResumeProfile = resumeData.ResumeProfile;
+          const photo: Photo = resumeData.Photo;
+          const resumeImage: Resumeimage = resumeData.Resumeimage;
+  
+          const resumesWithDetail: ResumesWithDetail = {
+            resume,
+            ResumeProfile: resumeProfile,
+            Photo: photo,
+            Resumeimage: resumeImage
+          };
+  
+          fetchedResumes.push(resumesWithDetail);
+          console.log("Resume data:", resumesWithDetail);
         } else {
           console.error(`Error fetching resume with id ${resumeId}: ${response.statusText}`);
         }
       }
-
+  
       setResumeData(fetchedResumes);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
   const jobtitleSearch = async () => {
     try {
       const resumeIdsSet = new Set<number>();
-
+  
       for (const jobtitle of selectedjobtitleValues) {
         const response = await fetch(`http://localhost:3001/api/v1/work-exp/findjobTitle/${jobtitle.value}`);
         if (response.ok) {
@@ -176,67 +247,91 @@ const Recruteur = () => {
           console.error(`Error searching for ${jobtitle.value}:`, response.statusText);
         }
       }
-
+  
       const uniqueResumeIds = Array.from(resumeIdsSet);
-      const fetchedResumes: Resume[] = [];
-
+      const fetchedResumes: ResumesWithDetail[] = [];
+  
       for (const resumeId of uniqueResumeIds) {
-        const response = await fetch(`http://localhost:3001/api/v1/resume/resume/${resumeId}`);
+        const response = await fetch(`http://localhost:3001/api/v1/resume/EYA/${resumeId}`);
         if (response.ok) {
           const resumeData = await response.json();
-          fetchedResumes.push(resumeData);
-          console.log("Resume data:", resumeData);
+          const resume: Resume = resumeData.resume;
+          const resumeProfile: ResumeProfile = resumeData.ResumeProfile;
+          const photo: Photo = resumeData.Photo;
+          const resumeImage: Resumeimage = resumeData.Resumeimage;
+  
+          const resumesWithDetail: ResumesWithDetail = {
+            resume,
+            ResumeProfile: resumeProfile,
+            Photo: photo,
+            Resumeimage: resumeImage
+          };
+  
+          fetchedResumes.push(resumesWithDetail);
+          console.log("Resume data:", resumesWithDetail);
         } else {
           console.error(`Error fetching resume with id ${resumeId}:`, response.statusText);
         }
       }
-
+  
       setResumeData(fetchedResumes);
       console.log("Fetched Resumes:", fetchedResumes);
     } catch (error) {
       console.error("Error:", error);
     }
   };
-
+  
   const locationSearch = async () => {
     try {
       const resumeIdsSet = new Set<number>();
-
-        const response = await fetch(`http://localhost:3001/api/v1/per-inf/findlocation/${location}`);
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          
-          data.perInf.forEach((Perinf:{ resumeid: number})=>{
-            if (Perinf.resumeid) {
-              resumeIdsSet.add(Perinf.resumeid);
-            }
-          });
-        } else {
-          console.error(`Error searching for ${location}:`, response.statusText);
-        }
-      
-
-       const uniqueResumeIds = Array.from(resumeIdsSet);
-      const fetchedResumes: Resume[] = [];
-
+  
+      const response = await fetch(`http://localhost:3001/api/v1/per-inf/findlocation/${location}`);
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+  
+        data.perInf.forEach((perInf: { resumeid: number }) => {
+          if (perInf.resumeid) {
+            resumeIdsSet.add(perInf.resumeid);
+          }
+        });
+      } else {
+        console.error(`Error searching for ${location}:`, response.statusText);
+      }
+  
+      const uniqueResumeIds = Array.from(resumeIdsSet);
+      const fetchedResumes: ResumesWithDetail[] = [];
+  
       for (const resumeId of uniqueResumeIds) {
-        const response = await fetch(`http://localhost:3001/api/v1/resume/resume/${resumeId}`);
-
+        const response = await fetch(`http://localhost:3001/api/v1/resume/EYA/${resumeId}`);
         if (response.ok) {
           const resumeData = await response.json();
-          fetchedResumes.push(resumeData);
-          console.log("Resume data:", resumeData);
+          const resume: Resume = resumeData.resume;
+          const resumeProfile: ResumeProfile = resumeData.ResumeProfile;
+          const photo: Photo = resumeData.Photo;
+          const resumeImage: Resumeimage = resumeData.Resumeimage;
+  
+          const resumesWithDetail: ResumesWithDetail = {
+            resume,
+            ResumeProfile: resumeProfile,
+            Photo: photo,
+            Resumeimage: resumeImage,
+          };
+  
+          fetchedResumes.push(resumesWithDetail);
+          console.log("Resume data:", resumesWithDetail);
         } else {
           console.error(`Error fetching resume with id ${resumeId}:`, response.statusText);
         }
       }
-
+  
       setResumeData(fetchedResumes);
+      console.log("Fetched Resumes:", fetchedResumes);
     } catch (error) {
       console.error("Error:", error);
     }
   };
+  
   const handleLocationChange = (event: { target: { value: React.SetStateAction<string>; }; }) => {
     setLocation(event.target.value);
   };
@@ -390,17 +485,17 @@ const Recruteur = () => {
       <div className="container mt-5">
         <div className="row">
           {noResult && <p>No resume found.</p>}
-          {!noResult && resumeData.map((resume, index) => (
+          {!noResult && resumeData.map((resum, index) => (
             <div className="col-lg-4 mb-10" key={index}>
                 <div className="card">
-                  <img
-                    src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                    alt="Generic placeholder image"
-                    className="card-img-top img-fluid rounded-top"
-                    style={{ width: "400px", height: "200px" }}
-                  />
+                <img
+  src={resum.Photo ? "data:image/jpeg;base64," + resum.Photo.fileUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"}
+  alt="Generic placeholder image"
+  className="card-img-top img-fluid"
+  style={{ borderRadius: "15px 15px 0 0" }}
+/>
                   <div className="card-body">
-                    <h5 className="card-title">{resume.name}</h5>
+                    <h5 className="card-title">{resum.resume.name}</h5>
                     {/* Remplacez les données manquantes ici */}
                     <p className="card-text">{/* Remplacer "JobTitle" par le titre du poste de travail de ce candidat */}</p>
                     <div className="d-flex justify-content-between align-items-center">
@@ -413,7 +508,7 @@ const Recruteur = () => {
                       <div>
                         <p className="small text-muted mb-1">Location</p>
                         {/* Remplacez les données manquantes ici */}
-                        <p className="mb-0">{/* Remplacer "Tabarka" par la localisation de ce candidat */}</p>
+                        <p className="mb-0">{resum.ResumeProfile.location}</p>
                       </div>
                     </div>
                   </div>
@@ -422,7 +517,7 @@ const Recruteur = () => {
                       type="button"
                       className="btn btn-outline-primary flex-grow-1 me-1"
                       onClick={() => {
-                        handleViewClick(resume.id)
+                        handleViewClick(resum.resume.id)
                       }}
                     >
                       View

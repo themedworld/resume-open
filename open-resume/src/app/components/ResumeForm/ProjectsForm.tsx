@@ -11,6 +11,8 @@ import { authService } from "components/form/authService";
 import { useEffect } from "react";
 import { selectShowBulletPoints } from "lib/redux/settingsSlice";
 import { changeShowBulletPoints } from "lib/redux/settingsSlice";
+import { deleteSectionInFormByIdx ,addEducationSection} from "lib/redux/resumeSlice";
+import { useState } from "react";
 export const ProjectsForm = () => {
   const projects = useAppSelector(selectProjects);
   const dispatch = useAppDispatch();
@@ -57,6 +59,24 @@ export const ProjectsForm = () => {
       console.error("Error:", error);
     }
   };
+
+
+  const [activationCount, setActivationCount] = useState(0);
+  console.log(activationCount);
+useEffect(() => {
+
+
+            dispatch(changeProjects({ idx: 0, field: "project", value: "" }));
+            dispatch(changeProjects({ idx: 0, field: "date", value: "" }));
+            dispatch(changeProjects({ idx: 0, field: "descriptions", value: [] }));
+  if ( activationCount < 40) {
+    for (let i = projects.length; i > 0 ; i--) {
+      dispatch(deleteSectionInFormByIdx({ form: "projects", idx: i }));
+      setActivationCount(prevCount => prevCount + 1);
+    }
+    
+  }
+}, [activationCount]);
   return (
     <Form form="projects" addButtonText="Add Project">
       {projects.map(({ project, date, descriptions }, idx) => {

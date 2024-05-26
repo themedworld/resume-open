@@ -17,7 +17,7 @@ import {
 } from "lib/redux/settingsSlice";
 import { useState } from "react";
 import { ResumeForm } from ".";
-
+import { deleteSectionInFormByIdx ,addEducationSection} from "lib/redux/resumeSlice";
 export const EducationsForm = () => {
   const educations = useAppSelector(selectEducations);
   const dispatch = useAppDispatch();
@@ -65,6 +65,23 @@ export const EducationsForm = () => {
       console.error("Error:", error);
     }
   };
+     
+  const [activationCount, setActivationCount] = useState(0);
+console.log(activationCount);
+useEffect(() => {
+  dispatch(changeEducations({ idx: 0, field: "school", value: "" }));
+  dispatch(changeEducations({ idx: 0, field: "date", value: "" }));
+  dispatch(changeEducations({ idx: 0, field: "descriptions", value: [] }));
+  dispatch(changeEducations({ idx: 0, field: "degree", value: "" }));
+  dispatch(changeEducations({ idx: 0, field: "gpa", value: "" }));  
+  if ( activationCount < 40) {
+    for (let i = educations.length; i > 0 ; i--) {
+      dispatch(deleteSectionInFormByIdx({ form: "educations", idx: i }));
+      setActivationCount(prevCount => prevCount + 1);
+    }
+    
+  }
+}, [activationCount]);
 
   return (
     <Form form={form} addButtonText="Add School">

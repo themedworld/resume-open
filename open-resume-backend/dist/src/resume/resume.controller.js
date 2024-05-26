@@ -52,8 +52,17 @@ let ResumeController = class ResumeController {
         const count = resumes.length;
         return { resumes, count };
     }
-    findOne(id) {
-        return this.resumeService.findOne(+id);
+    async findOne(id) {
+        const resume = await this.resumeService.findOne(+id);
+        const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
+        const photo = await this.uploadedFileService.findPhotoByResumeId(resume.id);
+        const resumeImage = await this.resumeimageService.findPhotoByResumeId(resume.id);
+        return {
+            resume,
+            ResumeProfile: perInfs,
+            Photo: photo,
+            Resumeimage: resumeImage,
+        };
     }
     async updateName(id, updateResumeNameDto) {
         return this.resumeService.updateName(id, updateResumeNameDto);
@@ -142,11 +151,11 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "findResumeByUserId", null);
 __decorate([
-    (0, common_1.Get)('resume/:id'),
+    (0, common_1.Get)('EYA/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Put)(':id/name'),
