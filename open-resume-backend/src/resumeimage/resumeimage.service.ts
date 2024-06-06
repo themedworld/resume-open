@@ -26,7 +26,16 @@ export class ResumeimageService {
     return this.ResumeimageRepository.save(Resumeimage);
   }
 
-
+  async updateimage(id: number,createResumeimageDto:CreateResumeimageDto ): Promise<Resumeimage> {
+    const resumeimage = await this.ResumeimageRepository.findOne({ where: { resume: { id } } });
+    if (!resumeimage) {
+      throw new NotFoundException(`Skills with id ${id} not found`);
+    }
+    resumeimage.fileName = createResumeimageDto.fileName;
+    resumeimage.documentSize = createResumeimageDto.documentSize;
+    resumeimage.document = createResumeimageDto.document;
+    return this.ResumeimageRepository.save(resumeimage);
+  }
   findAll() {
     return `This action returns all resumeimage`;
   }

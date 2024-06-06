@@ -69,27 +69,23 @@ export const ResumeForm = ({
 
   const uploadFileToDatabase = async () => {
     const resumeId =authService.getResumeId();
-    try {
-        const res = await fetch(`http://localhost:3001/api/v1/resumeimage/${resumeId}`, {
-          method: 'DELETE',
-        });
-    } catch (error) {
-      console.error('Une erreur est survenue lors de la suppression :', error);
-    }
+   
       try {
         
         const fileInfo = {
           fileName: resume.profile.name + " - Resume",
           documentSize: settings.documentSize,
           document: await blobToBase64(instance.url!),
-          resumeid: resumeId,
         };
   
   
-        const response = await axios.post(
-          "http://localhost:3001/api/v1/resumeimage/createResumeimage",
-          fileInfo
-        );
+        const response = await fetch(`http://localhost:3001/api/v1/resumeimage/${resumeId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(fileInfo),
+        });
   console.log("sheeepp")
         if (response.status === 200) {
           console.log("File information uploaded successfully");

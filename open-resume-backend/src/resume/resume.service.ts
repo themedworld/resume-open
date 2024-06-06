@@ -42,6 +42,12 @@ export class ResumeService {
     return this.ResumeRepository.save(resume);
   }
 
+
+  async findResumeByUserIdAndName(id: number, name: string): Promise<number> {
+    const resume = await this.ResumeRepository.findOne({ where: { user: { id }, name } });
+    return resume ? 1 : 0;
+  }
+
   async findResumeByUserId(id: number): Promise<Resume[]> {
     return this.ResumeRepository.find({ where: { user: { id } } });
   }

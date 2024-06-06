@@ -27,7 +27,7 @@ export class PerInfService {
   }
 
   async updatePerInf(id: number, updatePerInfDto: UpdatePerInfDto): Promise<PerInf> {
-    const perInf = await this.perInfRepository.findOne({ where: { id } });
+    const perInf = await this.perInfRepository.findOne({ where: { resume: { id } } });
     if (!perInf) {
       throw new NotFoundException(`PerInf with id ${id} not found`);
     }

@@ -7,6 +7,7 @@ export declare class ResumeimageService {
     private resumeRepository;
     constructor(ResumeimageRepository: Repository<Resumeimage>, resumeRepository: Repository<Resume>);
     createResumeimage(createResumeimageDto: CreateResumeimageDto): Promise<Resumeimage>;
+    updateimage(id: number, createResumeimageDto: CreateResumeimageDto): Promise<Resumeimage>;
     findAll(): string;
     findOne(id: number): string;
     remove(id: number): Promise<void>;

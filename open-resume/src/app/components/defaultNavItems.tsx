@@ -26,11 +26,7 @@ export const defaultNavItems: NavItem[] = [
     href: "/Messager",
     icon: <ChatBubbleBottomCenterIcon className="w-6 h-6" />,
   },
-  {
-    label: "Projects",
-    href: "/projects",
-    icon: <FolderIcon className="w-6 h-6" />,
-  },
+ 
   {
     label: "logout",
     href: "/SignIn",
@@ -50,11 +46,7 @@ export const demandeurNavItems: NavItem[] = [
     href: "/fetchresumebyuserid",
     icon: <FolderIcon className="w-6 h-6" />,
   },
-  {
-    label: "parser",
-    href: "/resume-parser",
-    icon: <CalendarIcon className="w-6 h-6" />,
-  },
+
   {
     label: "message",
     href: "/Messages",

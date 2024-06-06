@@ -46,20 +46,14 @@ useEffect(() => {
   };
 
   const handleSubmit = async () => {
+ 
     try {
       const response = await fetch(`http://localhost:3001/api/v1/skills/${resumeid}`, {
-        method: 'DELETE',
-      });
-  } catch (error) {
-    console.error('Une erreur est survenue lors de la suppression :', error);
-  }
-    try {
-      const response = await fetch("http://localhost:3001/api/v1/skills/createSkills", {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(skillswithresumeid),
+        body: JSON.stringify(skills),
       });
 
       if (!response.ok) {

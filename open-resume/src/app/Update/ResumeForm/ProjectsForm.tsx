@@ -31,6 +31,7 @@ export const ProjectsForm = () => {
         if (resume) {
           const projects = resume.projects;
           setcount(projects.length);
+          if(projects.length>0){
           for (let i = 0; i < projects.length; i++) {
             dispatch(addProjectSection());
             const project = projects[i];
@@ -38,6 +39,11 @@ export const ProjectsForm = () => {
             dispatch(changeProjects({ idx: i, field: "date", value: project.date }));
             dispatch(changeProjects({ idx: i, field: "descriptions", value: [project.descriptions] }));
             
+          }}
+          if(projects.length===0){
+            dispatch(changeProjects({ idx: 0, field: "project", value: "" }));
+            dispatch(changeProjects({ idx: 0, field: "date", value:"" }));
+            dispatch(changeProjects({ idx: 0, field: "descriptions", value: [] }));
           }
         }
       } catch (error) {

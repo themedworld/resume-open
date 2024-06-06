@@ -76,12 +76,17 @@ export const LanguageForm = () => {
         if (resume) {
           const languages = resume.languages;
           setcount(languages.length)
+          if(languages.length>0){
           for (let i = 0; i < languages.length; i++) {
             dispatch(addlanguagesSection());
             const language = languages[i];
             dispatch(changeLanguages({ idx: i, field: "language", value: language.language }));
             dispatch(changeLanguages({ idx: i, field: "descriptions", value: [language.descriptions] }));
            
+          }}
+          if (languages.length===0){
+            dispatch(changeLanguages({ idx: 0, field: "language", value:""}));
+            dispatch(changeLanguages({ idx: 0, field: "descriptions", value: [] }));
           }
         }
       } catch (error) {

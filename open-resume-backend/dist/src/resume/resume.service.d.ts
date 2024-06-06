@@ -17,6 +17,7 @@ export declare class ResumeService {
     constructor(ResumeRepository: Repository<Resume>, UserRepository: Repository<UserEntity>);
     createResume(createResumeDto: CreateResumeDto): Promise<Resume>;
     updateName(id: number, updateResumeNameDto: UpdateResumeNameDto): Promise<Resume>;
+    findResumeByUserIdAndName(id: number, name: string): Promise<number>;
     findResumeByUserId(id: number): Promise<Resume[]>;
     findOne(id: number): Promise<{
         userId: number;

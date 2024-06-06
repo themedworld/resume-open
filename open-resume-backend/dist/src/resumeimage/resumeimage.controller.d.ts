@@ -7,6 +7,7 @@ export declare class ResumeimageController {
     craeteResumeimage(createResumeimageDto: CreateResumeimageDto): Promise<{
         Resumeimage: Resumeimage;
     }>;
+    updateimageresume(id: number, createResumeimageDto: CreateResumeimageDto): Promise<Resumeimage>;
     remove(id: string): Promise<void>;
     findPerInfByResumeId(id: any): Promise<Resumeimage>;
 }

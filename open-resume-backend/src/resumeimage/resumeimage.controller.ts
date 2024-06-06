@@ -1,4 +1,4 @@
-import { Controller, Post, Body, HttpException, HttpStatus,Delete,Param,Get} from "@nestjs/common";
+import { Controller, Post, Body, HttpException, HttpStatus,Delete,Param,Get,Put} from "@nestjs/common";
 import { ResumeimageService } from './resumeimage.service';
 import { CreateResumeimageDto } from './dto/create-resumeimage.dto';
 import { Resumeimage } from "./entities/resumeimage.entity";
@@ -11,7 +11,10 @@ export class ResumeimageController {
     const Resumeimage = await this.resumeimageService.createResumeimage(createResumeimageDto);
     return { Resumeimage };
   }
-
+  @Put(':id')
+  async updateimageresume(@Param('id') id: number, @Body()createResumeimageDto:CreateResumeimageDto ): Promise<Resumeimage> {
+    return this.resumeimageService.updateimage(id, createResumeimageDto);
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

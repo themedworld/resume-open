@@ -28,7 +28,7 @@ export class SkillsService {
 
 
   async updateSkills(id: number, updateSkillsDto: UpdateSkillsDto): Promise<Skills> {
-    const skills = await this.SkillsRepository.findOne({ where: { id } });
+    const skills = await this.SkillsRepository.findOne({ where: { resume: { id } } });
     if (!skills) {
       throw new NotFoundException(`Skills with id ${id} not found`);
     }

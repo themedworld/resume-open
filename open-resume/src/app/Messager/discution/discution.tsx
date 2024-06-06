@@ -83,7 +83,9 @@ const Discussion = ({ Contactid }: { Contactid: number }) => {
 
     fetchMessages();
     
+    const intervalId = setInterval(fetchMessages, 500); 
 
+    return () => clearInterval(intervalId);
   
   }, [Contactid, userId]);
 

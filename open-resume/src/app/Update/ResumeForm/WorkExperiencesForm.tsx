@@ -103,7 +103,7 @@ export const WorkExperiencesForm = () => {
         if (resume) {
           const WorkExperiences = resume.workExperiences;
           setcount(WorkExperiences.length);
-          
+          if (WorkExperiences.length>0){
           for (let i = 0; i < WorkExperiences.length; i++) {
           
             dispatch(addWorkExperienceSection());
@@ -113,6 +113,12 @@ export const WorkExperiencesForm = () => {
             dispatch(changeWorkExperiences({ idx: i, field: "date", value: WorkExperience.date }));
             dispatch(changeWorkExperiences({ idx: i, field: "descriptions", value: [WorkExperience.descriptions] }));
          
+          }}
+          if(WorkExperiences.length===0){
+            dispatch(changeWorkExperiences({ idx: 0, field: "company", value:"" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "jobTitle", value: "" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "date", value:"" }));
+            dispatch(changeWorkExperiences({ idx: 0, field: "descriptions", value: [] })); 
           }
         }
       } catch (error) {

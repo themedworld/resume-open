@@ -24,6 +24,9 @@ let ResumeimageController = class ResumeimageController {
         const Resumeimage = await this.resumeimageService.createResumeimage(createResumeimageDto);
         return { Resumeimage };
     }
+    async updateimageresume(id, createResumeimageDto) {
+        return this.resumeimageService.updateimage(id, createResumeimageDto);
+    }
     remove(id) {
         return this.resumeimageService.remove(+id);
     }
@@ -39,6 +42,14 @@ __decorate([
     __metadata("design:paramtypes", [create_resumeimage_dto_1.CreateResumeimageDto]),
     __metadata("design:returntype", Promise)
 ], ResumeimageController.prototype, "craeteResumeimage", null);
+__decorate([
+    (0, common_1.Put)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, create_resumeimage_dto_1.CreateResumeimageDto]),
+    __metadata("design:returntype", Promise)
+], ResumeimageController.prototype, "updateimageresume", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

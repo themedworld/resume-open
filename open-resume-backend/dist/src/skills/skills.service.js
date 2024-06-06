@@ -33,7 +33,7 @@ let SkillsService = class SkillsService {
         return this.SkillsRepository.save(Skills);
     }
     async updateSkills(id, updateSkillsDto) {
-        const skills = await this.SkillsRepository.findOne({ where: { id } });
+        const skills = await this.SkillsRepository.findOne({ where: { resume: { id } } });
         if (!skills) {
             throw new common_1.NotFoundException(`Skills with id ${id} not found`);
         }

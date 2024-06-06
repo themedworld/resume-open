@@ -102,7 +102,7 @@ export const resumeSlice = createSlice({
     ) => {
       const { idx, field, value } = action.payload;
       const workExperience = draft.workExperiences[idx];
-      workExperience[field] = value as any;
+      workExperience[field] = value as never;
     },
     changeEducations: (
       draft,

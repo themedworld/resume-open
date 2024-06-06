@@ -52,6 +52,9 @@ let ResumeController = class ResumeController {
         const count = resumes.length;
         return { resumes, count };
     }
+    async findBySenderAndReceiver(id, name) {
+        return this.resumeService.findResumeByUserIdAndName(id, name);
+    }
     async findOne(id) {
         const resume = await this.resumeService.findOne(+id);
         const perInfs = await this.perInfService.findPerInfByResumeId(resume.id);
@@ -150,6 +153,14 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", Promise)
 ], ResumeController.prototype, "findResumeByUserId", null);
+__decorate([
+    (0, common_1.Get)('between/:id/:name'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Param)('name')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, String]),
+    __metadata("design:returntype", Promise)
+], ResumeController.prototype, "findBySenderAndReceiver", null);
 __decorate([
     (0, common_1.Get)('EYA/:id'),
     __param(0, (0, common_1.Param)('id')),

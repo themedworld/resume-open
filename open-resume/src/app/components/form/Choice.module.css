@@ -1,66 +1,53 @@
-.hero {
-    background-color: #f0f8ff;
-    padding: 50px 0;
-}
-
-.card {
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 15px;
-    background-color: #ffffff;
-}
-
-.primaryText {
-    color: #007bff;
-}
-
-.imageContainer {
-    position: relative;
-    display: inline-block;
-}
-
-.heroImage {
-    width: 500px;
-    height: 400px;
-    border-radius: 15px;
-    margin-bottom: 30px;
-}
-
-.buttonContainer {
-    position: absolute;
-    width: 100%;
-    top: 15%; /* Adjust this value to position the buttons correctly */
+.container {
+    margin-top: 5rem; /* Ajoute une marge supérieure */
+  }
+  
+  /* Styles pour la carte */
+  .card {
+    border: 1px solid #ccc; /* Bordure légère */
+    border-radius: 8px; /* Bords arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre pour l'effet de profondeur */
+  }
+  
+  /* Styles pour le corps de la carte */
+  .card-body {
+    padding: 2rem; /* Padding pour aérer le contenu */
+  }
+  
+  /* Styles pour le titre */
+  .custom-title {
+    font-size: 5rem; /* Taille du texte augmentée */
+    color: rgb(225, 142, 65); /* Couleur bleu roi */
+    font-weight: 800; /* Texte plus gras */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Légère ombre pour rendre le texte plus clair */
+  }
+  
+  /* Styles pour les boutons */
+  .custom-btn {
     display: flex;
-    justify-content: space-around;
-}
-
-.buttonContainer a {
-    display: flex;
-    flex-direction: column;
+    width: 100%; /* Largeur du bouton à 100% du conteneur parent */
+    font-size: 1.5rem; /* Taille du texte des boutons */
+    padding: 1rem 0; /* Padding vertical pour agrandir les boutons */
+    text-align: center; /* Centrer le texte */
+    background-color: rgb(65, 225, 113); /* Couleur de fond bleu roi */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Bords arrondis */
+    color: white; /* Couleur du texte */
+    transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
     align-items: center;
-    background-color: #007bff; /* Primary color for buttons */
-    color: white;
-    border-radius: 10px;
-    padding: 10px 20px;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
-.buttonContainer a:hover {
-    background-color: #0056b3; /* Darker shade for hover effect */
-}
-
-.buttonContainer a img {
-    margin-bottom: 10px;
-}
-
-@media (max-width: 768px) {
-    .buttonContainer {
-        flex-direction: column;
-        top: 30%; /* Adjust this value to position the buttons correctly on small screens */
-    }
-
-    .buttonContainer a {
-        margin-bottom: 20px;
-    }
-}
+    flex-direction: column;
+  }
+  
+  .custom-btn:hover {
+    background-color: rgb(0, 139, 42); /* Changement de couleur au survol */
+  }
+  
+  
+  .custom-btn img {
+    margin-top: 0.5rem; /* Marge supérieure entre le texte et l'image */
+  }
+  
+  /* Espacement supplémentaire */
+  .text-center br {
+    margin-bottom: 1rem; /* Ajuste la marge entre les sauts de ligne */
+  }

@@ -54,12 +54,13 @@ export class ResumeController {
     const count = resumes.length;
     return { resumes, count };
   }
-
-  @Get('resume/:id')
-  findOne(@Param('id') id: string) {
-    return this.resumeService.findOne(+id);
+  @Get('between/:id/:name')
+  async findBySenderAndReceiver(
+    @Param('id') id: number,
+    @Param('name') name: string
+  ): Promise<number> {
+    return this.resumeService.findResumeByUserIdAndName(id, name);
   }
-
   @Get('EYA/:id')
   async findOne(@Param('id') id: string) {
     const resume = await this.resumeService.findOne(+id);

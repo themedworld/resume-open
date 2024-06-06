@@ -91,9 +91,7 @@ const Sidebar = ({ open, setOpen }: Props) => {
           {username && (
             <div className="flex flex-col ">
               <span className="text-indigo-50 my-0">{username}</span>
-              <Link href="/" className="text-indigo-200 text-sm">
-                View Profile
-              </Link>
+           
             </div>
           )}
         </div>

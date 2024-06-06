@@ -4,7 +4,10 @@ import { authService } from "./authService";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { FaUser, FaLock } from 'react-icons/fa';
+import  './Signin.module.css'
+import Image from "next/image";
+import image from "./OpenResume.png";
 const SignInForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -40,59 +43,58 @@ const SignInForm = () => {
     }, []);
 
     return (
-        <div className="flex  justify-center items-center min-h-screen bg-black">
-        <div className="flex bg-white shadow-md rounded p-8 max-w-3xl w-full">
-            <div className="w-1/2 p-4">
-                <form onSubmit={submitForm} className='text-center'>
-                    <div className='mb-4'>
-                        <h2 className="text-center text-3xl font-semibold mb-4">Sign in to Your Account</h2>
-                        <label htmlFor='username' className='block text-gray-700 font-medium mb-2'>
-                            Email/Mobile Number
-                        </label>
-                        <input
-                            id='username'
-                            type='text'
-                            placeholder='Email/Mobile Number'
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            className='mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500'
-                        />
+        <div className="d-flex justify-content-center align-items-center min-vh-100" style={{ backgroundColor: 'rgba(240, 240, 255, 0.9)' }}>
+            <div className="card shadow-lg p-4" style={{ width: '50%', maxWidth: '500px', height: 'auto', backgroundColor: 'rgba(200, 200, 255, 0.5)', color: '#fff', borderRadius: '1rem' }}>
+                <div className="p-4">
+                    <div className="text-center mb-4">
+                        <Image src={image} style={{ maxWidth: '150px', width: '100%', height: 'auto' }} />
                     </div>
-                    <div className='mb-6'>
-                        <label htmlFor='password' className='block text-gray-700 font-medium mb-2'>
-                            Password
-                        </label>
-                        <input
-                            id='password'
-                            type='password'
-                            placeholder='Password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className='mt-1 p-2 border border-gray-300 rounded-md w-full focus:outline-none focus:border-blue-500'
-                        />
-                    </div>
-                    <button type='submit' className='bg-black hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-md w-full mb-2'>
-                        LOG IN
-                    </button>
-                    <p className='text-center text-sm text-gray-600'>
-                        Don't have an account?&nbsp;
-                        <Link href='/Choice'>
-                            <button type='button' className='bg-white border border-black text-black font-semibold py-2 px-4 rounded-md w-full'>
-                                SIGN UP
-                            </button>
-                        </Link>
-                    </p>
-                    {error && <div className='text-red-500 mt-4 text-center'>{error}</div>}
-                </form>
-            </div>
-            <div className="flex items-center justify-center w-1/2 bg-gray-100 p-4">
-                <img src="https://tse4.mm.bing.net/th?id=OIP.B67-wRFE8No08qKgpc-TYgHaH4&pid=Api&P=0&h=180" alt="Login Logo" className="w-full h-auto" />
+                    <form onSubmit={submitForm}>
+                    <h2 className="text-center text-blue-500 mb-4" style={{ fontFamily: 'Arial, sans-serif', fontSize :43 }}>
+  Sign in to Your Account
+</h2>
+
+
+                        <div className="mb-3 text-start">
+                            <label htmlFor="username" className="form-label text-black">
+                                <FaUser className="me-2" /> Username
+                            </label>
+                            <input
+                                id="username"
+                                type="text"
+                                placeholder="Email/Mobile Number"
+                                value={username}
+                                onChange={(e) => setUsername(e.target.value)}
+                                className="form-control custom-input"
+                            />
+                        </div>
+                        <div className="mb-3 text-start">
+                            <label htmlFor="password" className="form-label text-black">
+                                <FaLock className="me-2" /> Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                placeholder="Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="form-control custom-input"
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary w-100 mb-3">Sign In</button>
+                        <div className="d-flex justify-content-between text-back">
+                            <Link href="/Choice" className="text-decoration-none text-black">Don't have an account? Sign Up</Link>
+                        </div>
+                        {error && <div className="text-danger text-center mt-3">{error}</div>}
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     );
 };
 
 export default SignInForm;
+
+
 
 

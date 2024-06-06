@@ -73,7 +73,7 @@ const Navbar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 
           </div></div>
           <div className="flex-grow"></div>
-          {userId}
+          {username}
         </nav>
       </div>
       {showLayout ? (

@@ -114,10 +114,10 @@ export const ResumePDFProfile = ({
     src={ imageUrl ? imageUrl :   "data:image/jpeg;base64," + fileUrl }
      style={{
        width: '100%',
-       height: '100%', // Ajusté pour s'assurer que l'image couvre entièrement le conteneur
+       height: '100%', 
        borderRadius: '50%',
        objectFit: 'cover',
-       position: 'absolute', // Positionnement absolu pour superposition
+       position: 'absolute', 
        top: 0,
        left: 0
      }} 

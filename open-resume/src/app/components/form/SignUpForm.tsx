@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import  './SignUp.module.css'
 const FormSchema = z.object({
   username: z.string().min(1, 'Username is required').max(100),
   email: z.string().min(1, 'Email is required').email('Invalid email'),
@@ -52,7 +53,25 @@ const SignUpForm = () => {
   };
   
 
-  return ( <form onSubmit={form.handleSubmit(onSubmit)} className='mx-auto max-w-md'>
+  return ( 
+    <div className="d-flex justify-content-center align-items-center min-vh-200" style={{ backgroundColor: 'rgba(240, 240, 255, 0.9)' }}>
+ <div 
+      className="card shadow-lg p-4" 
+      style={{ 
+        width: '50%', 
+        maxWidth: '500px', 
+        height: 'auto',  
+        backgroundSize: 'cover', 
+        backgroundBlendMode: 'overlay', 
+        backgroundColor: 'rgba(200, 200, 255, 0.5)'
+      }}
+    >
+        <div className="p-4">
+    
+  
+  <form onSubmit={form.handleSubmit(onSubmit)} >
+  <h2 className="text-center text-blue-500 mb-4" style={{ fontFamily: 'Arial, sans-serif', fontSize :43 }}>
+Sign Up job Seeker : </h2>
   <div className='space-y-4'>
     <div>
       <label htmlFor='username' className='block font-medium text-gray-700'>
@@ -109,7 +128,7 @@ const SignUpForm = () => {
       )}
     </div>
   </div>
-  <button type='submit' className='mt-4 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md'>
+  <button type='submit' className='mt-4  bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md'>
     Sign up
   </button>
   {error && <div className='text-red-500 mt-4'>{error}</div>}
@@ -119,7 +138,7 @@ const SignUpForm = () => {
       Sign in
     </a>
   </p>
-</form>
+</form></div></div></div>
   );
 };
 

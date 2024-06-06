@@ -5,15 +5,23 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Testimonials } from "home/Testimonials";
 import Link from 'next/link';
+import Image from "next/image";
+import image from "./OpenResume.png";
 const HomePage: React.FC = () => {
   return (
     <div className={`container-fluid ${styles.container}`}>
-      <header className={`text-center p-4 ${styles.header}`}>
-        <h1>Open Resume</h1>
-      </header>
+  <header className={`text-center p-4 ${styles.header} d-flex flex-column align-items-center`}>
+  <div className="text-center mb-4">
+    <Image src={image} className={styles.heroImage} style={{ maxWidth: '150px', width: '100%', height: 'auto' }} />
+  </div>
+  <h1 style={{ width: '100%' }}>Open Resume</h1>
+</header>
 
+  
+  
       <main className="container py-4">
         <section className={`text-center ${styles.hero}`}>
+
           <h2 className={styles.heroTitle}>Create Your Perfect Resume</h2>
           <p className={styles.heroDescription}>
             Build a professional resume that highlights your skills and experiences.

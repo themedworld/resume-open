@@ -40,6 +40,10 @@ let ResumeService = class ResumeService {
         resume.name = updateResumeNameDto.name;
         return this.ResumeRepository.save(resume);
     }
+    async findResumeByUserIdAndName(id, name) {
+        const resume = await this.ResumeRepository.findOne({ where: { user: { id }, name } });
+        return resume ? 1 : 0;
+    }
     async findResumeByUserId(id) {
         return this.ResumeRepository.find({ where: { user: { id } } });
     }

@@ -38,6 +38,7 @@ export const ProfileForm = () => {
           dispatch(changeProfile({ field: "url", value: url }));
           dispatch(changeProfile({ field: "summary", value: summary }));
           dispatch(changeProfile({ field: "location", value: location }));
+          console.log()
         }
       } catch (error) {
         console.error("Error fetching resume data:", error);
@@ -51,21 +52,16 @@ export const ProfileForm = () => {
       handleSubmit();
     }
   }, [buttonClicked]); 
+
   const handleSubmit = async () => {
     try {
-      try {
-        const response = await fetch(`http://localhost:3001/api/v1/per-inf/${resumeid}`, {
-          method: 'DELETE',
-        });
-    } catch (error) {
-      console.error('Une erreur est survenue lors de la suppression :', error);
-    }
-      const response = await fetch("http://localhost:3001/api/v1/per-inf/createPerInf", {
-        method: "POST",
+     
+      const response = await fetch(`http://localhost:3001/api/v1/per-inf/${resumeid}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(profilewithresumeid),
+        body: JSON.stringify(profile),
       });
 
       if (!response.ok) {

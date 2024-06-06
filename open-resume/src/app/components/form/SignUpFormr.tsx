@@ -53,8 +53,24 @@ const SignUpFormr = () => {
   
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className='mx-auto max-w-md'>
-      <div className='space-y-4'>
+    <div className="d-flex justify-content-center align-items-center min-vh-200" style={{ backgroundColor: 'rgba(240, 240, 255, 0.9)' }}>
+    <div 
+         className="card shadow-lg p-4" 
+         style={{ 
+           width: '50%', 
+           maxWidth: '500px', 
+           height: 'auto',  
+           backgroundSize: 'cover', 
+           backgroundBlendMode: 'overlay', 
+           backgroundColor: 'rgba(200, 200, 255, 0.5)'
+         }}
+       >
+           <div className="p-4">
+       
+     
+     <form onSubmit={form.handleSubmit(onSubmit)} >
+     <h2 className="text-center text-blue-500 mb-4" style={{ fontFamily: 'Arial, sans-serif', fontSize :43 }}>
+   Sign Up Recruiter </h2>    <div className='space-y-4'>
         <div>
           <label htmlFor='username' className='block font-medium text-gray-700'>
             Username
@@ -120,7 +136,7 @@ const SignUpFormr = () => {
           Sign in
         </a>
       </p>
-    </form>
+    </form></div></div></div>
   );
 };
 

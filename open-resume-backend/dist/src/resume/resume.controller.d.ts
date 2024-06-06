@@ -42,6 +42,7 @@ export declare class ResumeController {
         resumes: Resume[];
         count: number;
     }>;
+    findBySenderAndReceiver(id: number, name: string): Promise<number>;
     findOne(id: string): Promise<{
         resume: {
             userId: number;

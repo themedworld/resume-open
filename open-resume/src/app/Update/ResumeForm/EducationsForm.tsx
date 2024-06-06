@@ -84,6 +84,7 @@ export const EducationsForm = () => {
           const NEWeducations = resume.educations;
           setcount(NEWeducations.length);
           console.log(count)
+          if (NEWeducations.length>0){
           for (let i = 0; i < NEWeducations.length; i++) {
             dispatch(addEducationSection());
             const education = NEWeducations[i];
@@ -92,6 +93,13 @@ export const EducationsForm = () => {
             dispatch(changeEducations({ idx: i, field: "descriptions", value: [education.descriptions] }));
             dispatch(changeEducations({ idx: i, field: "degree", value: education.degree }));
             dispatch(changeEducations({ idx: i, field: "gpa", value: education.gpa }));         
+          }}
+          if(NEWeducations.length===0){
+            dispatch(changeEducations({ idx: 0, field: "school", value: "" }));
+            dispatch(changeEducations({ idx: 0, field: "date", value: ""}));
+            dispatch(changeEducations({ idx: 0, field: "descriptions", value: [] }));
+            dispatch(changeEducations({ idx: 0, field: "degree", value: "" }));
+            dispatch(changeEducations({ idx: 0, field: "gpa", value: "" }));         
           }
 
 

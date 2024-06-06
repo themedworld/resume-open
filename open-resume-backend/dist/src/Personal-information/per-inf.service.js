@@ -33,7 +33,7 @@ let PerInfService = class PerInfService {
         return this.perInfRepository.save(perInf);
     }
     async updatePerInf(id, updatePerInfDto) {
-        const perInf = await this.perInfRepository.findOne({ where: { id } });
+        const perInf = await this.perInfRepository.findOne({ where: { resume: { id } } });
         if (!perInf) {
             throw new common_1.NotFoundException(`PerInf with id ${id} not found`);
         }

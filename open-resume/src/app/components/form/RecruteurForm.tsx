@@ -482,19 +482,18 @@ const Recruteur = () => {
           </div>
         </div>
       </div>
-      <div className="container mt-5">
-        <div className="row">
+      <div className="row row-cols-1 row-cols-md-3 g-4">
           {noResult && <p>No resume found.</p>}
           {!noResult && resumeData.map((resum, index) => (
-            <div className="col-lg-4 mb-10" key={index}>
-                <div className="card">
+            <div className="col-lg-4 mb-3"  key={index}>
+              <div className="card shadow-sm h-100 d-flex flex-column">
                 <img
   src={resum.Photo ? "data:image/jpeg;base64," + resum.Photo.fileUrl : "https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"}
   alt="Generic placeholder image"
   className="card-img-top img-fluid"
-  style={{ borderRadius: "15px 15px 0 0" }}
+  style={{ borderRadius: "20px 20px 0 0" }}
 />
-                  <div className="card-body">
+<div className="card-body flex-grow-1 d-flex flex-column p-3">
                     <h5 className="card-title">{resum.resume.name}</h5>
                     {/* Remplacez les données manquantes ici */}
                     <p className="card-text">{/* Remplacer "JobTitle" par le titre du poste de travail de ce candidat */}</p>
@@ -512,7 +511,7 @@ const Recruteur = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="card-footer d-flex justify-content-between">
+                  <div className="card-footer d-flex justify-content-between p-2">
                     <button
                       type="button"
                       className="btn btn-outline-primary flex-grow-1 me-1"
@@ -530,7 +529,7 @@ const Recruteur = () => {
        
         </div>
       </div>
-    </div>
+
   );
        
 
